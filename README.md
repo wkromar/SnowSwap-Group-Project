@@ -1,12 +1,7 @@
 
 # SnowSwaps
 
-This is out group project.
-
-## Use the Template for This Repository (Don't Clone)
-
-- Don't Fork or Clone. Instead, click the `Use this Template` button, and make a copy to your personal account.
-
+SnowSwaps is a full-stack web application that bridges the gap between buyers and sellers of used snow sport equipment.  Users can request permission from SnowSwaps to gain the ability to create virtual “swaps” where users can browse items listed in the swap.  Buyers can contact sellers to negotiate price and a location to meet. Swaps can be public, or they can be private requiring a passcode to interact with the swap.
 
 ## Prerequisites
 
@@ -18,17 +13,11 @@ Before you get started, make sure you have the following software installed on y
 
 ## Create database and table
 
-Create a new database called `prime_app` and create a `user` table:
+Create a new database called `snowswaps`.
 
-```SQL
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-```
+All the requered info to set up the database can be found in the database.sql file.
 
-If you would like to name your database something else, you will need to change `prime_app` to the name of your new database name in `server/modules/pool.js`
+If you would like to name your database something else, you will need to change `snowswaps` to the name of your new database name in `server/modules/pool.js`
 
 ## Development Setup Instructions
 
