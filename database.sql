@@ -16,7 +16,7 @@ CREATE TABLE "user" (
     "auth_level" INT DEFAULT 0 NOT NULL,
     "user_image" VARCHAR (1000), 
     "prefered_payment" VARCHAR (50),
-    "payment_username"
+    "payment_username" VARCHAR (80)
 );
 
 CREATE TABLE "categories" (
@@ -29,7 +29,7 @@ CREATE TABLE "items" (
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
     "size" INT,
-    "price" INT,
+    "price" DECIMAL,
     "flex" VARCHAR (50),
     "style" VARCHAR (50),
     "brand" VARCHAR (50),
