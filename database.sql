@@ -14,14 +14,15 @@ CREATE TABLE "user" (
     "first_name" VARCHAR (100) NOT NULL,
     "last_name" VARCHAR (100) NOT NULL,
     "auth_level" INT DEFAULT 0 NOT NULL,
-    "user_image" VARCHAR (1000)
+    "user_image" VARCHAR (1000), 
+    "prefered_payment" VARCHAR (50),
+    "payment_username"
 );
 
 CREATE TABLE "categories" (
     "id" SERIAL PRIMARY KEY,
     "name" TEXT NOT NULL
 );
-
 
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
@@ -37,6 +38,7 @@ CREATE TABLE "items" (
     "profile" VARCHAR (50),
     "condition" VARCHAR (50),
     "lacing_system" VARCHAR (50),
+    "purchased" BOOLEAN,
     "description" VARCHAR (1000)
 );
 
@@ -46,17 +48,15 @@ CREATE TABLE "images" (
     "url" TEXT
 );
 
-
 CREATE TABLE "swaps" (
     "id" SERIAL PRIMARY KEY,
     "is_private" BOOLEAN,
     "start_date" DATE,
     "sell_date" DATE,
     "stop_date" DATE,
-    "purchased" BOOLEAN,
+    "swap_open" BOOLEAN DEFAULT FALSE,
     "access_code" TEXT
 );
-
 
 CREATE TABLE "swap_users" (
     "id" SERIAL PRIMARY KEY,
