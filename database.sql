@@ -24,6 +24,9 @@ CREATE TABLE "categories" (
     "name" TEXT NOT NULL
 );
 
+INSERT INTO "categories" ("name")
+VALUE ('')
+
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user",
@@ -75,3 +78,4 @@ CREATE TABLE "swap_item_join" (
     "item_id" INT REFERENCES "items",
     "swap_id" INT REFERENCES "swaps"
 );
+
