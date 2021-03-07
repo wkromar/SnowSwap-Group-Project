@@ -86,8 +86,8 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
       req.body.description,
       itemToEdit,
     ])
-    .then((result) => {
-      res.sendStatus(500);
+    .then((response) => {
+      response.sendStatus(500);
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
