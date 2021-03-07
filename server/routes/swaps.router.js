@@ -9,6 +9,7 @@ require("dotenv").config();
 
 //handles the swaps data. GET POST PUT
 // gathers ALL SWAPS
+// sends to front end
 router.get("/", rejectUnauthenticated, (req, res) => {
   const queryText = `SELECT * FROM "swaps" ORDER BY "id";`;
   pool
@@ -22,4 +23,13 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.post("/", rejectUnauthenticated, (req, res) => {});
+const queryText = `SELECT * FROM "swaps";`;
+pool
+  .query(queryText)
+  .then((result) => {})
+  .catch((error) => {
+    console.log("error in swaps POST", error);
+    res.sendStatus(500);
+  });
 module.exports = router;
