@@ -27,8 +27,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 router.post("/", rejectUnauthenticated, (req, res) => {
   const swapToStore = req.body;
   console.log("sending swap", swapToStore);
-  const queryText = `INSERT INTO "swaps" ("is_private", "start_date", "sell_date", "stop_date", "swap_open", "access_code")
-        VALUES($1, $2, $3, $4, $5, $6)`;
+  const queryText = `INSERT INTO "swaps" ("is_private", "start_date", "sell_date", 
+  "stop_date", "swap_open", "access_code")
+    VALUES($1, $2, $3, $4, $5, $6);`;
   pool
     .query(queryText, [
       swap.is_private,
@@ -45,6 +46,29 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     .catch((error) => {
       console.log("error in swaps POST", error);
       res.sendStatus(500);
+    });
+});
+
+// PUT route to edit existing swaps
+router.put("/:id", rejectUnauthenticated, (req, res) => {
+  const swapToEdit = req.params.id;
+  const queryText = `UPDATE "swaps" where "id" = $1, "is_private" = $2, 
+  "start_date" = $3, sell_date = $4, "stop_date" = $5, "swap_open" = $6, "access_code" = $7;`;
+  pool
+    .query(queryText, [
+      req.body.id,
+      req.body.is_private,
+      req.body.start_date,
+      req.body.stop_date,
+      req.body.swap_open,
+      req.body.access_code,
+      swapToEdit,
+    ])
+    .then((result) => {
+      res.sendStatus(500);
+    })
+    .catch((error) => {
+      console.log(`Error making Edit to database query ${queryText}`, error);
     });
 });
 
