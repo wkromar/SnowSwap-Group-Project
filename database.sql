@@ -14,7 +14,7 @@ CREATE TABLE "user" (
     "first_name" VARCHAR (100) NOT NULL,
     "last_name" VARCHAR (100) NOT NULL,
     "auth_level" INT DEFAULT 0 NOT NULL,
-    "user_image" VARCHAR (1000), 
+    "user_image" TEXT, 
     "prefered_payment" VARCHAR (50),
     "payment_username" VARCHAR (80)
 );
@@ -25,7 +25,8 @@ CREATE TABLE "categories" (
 );
 
 INSERT INTO "categories" ("name")
-VALUE ('')
+VALUES ('ski'),('ski_binding'),('ski_boots'),('snowboard'),('snowboard_boots'),
+('snowboard_bindings'),('apparel'),('helmet');
 
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
