@@ -83,3 +83,5 @@ CREATE TABLE "swap_item_join" (
     "swap_id" INT REFERENCES "swaps"
 );
 
+-- QUICK REMOVAL COMMANDS
+DROP TABLE "swaps" CASCADE;

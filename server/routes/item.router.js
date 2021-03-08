@@ -5,7 +5,6 @@ const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
 
-
 //handles the individual items users place into swaps.
 
 //take item from user and place it into the  ITEM database
@@ -52,15 +51,14 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 
 router.get("/", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  console.log('GETting items');
-  
+  console.log("GETting items");
 
   const queryText = `SELECT * FROM "items" WHERE "user_id" = $1 ORDER BY "cat_id" ASC;`;
   pool
     .query(queryText, [userId])
     .then((result) => {
       console.log(result);
-      
+
       res.send(result.rows);
     })
     .catch((error) => {
@@ -95,7 +93,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
       itemToEdit,
     ])
     .then((response) => {
-      response.sendStatus(500);
+      response.sendStatus(200);
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
