@@ -47,11 +47,6 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 });
 
 //push existing items into swap
-//adding an item to the swap.
-// router.post("/", rejectUnauthenticated, (req, res)=>{
-// const item = req.body;
-// console.log("adding item to swap", item);
-// })
 
 router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
   const item = req.body;
@@ -69,6 +64,8 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// router.post(/)
 
 // PUT route to edit existing swaps
 router.put("/:id", rejectUnauthenticated, (req, res) => {
