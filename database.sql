@@ -19,6 +19,7 @@ CREATE TABLE "user" (
     "payment_username" VARCHAR (80)
 );
 
+
 CREATE TABLE "categories" (
     "id" SERIAL PRIMARY KEY,
     "name" TEXT NOT NULL

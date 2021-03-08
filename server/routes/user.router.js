@@ -35,6 +35,12 @@ router.post('/register', (req, res, next) => {
     });
 });
 
+// PUT will be handling the edit user profiles
+router.put('/updateUserProfile', (req, res) => {
+  
+})
+
+
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route
 // this middleware will run our POST if successful
