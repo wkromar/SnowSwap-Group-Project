@@ -46,6 +46,30 @@ router.post("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+//push existing items into swap
+//adding an item to the swap.
+// router.post("/", rejectUnauthenticated, (req, res)=>{
+// const item = req.body;
+// console.log("adding item to swap", item);
+// })
+
+router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
+  const item = req.body;
+  console.log("adding item to swap", item);
+  const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
+  VALUES($1, $2)`;
+  pool
+    .query(queryText, [item.item_id, item.swap_id])
+    .then((response) => {
+      console.log(response);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 // PUT route to edit existing swaps
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const swapToEdit = req.params.id;
