@@ -19,6 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
+import Profile from '../Profile/Profile.jsx';
 
 import './App.css';
 
@@ -103,6 +104,10 @@ function App() {
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
+
+          <ProtectedRoute exact path="/profile">
+            <Profile />
+          </ProtectedRoute>
           <Route>
             <h1>404</h1>
           </Route>
