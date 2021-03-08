@@ -4,33 +4,31 @@ const router = express.Router();
 const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
-const router = express.Router();
 
 //handles the individual items users place into swaps.
 
 //take item from user and place it into the  ITEM database
 //fields not filled out will become null
-router.post("/", rejectUnauthenticated, (req, res) => {
+router.post("/", (req, res) => {
   const itemToStore = req.body;
   console.log("sending item", itemToStore);
-  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "size", "price", "flex", "style", "brand", "shape", "gender", "profile", "condition", "lacing_system", "purchased", "description")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
+  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "size", "price", "flex", "style", "brand", "shape", "gender", "profile", "condition", "lacing_system", "description")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
   pool
     .query(queryText, [
-      item.user_id,
-      item.cat_id,
-      item.size,
-      item.price,
-      item.flex,
-      item.style,
-      item.brand,
-      item.shape,
-      item.gender,
-      item.profile,
-      item.condition,
-      item.lacing_system,
-      item.purchased,
-      item.description,
+      itemToStore.user_id,
+      itemToStore.cat_id,
+      itemToStore.size,
+      itemToStore.price,
+      itemToStore.flex,
+      itemToStore.style,
+      itemToStore.brand,
+      itemToStore.shape,
+      itemToStore.gender,
+      itemToStore.profile,
+      itemToStore.condition,
+      itemToStore.lacing_system,
+      itemToStore.description,
     ])
     .then((response) => {
       console.log(response);
@@ -87,7 +85,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
       itemToEdit,
     ])
     .then((response) => {
-      response.sendStatus(500);
+      response.sendStatus(200);
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
