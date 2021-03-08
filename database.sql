@@ -32,6 +32,7 @@ CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
+    "title" VARCHAR (100),
     "size" INT,
     "price" DECIMAL,
     "flex" VARCHAR (50),
@@ -45,6 +46,7 @@ CREATE TABLE "items" (
     "purchased" BOOLEAN,
     "description" VARCHAR (1000)
 );
+
 
 CREATE TABLE "images" (
     "id" SERIAL PRIMARY KEY,
