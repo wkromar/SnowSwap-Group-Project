@@ -1,11 +1,9 @@
 const express = require("express");
-const bodyParser = require("body-parser");
-const router = require("./item.router");
+const pool = require("../modules/pool");
+const router = express.Router();
 const {
   rejectUnauthenticated,
 } = require("../modules/authentication-middleware");
-const pool = require("../modules/pool");
-require("dotenv").config();
 
 //handles the swaps data. GET POST PUT
 // gathers ALL SWAPS
@@ -25,18 +23,17 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
 //insert into SWAPS database
 router.post("/", rejectUnauthenticated, (req, res) => {
-  const swapToStore = req.body;
-  console.log("sending swap", swapToStore);
+  const swap = req.body;
+  console.log("sending swap", swap);
   const queryText = `INSERT INTO "swaps" ("is_private", "start_date", "sell_date", 
-  "stop_date", "swap_open", "access_code")
-    VALUES($1, $2, $3, $4, $5, $6);`;
+  "stop_date", "access_code")
+    VALUES($1, $2, $3, $4, $5)`;
   pool
     .query(queryText, [
       swap.is_private,
       swap.start_date,
       swap.sell_date,
       swap.stop_date,
-      swap.open,
       swap.access_code,
     ])
     .then((response) => {
@@ -65,7 +62,7 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
       swapToEdit,
     ])
     .then((response) => {
-      response.sendStatus(500);
+      response.sendStatus(200);
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
