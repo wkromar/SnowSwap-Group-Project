@@ -19,10 +19,15 @@ CREATE TABLE "user" (
     "payment_username" VARCHAR (80)
 );
 
+
 CREATE TABLE "categories" (
     "id" SERIAL PRIMARY KEY,
     "name" TEXT NOT NULL
 );
+
+INSERT INTO "categories" ("name")
+VALUES ('ski'),('ski_binding'),('ski_boots'),('snowboard'),('snowboard_boots'),
+('snowboard_bindings'),('apparel'),('helmet');
 
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
@@ -75,3 +80,4 @@ CREATE TABLE "swap_item_join" (
     "item_id" INT REFERENCES "items",
     "swap_id" INT REFERENCES "swaps"
 );
+
