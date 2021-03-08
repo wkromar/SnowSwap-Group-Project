@@ -14,7 +14,7 @@ CREATE TABLE "user" (
     "first_name" VARCHAR (100) NOT NULL,
     "last_name" VARCHAR (100) NOT NULL,
     "auth_level" INT DEFAULT 0 NOT NULL,
-    "user_image" VARCHAR (1000), 
+    "user_image" TEXT, 
     "prefered_payment" VARCHAR (50),
     "payment_username" VARCHAR (80)
 );
@@ -33,6 +33,7 @@ CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
+    "title" VARCHAR (100),
     "size" INT,
     "price" DECIMAL,
     "flex" VARCHAR (50),
@@ -46,6 +47,7 @@ CREATE TABLE "items" (
     "purchased" BOOLEAN,
     "description" VARCHAR (1000)
 );
+
 
 CREATE TABLE "images" (
     "id" SERIAL PRIMARY KEY,
