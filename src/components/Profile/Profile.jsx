@@ -10,14 +10,6 @@ export default function Profile() {
   const [editMode, setEditMode] = useState(false);
   console.log('user', user);
 
-  const paymentMethods = [
-    'Choose a Payment Method',
-    'Cash',
-    'Cash App',
-    'Venmo',
-    'PayPal',
-  ];
-
   return (
     <div>
       {editMode ? (
