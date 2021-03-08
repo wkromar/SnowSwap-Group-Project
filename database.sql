@@ -15,7 +15,7 @@ CREATE TABLE "user" (
     "last_name" VARCHAR (100) NOT NULL,
     "auth_level" INT DEFAULT 0 NOT NULL,
     "user_image" TEXT, 
-    "prefered_payment" VARCHAR (50),
+    "preferred_payment" VARCHAR (50),
     "payment_username" VARCHAR (80)
 );
 
