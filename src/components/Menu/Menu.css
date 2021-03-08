@@ -28,7 +28,7 @@
     background-color: white;
     right: 0;
     top: 80px;
-    z-index: 0;
+    z-index: 5;
     animation-name: menu-open;
     animation-duration: 0.5s;
 }
