@@ -34,7 +34,7 @@ CREATE TABLE "items" (
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
     "title" VARCHAR (100),
-    "size" INT,
+    "size" DECIMAL,
     "price" DECIMAL,
     "flex" VARCHAR (50),
     "style" VARCHAR (50),

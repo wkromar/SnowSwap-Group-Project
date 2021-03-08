@@ -35,6 +35,13 @@ app.use("/api/swaps", swapRouter);
 // Serve static files
 app.use(express.static("build"));
 
+app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
+  bucket: process.env.AWS_S3_BUCKET,                           // required
+  region: process.env.AWS_S3_REGION,                            // optional
+  headers: {'Access-Control-Allow-Origin': '*'},  		    // optional
+  ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
+}));
+
 // App Set //
 const PORT = process.env.PORT || 5000;
 
