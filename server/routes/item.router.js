@@ -9,26 +9,29 @@ const {
 
 //take item from user and place it into the  ITEM database
 //fields not filled out will become null
-router.post("/", (req, res) => {
-  const itemToStore = req.body;
-  console.log("sending item", itemToStore);
-  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "size", "price", "flex", "style", "brand", "shape", "gender", "profile", "condition", "lacing_system", "description")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)`;
+router.post("/", rejectUnauthenticated, (req, res) => {
+  const item = req.body;
+  console.log("sending item", item);
+  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
+  "flex", "style", "brand", "shape", "gender", "profile", "condition", 
+  "lacing_system", "description")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
   pool
     .query(queryText, [
-      itemToStore.user_id,
-      itemToStore.cat_id,
-      itemToStore.size,
-      itemToStore.price,
-      itemToStore.flex,
-      itemToStore.style,
-      itemToStore.brand,
-      itemToStore.shape,
-      itemToStore.gender,
-      itemToStore.profile,
-      itemToStore.condition,
-      itemToStore.lacing_system,
-      itemToStore.description,
+      item.user_id,
+      item.cat_id,
+      item.title,
+      item.size,
+      item.price,
+      item.flex,
+      item.style,
+      item.brand,
+      item.shape,
+      item.gender,
+      item.profile,
+      item.condition,
+      item.lacing_system,
+      item.description,
     ])
     .then((response) => {
       console.log(response);
@@ -47,10 +50,15 @@ router.post("/", (req, res) => {
 //the current swap?
 
 router.get("/", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "items" WHERE "user_id" = $1 ORDER BY "name" ASC;`;
+  const userId = req.user.id;
+  console.log("GETting items");
+
+  const queryText = `SELECT * FROM "items" WHERE "user_id" = $1 ORDER BY "cat_id" ASC;`;
   pool
-    .query(queryText)
+    .query(queryText, [userId])
     .then((result) => {
+      console.log(result);
+
       res.send(result.rows);
     })
     .catch((error) => {
