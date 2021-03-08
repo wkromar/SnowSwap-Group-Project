@@ -8,6 +8,9 @@
   background-color: #00acb0;
   overflow: hidden;
   z-index: 2;
+  /* position: fixed;
+  top: 0;
+  width: 100%; */
 }
 
 .nav a {

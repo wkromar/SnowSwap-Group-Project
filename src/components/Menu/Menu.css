@@ -42,6 +42,9 @@
 }
 
 .menuItem {
-    margin: 0 0 3px 0;
+    margin: 0 0 3px 0;   
+}
+
+.menuItems a {
     text-decoration: none;
 }

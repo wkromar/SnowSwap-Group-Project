@@ -8,8 +8,6 @@ import Menu from "../Menu/Menu";
 function Nav() {
   const user = useSelector((store) => store.user);
 
-  const [state, setState] = useState(false)
-
   let loginLinkData = {
     path: '/login',
     text: 'Login / Register',
