@@ -6,9 +6,9 @@ export default function DisplayProfile({ user, setEditMode, editMode }) {
     <div className="profile-container">
       <div className="profile-info-container">
         <div className="left-side">
-          {user?.user_img ? (
+          {user?.user_image ? (
             <div>
-              <img src={user?.user_img} />
+              <img src={user?.user_image} />
             </div>
           ) : (
             <div>Add a profile picture</div>
