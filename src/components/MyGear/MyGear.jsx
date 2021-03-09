@@ -16,10 +16,16 @@ const customStyles = {
   };
 
 export default function MyGear() {
+    const dispatch = useDispatch();
+
   let boxes = [1, 2, 3, 4, 5, 6, 7];
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch({ type: "FETCH_GEAR" });
+  }, []);
 
+ 
+  const gear = useSelector(state => state.gear)
   const modalStatus = useSelector(state => state.modal)
 
   const handleAddGear = () => {

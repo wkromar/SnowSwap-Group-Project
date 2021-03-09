@@ -1,10 +1,8 @@
 
-const gearReducer = (state = {detailView: false}, action) => {
+const gearReducer = (state = [], action) => {
     switch (action.type) {
-      case 'OPEN_DETAIL_VIEW':
-        return {...state, detailView: true};
-      case 'CLOSE_DETAIL_VIEW':
-        return {...state, detailView: false};
+      case 'SET_GEAR':
+        return action.payload;
       default:
         return state;
     }
