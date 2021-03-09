@@ -57,6 +57,7 @@ CREATE TABLE "images" (
 
 CREATE TABLE "swaps" (
     "id" SERIAL PRIMARY KEY,
+    "owner" INT REFERENCES "user",
     "is_private" BOOLEAN,
     "start_date" DATE,
     "sell_date" DATE,
