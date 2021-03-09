@@ -104,7 +104,7 @@ INSERT INTO "items"
      "purchased",
      "description"
      )
-VALUES ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+VALUES  ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
@@ -114,3 +114,6 @@ VALUES ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
         ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!');
+
+INSERT INTO "images" ("item_id", "url")
+    VALUES ('1', 'https://i.imgur.com/n8eVxIk.jpg');

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
@@ -11,17 +11,17 @@ const customStyles = {
       right                 : 'auto',
       bottom                : 'auto',
       marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
+      transform             : 'translate(-50%, -50%)',
+      position              : 'relative'
     }
   };
 
 export default function MyGear() {
     const dispatch = useDispatch();
 
-  let boxes = [1, 2, 3, 4, 5, 6, 7];
-
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
+    
   }, []);
 
  
@@ -39,11 +39,11 @@ export default function MyGear() {
       </div>
       <p className="title"> Inventory </p>
       <div className="container">
-        {boxes.map((box) => (
+        {gear.map((piece) => (
           <div className="item">
             <img onClick={() => dispatch({type: 'OPEN_DETAIL_VIEW'})} className="image" src="images/menu_icon.svg" />
             <img className="favorite-icon" src="images/favorite.svg" />
-            <p className="name"> Name | $ </p>
+            <p className="name"> {piece.title} | ${piece.price} </p>
           </div>
         ))}
       </div>
@@ -54,8 +54,8 @@ export default function MyGear() {
       styles={customStyles}
       contentLabel="Detail View"
       >
-          hello
-          <button onClick={() => dispatch({type: 'CLOSE_DETAIL_VIEW'})}>Close</button>
+          
+          <button className="close-button" onClick={() => dispatch({type: 'CLOSE_DETAIL_VIEW'})}>Close</button>
       </Modal>
     </>
   );
