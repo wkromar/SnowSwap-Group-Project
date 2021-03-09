@@ -39,8 +39,8 @@ router.post('/register', (req, res, next) => {
 router.put('/updateUserProfile', (req, res) => {
   const userId = req.user.id;
 
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
   const email = req.body.email;
   const preferredPayment = req.body.preferred_payment
   const paymentUsername = req.body.payment_username
