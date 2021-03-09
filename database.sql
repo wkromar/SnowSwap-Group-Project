@@ -85,3 +85,7 @@ CREATE TABLE "swap_item_join" (
 
 -- QUICK REMOVAL COMMANDS
 DROP TABLE "swaps" CASCADE;
+
+-- SWAP JOINS CONNECTION ITEMS TO SWAP_ITEMS_JOINS TO SWAPS
+SELECT * FROM "items" JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
+INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;

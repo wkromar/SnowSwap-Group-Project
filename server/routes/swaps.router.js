@@ -65,7 +65,23 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
     });
 });
 
-// router.post(/)
+//join swap item join
+// using a get to grab all data from multiple tables
+router.get("/swapItems", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "items" JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
+INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
 
 // PUT route to edit existing swaps
 router.put("/:id", rejectUnauthenticated, (req, res) => {
