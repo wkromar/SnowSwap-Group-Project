@@ -34,7 +34,7 @@ CREATE TABLE "items" (
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
     "title" VARCHAR (100),
-    "size" INT,
+    "size" DECIMAL,
     "price" DECIMAL,
     "flex" VARCHAR (50),
     "style" VARCHAR (50),
@@ -85,6 +85,7 @@ CREATE TABLE "swap_item_join" (
 
 
 
+
 -- Dummy Data
 
 INSERT INTO "items"
@@ -117,3 +118,7 @@ VALUES  ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Men
 
 INSERT INTO "images" ("item_id", "url")
     VALUES ('1', 'https://i.imgur.com/n8eVxIk.jpg');
+
+-- QUICK REMOVAL COMMANDS
+DROP TABLE "swaps" CASCADE;
+

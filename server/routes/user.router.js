@@ -37,7 +37,45 @@ router.post('/register', (req, res, next) => {
 
 // PUT will be handling the edit user profiles
 router.put('/updateUserProfile', (req, res) => {
-  
+  const userId = req.user.id;
+
+  const firstName = req.body.first_name;
+  const lastName = req.body.last_name;
+  const email = req.body.email;
+  const preferredPayment = req.body.preferred_payment
+  const paymentUsername = req.body.payment_username
+  const userImage = req.body.user_image
+
+  console.log('updating profile for user #:', userId);
+
+  const queryText = `
+  UPDATE "user" 
+  SET "first_name" = $2, "last_name" = $3, "email" = $4,
+  "preferred_payment" = $5,  "payment_username" = $6, "user_image" = $7
+  WHERE "user".id = $1;
+  `;
+
+  pool
+    .query(queryText, [
+      userId,
+      firstName,
+      lastName,
+      email,
+      preferredPayment,
+      paymentUsername,
+      userImage
+    ])
+    .then((result) => {
+      console.log(result);
+
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+
+
 })
 
 
