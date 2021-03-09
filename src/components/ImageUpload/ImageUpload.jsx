@@ -1,11 +1,10 @@
+import React from 'react';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
-import React from 'react';
-
-export default function ImageUpload() {
+export default function ImageUpload({ userProfileEdit, setUserProfileEdit }) {
   const handleFinishedUpload = (info) => {
     console.log('File uploaded with filename', info.filename);
-    console.log('Access it on s3 at', info.fileUrl);
+    setUserProfileEdit({ ...userProfileEdit, user_image: info.fileUrl });
   };
 
   const uploadOptions = {
