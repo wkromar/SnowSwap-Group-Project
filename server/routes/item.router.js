@@ -55,7 +55,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 
   const queryText = `
       SELECT items.*, ARRAY_AGG(url) image FROM "items" 
-      JOIN "images" ON "items".id = "images".item_id
+      LEFT JOIN "images" ON "items".id = "images".item_id
       WHERE "user_id" = $1
       GROUP BY "items".id
       ORDER BY "cat_id" ASC;
