@@ -5,19 +5,19 @@
 }
 
 .item {
-    border-style: solid;
-    border-width: thin;
+    border: 1px solid black;
     border-radius: 5px;
-    width: 10em;
-    height: 10em;
+    width: 10rem;
+    height: 10rem;
     margin: 10px;
     justify-content: space-evenly;
     align-items: center;
+    position: relative;
 }
 
 .add-gear-button {
-    height: 3em;
-    width: 8em;
+    height: 3rem;
+    width: 8rem;
     border-radius: 16px;
     align-items: flex-start;
 }
@@ -29,8 +29,8 @@
 
 .image {
     background-color: tomato;
-    height: 8.5em;
-    width: 10em;
+    height: 8.5rem;
+    width: 10rem;
 }
 
 .name {
@@ -39,6 +39,8 @@
 }
 
 .favorite-icon {
-    align-self: flex-end;
-    justify-content: flex-end;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 4px;
 }
