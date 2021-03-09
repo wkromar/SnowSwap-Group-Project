@@ -4,11 +4,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 0;
-  background-color: #00acb0;
+  background-color: #7ebbf1;
   overflow: hidden;
   /* z-index: 2; */
   /* position: sticky; */
-  width: 100%
+  width: 100%;
 }
 
 .nav a {
