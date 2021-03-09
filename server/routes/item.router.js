@@ -73,6 +73,31 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// Add item to Favorites
+router.post('/addToFav', (req, rejectUnauthenticated, res) => {
+  const userId = req.user.id;
+  const itemToFav = req.body
+  console.log('adding item to favorites', itemToFav);
+
+  const queryText = `
+  INSERT INTO "favorites" ("user_id", "item_id")
+  VALUES ($1, $2);
+  `;
+
+  pool
+    .query(queryText, [userId, itemToFav.id])
+    .then((result) => {
+      console.log(result);
+      res.sendStatus(201)
+
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+
+})
+
 //route to edit an item using the ITEM_ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const itemToEdit = req.params.id;
