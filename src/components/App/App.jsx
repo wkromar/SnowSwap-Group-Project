@@ -21,6 +21,7 @@ import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 
 import './App.css';
+import MyGear from '../MyGear/MyGear';
 
 function App() {
   const dispatch = useDispatch();
@@ -100,6 +101,13 @@ function App() {
             authRedirect="/user"
           >
             <LandingPage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+           exact
+           path="/myGear"
+          >
+            <MyGear/>
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

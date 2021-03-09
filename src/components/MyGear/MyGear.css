@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.item {
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+    width: 10em;
+    height: 10em;
+    margin: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.add-gear-button {
+    height: 3em;
+    width: 8em;
+    border-radius: 16px;
+    align-items: flex-start;
+}
+
+.title {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin: 5px 0px 5px 30px;
+}
+
+.image {
+    background-color: tomato;
+    height: 8.5em;
+    width: 10em;
+}
+
+.name {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left: 5px;
+}
+
+.favorite-icon {
+    align-self: flex-end;
+    justify-content: flex-end;
+}
