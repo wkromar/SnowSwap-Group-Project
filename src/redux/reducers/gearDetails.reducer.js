@@ -1,6 +1,6 @@
-const gearReducer = (state = [], action) => {
+const gearDetails = (state = {}, action) => {
     switch (action.type) {
-      case 'SET_GEAR':
+      case 'SELECTED_PIECE':
         return action.payload;
       default:
         return state;
@@ -8,4 +8,4 @@ const gearReducer = (state = [], action) => {
   };
 
 
-  export default gearReducer;
+  export default gearDetails;

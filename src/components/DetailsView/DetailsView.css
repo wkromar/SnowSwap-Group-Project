@@ -1,0 +1,23 @@
+.modalImages {
+    display: flex;
+    position: relative;
+    height: 160px;
+    width: 160px;
+}
+
+.right-arrow {
+    height: 100%;
+    width: 1rem;
+    position: absolute;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+.left-arrow {
+    height: 100%;
+    width: 1rem;
+    position: absolute;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
