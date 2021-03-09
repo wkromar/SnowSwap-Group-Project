@@ -75,6 +75,53 @@ router.put('/updateUserProfile', (req, res) => {
       res.sendStatus(500);
     });
 
+})
+
+
+router.put('/upgradeUser', (req, res, next) => {
+
+  const userId = req.user.id;
+
+  const userToUpgrade = req.body.userNumber
+
+  console.log(`upgrading ${userToUpgrade} to a Super User`);
+
+  const queryText = `
+  SELECT "user".auth_level FROM "user"
+  WHERE "user".id = $1;
+  `;
+
+  pool.query(queryText, [userId]).then((results) => {
+    let authLvl = results.rows[0].auth_level
+    console.log('auth level:', authLvl);
+
+    if (authLvl === 2) {
+      const queryText = `
+      UPDATE "user" 
+      SET "auth_level" = 1
+      WHERE "user".id = $1;
+      `;
+
+      pool.query(queryText, [userToUpgrade])
+        .then((result) => {
+          console.log(result);
+          res.sendStatus(200);
+        })
+        .catch((error) => {
+          console.log(error);
+          res.sendStatus(500);
+        });
+    }
+    else { 
+      console.log('Could not upgrade user number:', userToUpgrade);
+      
+      res.sendStatus(403); 
+    }
+
+  }).catch((error) => {
+    console.log(error);
+    res.sendStatus(500);
+  });
 
 })
 
