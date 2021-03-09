@@ -83,5 +83,45 @@ CREATE TABLE "swap_item_join" (
     "swap_id" INT REFERENCES "swaps"
 );
 
+
+
+
+-- Dummy Data
+
+INSERT INTO "items"
+    ("user_id",
+     "cat_id",
+     "title",
+     "size",
+     "price",
+     "flex",
+     "style",
+     "brand",
+     "shape",
+     "gender",
+     "profile",
+     "condition",
+     "lacing_system",
+     "purchased",
+     "description"
+     )
+VALUES  ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!')
+        ('1', '2', 'KSwiss Skiis', '167', '60', '', 'racing', 'KSwiss', '', 'Mens', 'rocker', 'used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!');
+
+INSERT INTO "images" ("item_id", "url")
+    VALUES ('1', 'https://i.imgur.com/n8eVxIk.jpg');
+
 -- QUICK REMOVAL COMMANDS
 DROP TABLE "swaps" CASCADE;
+
+-- SWAP JOINS CONNECTION ITEMS TO SWAP_ITEMS_JOINS TO SWAPS
+SELECT * FROM "items" JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
+INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;
