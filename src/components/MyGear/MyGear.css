@@ -33,7 +33,6 @@
 }
 
 .image {
-    background-color: tomato;
     height: 8.5rem;
     width: 10rem;
 }
@@ -57,4 +56,8 @@
     position: absolute;
     bottom: 0;
     margin: 10px;
+}
+
+.modalImages {
+    border: 1px solid black;
 }
