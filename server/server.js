@@ -12,8 +12,6 @@ const userRouter = require("./routes/user.router");
 const itemRouter = require("./routes/item.router");
 const swapRouter = require("./routes/swaps.router");
 
-const userItemRouter = require("./routes/userItem.router");
-
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,8 +27,6 @@ app.use(passport.session());
 app.use("/api/user", userRouter);
 app.use("/api/item", itemRouter);
 app.use("/api/swaps", swapRouter);
-
-// app.use('/api/userItem', userItemRouter);
 
 // Serve static files
 app.use(express.static("build"));
