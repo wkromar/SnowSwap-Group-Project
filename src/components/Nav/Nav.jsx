@@ -24,7 +24,7 @@ function Nav() {
         <h2 className="nav-title">SNOWSWAPS</h2>
       </Link>
       <div>
-
+          
         {user.id && (
           <>
             <Menu/>

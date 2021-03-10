@@ -74,7 +74,7 @@ router.get("/", rejectUnauthenticated, (req, res) => {
 });
 
 // Add item to Favorites
-router.post('/addToFav', (req, rejectUnauthenticated, res) => {
+router.post('/addToFav', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const itemToFav = req.body
   console.log('adding item to favorites', itemToFav);
@@ -98,15 +98,18 @@ router.post('/addToFav', (req, rejectUnauthenticated, res) => {
 
 })
 
-router.get('/favorites', (req, rejectUnauthenticated, res) => {
+router.get('/favorites', rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   console.log('GETting favorites for:', userId);
 
   const queryText = `
-  SELECT * from "items"
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "user"."username", "user"."email", "user"."user_image" FROM "items"
+  JOIN "categories" ON "items".cat_id = "categories".id
+  LEFT JOIN "images" ON "items".id = "images".item_id
   JOIN "favorites" ON "favorites".item_id = "items".id
-  WHERE "favorites".user_id = $1;
-  `;
+  JOIN "user" ON "items".user_id = "user".id
+  WHERE "favorites".user_id = $1
+  GROUP BY "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image";`;
 
   pool
     .query(queryText, [userId])
