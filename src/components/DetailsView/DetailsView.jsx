@@ -48,7 +48,9 @@ export default function DetailsView() {
       <div className="modalImages">
         <div onClick = {() => handleNextPicture('back')} className="left-arrow"></div>
         <img onClick = {() => dispatch({type: 'ENLARGE_IMAGE_OPEN'})} src={gearDetails?.image[imageCounter]} />
-        <div onClick = {() => handleNextPicture('next')} className="right-arrow"></div>
+        <div onClick = {() => handleNextPicture('next')} className="right-arrow">
+            <img className="right-arrow-icon" src="images/cancel.svg" />
+        </div>
       </div>
       <button
         className="close-button"
@@ -63,6 +65,7 @@ export default function DetailsView() {
         styles={customStyles}
         contentLabel="Detail View"
       >
+        <img onClick={() => dispatch({ type: "ENLARGE_IMAGE_CLOSE" })} className="cancel-button" src="images/cancel.svg"/>
         <img src={gearDetails?.image[imageCounter]} />
       </Modal>
     </>
