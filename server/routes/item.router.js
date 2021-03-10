@@ -9,6 +9,7 @@ const {
 
 //take item from user and place it into the  ITEM database
 //fields not filled out will become null
+// ITEMS ACTIONS
 router.post("/", rejectUnauthenticated, (req, res) => {
   const item = req.body;
   console.log("sending item", item);
@@ -72,56 +73,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
-
-// Add item to Favorites
-router.post('/addToFav', (req, rejectUnauthenticated, res) => {
-  const userId = req.user.id;
-  const itemToFav = req.body
-  console.log('adding item to favorites', itemToFav);
-
-  const queryText = `
-  INSERT INTO "favorites" ("user_id", "item_id")
-  VALUES ($1, $2);
-  `;
-
-  pool
-    .query(queryText, [userId, itemToFav.id])
-    .then((result) => {
-      console.log(result);
-      res.sendStatus(201)
-
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
-
-})
-
-router.get('/favorites', (req, rejectUnauthenticated, res) => {
-  const userId = req.user.id;
-  console.log('GETting favorites for:', userId);
-
-  const queryText = `
-  SELECT * from "items"
-  JOIN "favorites" ON "favorites".item_id = "items".id
-  WHERE "favorites".user_id = $1;
-  `;
-
-  pool
-    .query(queryText, [userId])
-    .then((result) => {
-      console.log(result.rows);
-      res.send(result.rows)
-
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
-  
-})
-
 //route to edit an item using the ITEM_ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const itemToEdit = req.params.id;
@@ -172,5 +123,72 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+// END ITEMS ACTIONS
+
+// FAVORITE ACTIONS
+// Add item to Favorites
+router.post("/addToFav", (req, rejectUnauthenticated, res) => {
+  const userId = req.user.id;
+  const itemToFav = req.body;
+  console.log("adding item to favorites", itemToFav);
+
+  const queryText = `
+  INSERT INTO "favorites" ("user_id", "item_id")
+  VALUES ($1, $2);
+  `;
+
+  pool
+    .query(queryText, [userId, itemToFav.id])
+    .then((result) => {
+      console.log(result);
+      res.sendStatus(201);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/favorites", (req, res) => {
+  const userId = req.user.id;
+  console.log("GETting favorites for:", userId);
+
+  const queryText = `
+  SELECT * from "items"
+  JOIN "favorites" ON "favorites".item_id = "items".id
+  WHERE "favorites".user_id = $1;
+  `;
+
+  pool
+    .query(queryText, [userId])
+    .then((result) => {
+      console.log(result.rows);
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+// delete function to remove the items from only the favorites
+router.delete("/deleteFav/:id", (req, rejectUnauthenticated, res) => {
+  const favToDelete = req.params.id;
+  console.log(favToDelete);
+  const queryText = `DELETE FROM "favorites" Where id = $1;`;
+  pool
+    .query(queryText, [itemToDelete])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log(
+        `Error making favorites DELETE database query${queryText}`,
+        error
+      );
+      res.sendStatus(500);
+    });
+});
+// END FAVORITES
 
 module.exports = router;
