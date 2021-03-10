@@ -85,6 +85,23 @@ router.get("/swapItems", rejectUnauthenticated, (req, res) => {
     });
 });
 
+// JOINS get to grab only the swaps the user has joined
+router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "swaps" JOIN "swap_users" ON "swap_users".swap_id = "swaps".id
+INNER JOIN "user" ON "user".id = "swap_users".user_id;`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      console.log(result);
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 // PUT route to edit existing swaps
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const swapToEdit = req.params.id;
