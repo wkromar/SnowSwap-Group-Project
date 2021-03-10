@@ -5,7 +5,9 @@ const gearReducer = (state = [], action) => {
       default:
         return state;
     }
-  };
+};
+
+
 
 
   export default gearReducer;

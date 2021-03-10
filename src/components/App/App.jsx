@@ -20,6 +20,7 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Profile from '../Profile/Profile.jsx';
+import Favorites from '../Favorites/Favorites.jsx'
 
 import './App.css';
 import MyGear from '../MyGear/MyGear';
@@ -109,6 +110,20 @@ function App() {
            path="/myGear"
           >
             <MyGear/>
+          </ProtectedRoute>
+
+          <ProtectedRoute
+           exact
+           path="/favorites"
+          >
+            <Favorites/>
+          </ProtectedRoute>
+
+          <ProtectedRoute
+           exact
+           path="/swapView"
+          >
+            <Favorites/>
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

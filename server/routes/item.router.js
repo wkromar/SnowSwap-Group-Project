@@ -73,6 +73,59 @@ router.get("/", rejectUnauthenticated, (req, res) => {
       res.sendStatus(500);
     });
 });
+
+// Add item to Favorites
+router.post('/addToFav', rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const itemToFav = req.body
+  console.log('adding item to favorites', itemToFav);
+
+  const queryText = `
+  INSERT INTO "favorites" ("user_id", "item_id")
+  VALUES ($1, $2);
+  `;
+
+  pool
+    .query(queryText, [userId, itemToFav.id])
+    .then((result) => {
+      console.log(result);
+      res.sendStatus(201)
+
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+
+})
+
+router.get('/favorites', rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  console.log('GETting favorites for:', userId);
+
+  const queryText = `
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "user"."username", "user"."email", "user"."user_image" FROM "items"
+  JOIN "categories" ON "items".cat_id = "categories".id
+  LEFT JOIN "images" ON "items".id = "images".item_id
+  JOIN "favorites" ON "favorites".item_id = "items".id
+  JOIN "user" ON "items".user_id = "user".id
+  WHERE "favorites".user_id = $1
+  GROUP BY "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image";`;
+
+  pool
+    .query(queryText, [userId])
+    .then((result) => {
+      console.log(result.rows);
+      res.send(result.rows)
+
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+  
+})
+
 //route to edit an item using the ITEM_ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const itemToEdit = req.params.id;

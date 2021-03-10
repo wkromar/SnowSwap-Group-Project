@@ -4,6 +4,7 @@ import user from './user.reducer';
 import modal from './modal.reducer';
 import gear from './gear.reducer';
 import gearDetails from './gearDetails.reducer';
+import favorites from './favorites.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   modal, // reducer with status of modals
   gear, // reducer containing gear
-  gearDetails
+  gearDetails,
+  favorites,
   
 });
 
