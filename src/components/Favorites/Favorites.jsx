@@ -21,7 +21,6 @@ export default function Favorites() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch({ type: "FETCH_GEAR" });
     dispatch({type: "FETCH_FAVORITES"});
   }, []);
 
@@ -33,8 +32,16 @@ export default function Favorites() {
   
   const gearClicked = (piece) => {
     dispatch({type: "SELECTED_PIECE", payload: piece});
-    dispatch({ type: "OPEN_DETAIL_VIEW" });
+    dispatch({type: "OPEN_DETAIL_VIEW" });
   };
+
+  const unFavorite = (piece) => {
+    dispatch({type: "UNFAVORITE_ITEM", payload: piece})
+  }
+
+  const handleContactSeller = () => {
+    console.log('Clicked Contact Seller')
+  }
 
   return (
     <>
@@ -45,7 +52,7 @@ export default function Favorites() {
         {favorites.map((piece) => (
           <div className="item">
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
-            <img className="favorite-icon" src="images/unfavorite.svg" />
+            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/unfavorite.svg" />
             <p className="name">
               {" "}
               {piece.title} | ${piece.price}{" "}
@@ -62,14 +69,24 @@ export default function Favorites() {
       >
         <DetailsView />
         <div className="seller-price">
-        <p className="seller">Seller: {gearDetails.user_id}</p>
+        <p className="seller">Seller: {gearDetails.username}</p>
         <p className="price">Price: ${gearDetails.price}</p>
         </div>
-        <button className="contact-seller-button">Contact Seller</button>
+        <button onClick = {() => handleContactSeller()} className="contact-seller-button">Contact Seller</button>
         <div className="description-tags">
           <h4>Description</h4>
           <p>{gearDetails.description}</p>
-          
+          <div className="container">
+          {gearDetails?.category_name && <div className="chip">{gearDetails?.category_name}</div>}
+          {gearDetails?.gender && <div className="chip">{gearDetails?.gender}</div>}
+          {gearDetails?.brand && <div className="chip">{gearDetails?.brand}</div>}
+          {gearDetails?.condition && <div className="chip">{gearDetails?.condition}</div>}
+          {gearDetails?.shape && <div className="chip">{gearDetails?.shape}</div>}
+          {gearDetails?.size && <div className="chip">{gearDetails?.size}</div>}
+          {gearDetails?.lacing_system && <div className="chip">{gearDetails?.lacing_system}</div>}
+          {gearDetails?.profile && <div className="chip">{gearDetails?.profile}</div>}
+          {gearDetails?.flex && <div className="chip">{gearDetails?.flex}</div>}
+          </div>
         </div>
       </Modal>
     </>

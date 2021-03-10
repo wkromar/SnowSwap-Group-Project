@@ -11,6 +11,7 @@ function* fetchGear() {
       }
 }
 
+
 function* fetchFavorites() {
   try {
       const response = yield axios.get("/api/item/favorites");
@@ -20,9 +21,24 @@ function* fetchFavorites() {
     }
 }
 
+function* unFavorite(action) {
+  try {
+    const favoriteID = action.payload.id;
+    console.log('removing favorite with id:', favoriteID);
+    console.log('******** payload: ', favoriteID);
+    yield axios.delete(`/api/item/favorites/${favoriteID}`);
+    yield put({type: 'FETCH_FAVORITES'});
+} catch (err) {
+    console.log(`error in removing favorite: ${err}`);
+}
+}
+
+
 function* gearSaga() {
     yield takeLatest('FETCH_GEAR', fetchGear)
     yield takeLatest('FETCH_FAVORITES', fetchFavorites)
+    yield takeLatest('UNFAVORITE', unFavorite)
 }
+
 
 export default gearSaga;
