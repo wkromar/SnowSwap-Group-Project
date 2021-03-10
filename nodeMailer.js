@@ -16,11 +16,11 @@ async function main() {
         });
 
         let upgradeUser = await transporter.sendMail({
-            from: '"The SnowSwap Devs 👻" <snowswapsdev@outlook.com>', // sender address
+            from: '"The SnowSwaps Devs 👻" <snowswapsdev@outlook.com>', // sender address
             to: "greenmonkee3333@gmail.com, greenmonkee3333@yahoo.com", // list of receivers
-            subject: "TEST EMAIL PLEASE IGNORE ✔", // Subject line
-            text: "WOW, THIS WAS SO SIMPLE TO SET UP. This concludes out test.", // plain text body
-            html: "<b>Hello?</b>",
+            subject: "Someone wants to upgrade their status.", // Subject line
+            text: "Hey there SnowSwaps Admin! Looks like there's a user who would like to become a Superuser.", // plain text body
+            html: "<b>Hey there SnowSwaps Admin! Looks like their is a user who would like to become a Superuser.</b>",
         });
 
         console.log("Message sent: %s", upgradeUser.messageId);
@@ -28,23 +28,3 @@ async function main() {
 
 main().catch(console.error);
 
-
-
-
-
-
-
-    // const transporter = nodemailer.createTransport({
-    //     service: "gmail",
-    //     auth: {
-    //         user: "snowswapdevs@gmail.com",
-    //         pass: "ZhuSnowSwap12"
-    //     }
-    // });
-
-    // const upgradeUser = {
-    //     from: "snowswapdevs@gmail.com",
-    //     to: "greenmonkee3333@gmail.com",
-    //     subject: "TEST EMAIL PLEASE IGNORE",
-    //     text: "WOW, THIS WAS SO SIMPLE TO SET UP. This concludes out test."
-    // }
