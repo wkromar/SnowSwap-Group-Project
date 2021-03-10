@@ -42,9 +42,9 @@ router.put('/updateUserProfile', (req, res) => {
   const firstName = req.body.first_name;
   const lastName = req.body.last_name;
   const email = req.body.email;
-  const preferredPayment = req.body.preferred_payment
-  const paymentUsername = req.body.payment_username
-  const userImage = req.body.user_image
+  const preferredPayment = req.body.preferred_payment;
+  const paymentUsername = req.body.payment_username;
+  const userImage = req.body.user_image;
 
   console.log('updating profile for user #:', userId);
 
@@ -76,7 +76,23 @@ router.put('/updateUserProfile', (req, res) => {
     });
 
 
-})
+});
+
+router.get('/usersearch', rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    SELECT * FROM "user"
+    WHERE "username" ILIKE '%$1%'
+    OR "first_name" ILIKE '%$1%'
+    OR "last_name" ILIKE '%$1%';
+  `;
+  pool.query()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.sendStatus(500);
+    });
+});
 
 
 // Handles login form authenticate/login POST

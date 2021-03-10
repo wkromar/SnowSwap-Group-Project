@@ -17,7 +17,7 @@ export default function SwapAdmin() {
       <ul>
         {ownedSwaps?.map((swap) => {
           return (
-            <li>
+            <li key={swap.id}>
               <div>{swap.swap_name}</div>
               <div>
                 {new Date(swap.stop_date) > new Date() ? (
