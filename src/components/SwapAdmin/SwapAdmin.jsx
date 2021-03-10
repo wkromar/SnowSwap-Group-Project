@@ -13,11 +13,11 @@ export default function SwapAdmin() {
   }, []);
 
   return (
-    <div>
+    <div className="top-margin">
       <ul>
         {ownedSwaps?.map((swap) => {
           return (
-            <li key={swap.id}>
+            <li className="li-with-button" key={swap.id}>
               <div>{swap.swap_name}</div>
               <div>
                 {new Date(swap.stop_date) > new Date() ? (

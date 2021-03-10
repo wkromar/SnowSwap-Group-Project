@@ -4,6 +4,7 @@ import user from './user.reducer';
 import modal from './modal.reducer';
 import gear from './gear.reducer';
 import ownedSwaps from './ownedSwaps.reducer';
+import searchedUser from './searchedUser.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   modal, // reducer with status of modals
   gear, // reducer containing gear
   ownedSwaps,
+  searchedUser
 
 });
 

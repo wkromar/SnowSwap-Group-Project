@@ -79,15 +79,19 @@ router.put('/updateUserProfile', (req, res) => {
 });
 
 router.get('/usersearch', rejectUnauthenticated, (req, res) => {
+  const searchTerm = [`%${req.query.q}%`];
+  console.log(searchTerm);
+
   const queryText = `
     SELECT * FROM "user"
-    WHERE "username" ILIKE '%$1%'
-    OR "first_name" ILIKE '%$1%'
-    OR "last_name" ILIKE '%$1%';
+    WHERE "username" ILIKE $1
+    OR "first_name" ILIKE $1
+    OR "last_name" ILIKE $1;
   `;
-  pool.query()
+
+  pool.query(queryText, searchTerm)
     .then((result) => {
-      res.send(result);
+      res.send(result.rows);
     })
     .catch((err) => {
       res.sendStatus(500);
