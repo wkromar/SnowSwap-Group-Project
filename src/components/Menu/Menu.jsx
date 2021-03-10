@@ -33,8 +33,8 @@ export default function Menu() {
           <Link to="myGear" className="menuItem">
             My Gear
           </Link>
-          <Link to="savedItems" className="menuItem">
-            Saved Items
+          <Link to="favorites" className="menuItem">
+            Favorites
           </Link>
           <LogOutButton />
         </div>

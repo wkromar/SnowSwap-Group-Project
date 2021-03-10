@@ -46,10 +46,12 @@ export default function DetailsView() {
   return (
     <>
       <div className="modalImages">
-        <div onClick = {() => handleNextPicture('back')} className="left-arrow"></div>
+        <div onClick = {() => handleNextPicture('back')} className="left-arrow">
+            <img className="right-arrow-icon" src="images/left_arrow.svg"/>
+        </div>
         <img onClick = {() => dispatch({type: 'ENLARGE_IMAGE_OPEN'})} src={gearDetails?.image[imageCounter]} />
         <div onClick = {() => handleNextPicture('next')} className="right-arrow">
-            <img className="right-arrow-icon" src="images/cancel.svg" />
+            <img className="right-arrow-icon" src="images/right_arrow.svg" />
         </div>
       </div>
       <button
