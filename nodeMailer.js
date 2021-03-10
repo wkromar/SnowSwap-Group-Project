@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 
-async function main() {
+async function userUpgrade() {
 
     // let testAccount = await nodemailer.createTestAccount();
 
@@ -18,13 +18,14 @@ async function main() {
         let upgradeUser = await transporter.sendMail({
             from: '"The SnowSwaps Devs 👻" <snowswapsdev@outlook.com>', // sender address
             to: "greenmonkee3333@gmail.com, greenmonkee3333@yahoo.com", // list of receivers
-            subject: "Someone wants to upgrade their status.", // Subject line
+            subject: "Someone wants to upgrade!", // Subject line
             text: "Hey there SnowSwaps Admin! Looks like there's a user who would like to become a Superuser.", // plain text body
-            html: "<b>Hey there SnowSwaps Admin! Looks like their is a user who would like to become a Superuser.</b>",
+            html: "<b>Hey there SnowSwaps Admin! Looks like there's a user who would like to become a Superuser.</b>",
         });
 
         console.log("Message sent: %s", upgradeUser.messageId);
 }
 
-main().catch(console.error);
+userUpgrade().catch(console.error);
 
+export default userUpgrade;
