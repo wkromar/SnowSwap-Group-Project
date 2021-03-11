@@ -33,9 +33,20 @@ function* editUser(action) {
   }
 }
 
+function* searchUser(action) {
+  const response = yield axios.get(`/api/user/usersearch?q=${action.payload}`);
+  yield put({ type: 'USER_SEARCH_RESULT', payload: response });
+}
+
+function* upgradeUser(action) {
+  yield axios.put(`/api/user/upgradeUser`, action.payload);
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('EDIT_USER', editUser);
+  yield takeLatest('USER_SEARCH', searchUser);
+  yield takeLatest('USER_UPGRADE', upgradeUser);
 }
 
 export default userSaga;

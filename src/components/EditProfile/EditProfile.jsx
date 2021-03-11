@@ -57,7 +57,11 @@ export default function EditProfile({ user, setEditMode, editMode }) {
                     Choose a Payment Method
                   </option>
                   {paymentMethods.map((method) => {
-                    return <option value={method}>{method}</option>;
+                    return (
+                      <option key={method} value={method}>
+                        {method}
+                      </option>
+                    );
                   })}
                 </select>
                 {userProfileEdit?.preferred_payment != 'Cash' ? (
