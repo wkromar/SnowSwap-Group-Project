@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import "./AddGear.css";
+import "./EditGear.css";
 
-function AddGear({ gear }) {
+function EditGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
-  const user = useSelector((store) => store.user);
+
   console.log(gearToAdd);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -247,5 +247,4 @@ function AddGear({ gear }) {
     </form>
   );
 }
-
-export default AddGear;
+export default EditGear;

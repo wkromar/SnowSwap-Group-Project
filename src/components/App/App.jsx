@@ -13,7 +13,6 @@ import Footer from "../Footer/Footer";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 
-
 import AboutPage from "../AboutPage/AboutPage";
 import UserPage from "../UserPage/UserPage";
 import InfoPage from "../InfoPage/InfoPage";
@@ -22,8 +21,8 @@ import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import Profile from "../Profile/Profile.jsx";
 import AddGear from "../AddGear/AddGear";
-import Favorites from '../Favorites/Favorites.jsx'
-
+import Favorites from "../Favorites/Favorites.jsx";
+import EditGear from "../EditGear/EditGear.jsx";
 
 import "./App.css";
 import MyGear from "../MyGear/MyGear";
@@ -121,18 +120,16 @@ function App() {
             <MyGear />
           </ProtectedRoute>
 
-          <ProtectedRoute
-           exact
-           path="/favorites"
-          >
-            <Favorites/>
+          <ProtectedRoute exact path="/editGear">
+            <EditGear />
           </ProtectedRoute>
 
-          <ProtectedRoute
-           exact
-           path="/swapView"
-          >
-            <Favorites/>
+          <ProtectedRoute exact path="/favorites">
+            <Favorites />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/swapView">
+            <Favorites />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

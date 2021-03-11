@@ -1,4 +1,4 @@
-import { put, takeLatest } from "redux-saga/effects";
+import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import axios from "axios";
 
 function* fetchGear() {
@@ -40,12 +40,21 @@ function* unFavorite(action) {
     console.log(`error in removing favorite: ${err}`);
   }
 }
+function* editGear(action) {
+  try {
+    yield axios.put(`api/item/${action.payload.id}`, action.payload);
+    yield put({ type: "FETCH_GEAR" });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 function* gearSaga() {
   yield takeLatest("FETCH_GEAR", fetchGear);
   yield takeLatest("ADD_GEAR", addGear);
   yield takeLatest("FETCH_FAVORITES", fetchFavorites);
   yield takeLatest("UNFAVORITE_ITEM", unFavorite);
+  yield takeEvery("EDIT_GEAR", editGear);
 }
 
 export default gearSaga;
