@@ -203,28 +203,6 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get("/favorites", (req, res) => {
-  const userId = req.user.id;
-  console.log("GETting favorites for:", userId);
-
-  const queryText = `
-  SELECT * from "items"
-  JOIN "favorites" ON "favorites".item_id = "items".id
-  WHERE "favorites".user_id = $1;
-  `;
-
-  pool
-    .query(queryText, [userId])
-    .then((result) => {
-      console.log(result.rows);
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
-});
-
 // delete function to remove the items from only the favorites
 router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
   const favToDelete = req.params.id;
