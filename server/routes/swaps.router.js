@@ -21,6 +21,23 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    SELECT * FROM "swaps" 
+    WHERE "owner" = $1
+    ORDER BY "id";`;
+  pool
+    .query(queryText, [req.user.id])
+    .then((result) => {
+      res.send(result.rows);
+      // console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 //insert into SWAPS database
 router.post("/", rejectUnauthenticated, (req, res) => {
   const swap = req.body;
@@ -68,8 +85,10 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 //join swap item join
 // using a get to grab all data from multiple tables
 router.get("/swapItems", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "items" JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
-INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
+  const queryText = `
+  SELECT * FROM "items"
+  JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
+  INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
   pool
     .query(queryText)
     .then((result) => {

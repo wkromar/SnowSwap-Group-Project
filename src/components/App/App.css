@@ -116,3 +116,12 @@ input {
   margin: 5px;
   margin-bottom: 10px;
 }
+
+.li-with-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.top-margin {
+  margin: 2rem 0 0 0;
+}
