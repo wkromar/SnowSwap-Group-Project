@@ -19,7 +19,7 @@ const customStyles = {
 
 export default function MyGear() {
   const dispatch = useDispatch();
-
+  const history = useHistory();
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
   }, []);
@@ -28,12 +28,12 @@ export default function MyGear() {
   const modalStatus = useSelector((state) => state.modal);
 
   const handleAddGear = () => {
-    return console.log("Clicked Add Gear");
+    console.log("Clicked Add Gear");
+    history.push("/addGear");
   };
 
-  
   const gearClicked = (piece) => {
-    dispatch({type: "SELECTED_PIECE", payload: piece});
+    dispatch({ type: "SELECTED_PIECE", payload: piece });
     dispatch({ type: "OPEN_DETAIL_VIEW" });
   };
 
@@ -48,7 +48,11 @@ export default function MyGear() {
       <div className="container">
         {gear.map((piece) => (
           <div className="item">
-            <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
             <img className="favorite-icon" src="images/favorite.svg" />
             <p className="name">
               {" "}
