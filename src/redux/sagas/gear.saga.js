@@ -31,10 +31,10 @@ function* fetchFavorites() {
 
 function* unFavorite(action) {
   try {
-    const favoriteID = action.payload.id;
+    const favoriteID = action.payload.favorites_id;
     console.log("removing favorite with id:", favoriteID);
     console.log("******** payload: ", favoriteID);
-    yield axios.delete(`/api/item/favorites/${favoriteID}`);
+    yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
     yield put({ type: "FETCH_FAVORITES" });
   } catch (err) {
     console.log(`error in removing favorite: ${err}`);
@@ -45,7 +45,7 @@ function* gearSaga() {
   yield takeLatest("FETCH_GEAR", fetchGear);
   yield takeLatest("ADD_GEAR", addGear);
   yield takeLatest("FETCH_FAVORITES", fetchFavorites);
-  yield takeLatest("UNFAVORITE", unFavorite);
+  yield takeLatest("UNFAVORITE_ITEM", unFavorite);
 }
 
 export default gearSaga;
