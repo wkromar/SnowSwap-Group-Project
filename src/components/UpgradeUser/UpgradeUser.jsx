@@ -15,7 +15,7 @@ export default function UpgradeUser() {
   const handleClick = (id) => {
     dispatch({ type: 'USER_UPGRADE', payload: { userNumber: id } });
   };
-  
+
   return (
     <div className="top-margin">
       <form onSubmit={handleSubmit}>
@@ -37,9 +37,13 @@ export default function UpgradeUser() {
                 <p>
                   {user.username} | {user.first_name} {user.last_name}
                 </p>
-                <button onClick={() => handleClick(user.id)}>
-                  Grant Access
-                </button>
+                {user.auth_level < 1 ? (
+                  <button onClick={() => handleClick(user.id)}>
+                    Grant Access
+                  </button>
+                ) : (
+                  <p>Access Granted</p>
+                )}
               </div>
             </li>
           </ul>
