@@ -12,6 +12,7 @@ const {
 // ITEMS ACTIONS
 router.post("/", rejectUnauthenticated, (req, res) => {
   const item = req.body;
+  const id = req.user.id;
   console.log("sending item", item);
   const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
   "flex", "style", "brand", "shape", "gender", "profile", "condition", 
@@ -19,7 +20,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
   pool
     .query(queryText, [
-      item.user_id,
+      id,
       item.cat_id,
       item.title,
       item.size,

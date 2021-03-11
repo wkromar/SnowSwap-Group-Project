@@ -16,13 +16,15 @@ export default function MyGear() {
   const gearDetails = useSelector((state) => state?.gearDetails);
 
   const handleAddGear = () => {
-    return console.log("Clicked Add Gear");
+    console.log("Clicked Add Gear");
+    history.push("/addGear");
   };
 
-  
   const gearClicked = (piece) => {
+
     dispatch({type: "SELECTED_PIECE", payload: piece});
     history.push(`/editGear`)
+
   };
 
   return (
@@ -36,6 +38,7 @@ export default function MyGear() {
       <div className="container">
         {gear.map((piece) => (
           <div className="item">
+
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
             <p className="name">
               {" "}
