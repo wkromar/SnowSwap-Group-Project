@@ -180,7 +180,7 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
 
 // FAVORITE ACTIONS
 // Add item to Favorites
-router.post("/addToFav", (req, rejectUnauthenticated, res) => {
+router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const itemToFav = req.body;
   console.log("adding item to favorites", itemToFav);
@@ -225,7 +225,7 @@ router.get("/favorites", (req, res) => {
 });
 
 // delete function to remove the items from only the favorites
-router.delete("/deleteFav/:id", (req, rejectUnauthenticated, res) => {
+router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
   const favToDelete = req.params.id;
   console.log(favToDelete);
   const queryText = `DELETE FROM "favorites" Where id = $1;`;
