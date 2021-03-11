@@ -7,6 +7,7 @@ import gearDetails from './gearDetails.reducer';
 import favorites from './favorites.reducer';
 import ownedSwaps from './ownedSwaps.reducer';
 import searchedUser from './searchedUser.reducer';
+import swapItems from './swapItems.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   gearDetails,
   favorites,
   ownedSwaps,
-  searchedUser
+  searchedUser,
+  swapItems
 
 });
 

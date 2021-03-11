@@ -26,6 +26,7 @@ import EditGear from "../EditGear/EditGear.jsx";
 
 import "./App.css";
 import MyGear from "../MyGear/MyGear";
+import SwapItems from "../SwapItems/SwapItems";
 
 function App() {
   const dispatch = useDispatch();
@@ -128,8 +129,8 @@ function App() {
             <Favorites />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/swapView">
-            <Favorites />
+          <ProtectedRoute exact path="/swapItems">
+            <SwapItems />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
