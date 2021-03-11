@@ -27,6 +27,7 @@ import Favorites from '../Favorites/Favorites.jsx'
 
 import "./App.css";
 import MyGear from "../MyGear/MyGear";
+import SwapItems from "../SwapItems/SwapItems";
 
 function App() {
   const dispatch = useDispatch();
@@ -130,9 +131,9 @@ function App() {
 
           <ProtectedRoute
            exact
-           path="/swapView"
+           path="/swapItems"
           >
-            <Favorites/>
+            <SwapItems/>
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

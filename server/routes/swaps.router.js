@@ -85,12 +85,16 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 //join swap item join
 // using a get to grab all data from multiple tables
 router.get("/swapItems", rejectUnauthenticated, (req, res) => {
+
+  const swapID = req.body.id;
+
   const queryText = `
   SELECT * FROM "items"
+  WHERE "swap".id = $1
   JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
   INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
   pool
-    .query(queryText)
+    .query(queryText, [swapID])
     .then((result) => {
       console.log(result);
 
