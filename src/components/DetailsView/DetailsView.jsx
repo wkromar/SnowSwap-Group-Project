@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import Modal from "react-modal";
 import "../DetailsView/DetailsView.css";
+import "../Favorites/Favorites.css";
 
 const customStyles = {
     content: {
@@ -41,6 +42,10 @@ export default function DetailsView() {
       }
   };
 
+  const handleContactSeller = () => {
+    console.log('Clicked Contact Seller')
+  }
+
   console.log('imageCounter:', imageCounter);
 
   return (
@@ -54,6 +59,26 @@ export default function DetailsView() {
             <img className="right-arrow-icon" src="images/right_arrow.svg" />
         </div>
       </div>
+      <div className="seller-price">
+        <p className="seller">Seller: {gearDetails.username}</p>
+        <p className="price">Price: ${gearDetails.price}</p>
+        </div>
+        <button onClick = {() => handleContactSeller()} className="contact-seller-button">Contact Seller</button>
+        <div className="description-tags">
+          <h4>Description</h4>
+          <p>{gearDetails.description}</p>
+          <div className="container">
+          {gearDetails?.category_name && <div className="chip">{gearDetails?.category_name}</div>}
+          {gearDetails?.gender && <div className="chip">{gearDetails?.gender}</div>}
+          {gearDetails?.brand && <div className="chip">{gearDetails?.brand}</div>}
+          {gearDetails?.condition && <div className="chip">{gearDetails?.condition}</div>}
+          {gearDetails?.shape && <div className="chip">{gearDetails?.shape}</div>}
+          {gearDetails?.size && <div className="chip">{gearDetails?.size}</div>}
+          {gearDetails?.lacing_system && <div className="chip">{gearDetails?.lacing_system}</div>}
+          {gearDetails?.profile && <div className="chip">{gearDetails?.profile}</div>}
+          {gearDetails?.flex && <div className="chip">{gearDetails?.flex}</div>}
+          </div>
+        </div>
       <button
         className="close-button"
         onClick={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}

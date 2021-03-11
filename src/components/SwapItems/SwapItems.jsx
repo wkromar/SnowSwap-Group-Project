@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
-import "../SwapView/SwapView.css";
+import "../SwapItems/SwapItems.css";
 import DetailsView from "../DetailsView/DetailsView";
 
 const customStyles = {
@@ -17,21 +17,26 @@ const customStyles = {
   },
 };
 
-export default function SwapView() {
+export default function SwapItems() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_SWAP_ITEMS" , payload: swapItems});
   }, []);
 
+
+  const swapItems = useSelector((state) => state.swapItems)
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
-  const handleAddGear = () => {
-    return console.log("Clicked Add Gear");
+  const handleAddGearToSwap = () => {
+    return console.log("Clicked Add Gear To This Swap");
   };
 
+  const favoriteItem = (piece) => {
+    
+  }
   
   const gearClicked = (piece) => {
     dispatch({type: "SELECTED_PIECE", payload: piece});
@@ -41,16 +46,16 @@ export default function SwapView() {
   return (
     <>
       <div className="container">
-        <button className="add-gear-button" onClick={handleAddGear}>
-          Add Gear
+        <button className="add-gear-button" onClick={handleAddGearToSwap}>
+          Add Gear To This Swap
         </button>
       </div>
-      <p className="title"> Inventory </p>
+      <p className="title"> SWAP NAME HERE </p>
       <div className="container">
         {gear.map((piece) => (
           <div className="item">
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
-            <img className="favorite-icon" src="images/favorite.svg" />
+            <img onClick={() => favoriteItem(piece)} className="favorite-icon" src="images/favorite.svg" />
             <p className="name">
               {" "}
               {piece.title} | ${piece.price}{" "}
@@ -66,10 +71,6 @@ export default function SwapView() {
         contentLabel="Detail View"
       >
         <DetailsView />
-        <div className="seller-price">
-        <p className="seller">Seller: {gearDetails.user_id}</p>
-        <p className="price">Price: ${gearDetails.price}</p>
-        </div>
       </Modal>
     </>
   );
