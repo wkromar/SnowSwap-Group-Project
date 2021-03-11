@@ -20,10 +20,11 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Profile from '../Profile/Profile.jsx';
-import Favorites from '../Favorites/Favorites.jsx'
+import Favorites from '../Favorites/Favorites.jsx';
 
 import './App.css';
 import MyGear from '../MyGear/MyGear';
+import CreateSwap from '../CreateSwap/CreateSwap';
 
 function App() {
   const dispatch = useDispatch();
@@ -105,25 +106,20 @@ function App() {
             <LandingPage />
           </ProtectedRoute>
 
-          <ProtectedRoute
-           exact
-           path="/myGear"
-          >
-            <MyGear/>
+          <ProtectedRoute exact path="/myGear">
+            <MyGear />
           </ProtectedRoute>
 
-          <ProtectedRoute
-           exact
-           path="/favorites"
-          >
-            <Favorites/>
+          <ProtectedRoute exact path="/favorites">
+            <Favorites />
           </ProtectedRoute>
 
-          <ProtectedRoute
-           exact
-           path="/swapView"
-          >
-            <Favorites/>
+          <ProtectedRoute exact path="/swapView">
+            <Favorites />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/createEvent">
+            <CreateSwap />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

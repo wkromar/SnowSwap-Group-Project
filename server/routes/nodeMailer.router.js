@@ -11,6 +11,12 @@ require('dotenv').config();
 router.post('/', async (req, res) => {
 
     const userId = req.user.id;
+    const firstName = req.body.first_name;
+    const lastName = req.body.last_name;
+    const userName = req.body.username;
+
+    console.log(firstName, lastName, userName);
+
 
     try {
 
@@ -29,20 +35,20 @@ router.post('/', async (req, res) => {
             to: "snowswapdevs@gmail.com", // list of receivers
             subject: "Someone wants to upgrade!", // Subject line of email
             text: `
-        Hey there SnowSwaps Admin! Looks like there's a user who would like to become a Superuser.
+        Hey there SnowSwaps Admin! Looks like ${firstName} ${lastName} (username: ${userName})  would like to become a Superuser.
         Here is their user ID: ${userId}
         `, // plain text body
             // html: "<b>Hey there SnowSwaps Admin! Looks like there's a user who would like to become a Superuser.</b>",
         });
 
         console.log("Message sent: %s", upgradeUser.messageId);
-        res.sendStatus(200)
+        res.sendStatus(200);
 
     } catch (error) {
         console.log(error);
-        res.sendStatus(500)
+        res.sendStatus(500);
     }
-})
+});
 
 
 module.exports = router;
