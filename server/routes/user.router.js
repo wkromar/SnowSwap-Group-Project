@@ -75,14 +75,14 @@ router.put('/updateUserProfile', (req, res) => {
       res.sendStatus(500);
     });
 
-})
+});
 
 
-router.put('/upgradeUser', (req, res, next) => {
+router.put('/upgradeUser', rejectUnauthenticated, (req, res, next) => {
 
   const userId = req.user.id;
 
-  const userToUpgrade = req.body.userNumber
+  const userToUpgrade = req.body.userNumber;
 
   console.log(`upgrading ${userToUpgrade} to a Super User`);
 
@@ -92,7 +92,7 @@ router.put('/upgradeUser', (req, res, next) => {
   `;
 
   pool.query(queryText, [userId]).then((results) => {
-    let authLvl = results.rows[0].auth_level
+    let authLvl = results.rows[0].auth_level;
     console.log('auth level:', authLvl);
 
     if (authLvl === 2) {
@@ -112,10 +112,10 @@ router.put('/upgradeUser', (req, res, next) => {
           res.sendStatus(500);
         });
     }
-    else { 
+    else {
       console.log('Could not upgrade user number:', userToUpgrade);
-      
-      res.sendStatus(403); 
+
+      res.sendStatus(403);
     }
 
   }).catch((error) => {

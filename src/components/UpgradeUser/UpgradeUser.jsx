@@ -11,6 +11,11 @@ export default function UpgradeUser() {
     event.preventDefault();
     dispatch({ type: 'USER_SEARCH', payload: searchTerm });
   };
+
+  const handleClick = (id) => {
+    dispatch({ type: 'USER_UPGRADE', payload: { userNumber: id } });
+  };
+  
   return (
     <div className="top-margin">
       <form onSubmit={handleSubmit}>
@@ -32,7 +37,9 @@ export default function UpgradeUser() {
                 <p>
                   {user.username} | {user.first_name} {user.last_name}
                 </p>
-                <button>Grant Access</button>
+                <button onClick={() => handleClick(user.id)}>
+                  Grant Access
+                </button>
               </div>
             </li>
           </ul>
