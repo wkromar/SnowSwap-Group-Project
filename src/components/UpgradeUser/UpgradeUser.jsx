@@ -29,10 +29,10 @@ export default function UpgradeUser() {
         <button type="submit">Search</button>
       </form>
       <p>Results:</p>
-      {searchResults.map((user) => {
-        return (
-          <ul>
-            <li>
+      <ul>
+        {searchResults.map((user) => {
+          return (
+            <li key={user.id}>
               <div className="li-with-button">
                 <p>
                   {user.username} | {user.first_name} {user.last_name}
@@ -46,9 +46,9 @@ export default function UpgradeUser() {
                 )}
               </div>
             </li>
-          </ul>
-        );
-      })}
+          );
+        })}
+      </ul>
     </div>
   );
 }

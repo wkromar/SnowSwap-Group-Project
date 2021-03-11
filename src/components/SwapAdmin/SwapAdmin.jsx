@@ -14,6 +14,7 @@ export default function SwapAdmin() {
 
   return (
     <div className="top-margin">
+      <p>SWAP ADMIN:</p>
       <ul>
         {ownedSwaps?.map((swap) => {
           return (
