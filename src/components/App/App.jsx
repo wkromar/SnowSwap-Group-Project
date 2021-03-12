@@ -12,7 +12,6 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
@@ -27,7 +26,6 @@ import './App.css';
 import MyGear from '../MyGear/MyGear';
 import SwapItems from '../SwapItems/SwapItems';
 import AllSwaps from '../AllSwaps/AllSwaps';
-
 function App() {
   const dispatch = useDispatch();
 
@@ -121,9 +119,14 @@ function App() {
             <MyGear />
           </ProtectedRoute>
 
+          <ProtectedRoute exact path="/editGear">
+            <EditGear />
+          </ProtectedRoute>
+
           <ProtectedRoute exact path="/favorites">
             <Favorites />
           </ProtectedRoute>
+
 
           <ProtectedRoute exact path="/swapItems">
             <SwapItems />
