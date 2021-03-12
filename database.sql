@@ -45,7 +45,8 @@ CREATE TABLE "items" (
     "condition" VARCHAR (50),
     "lacing_system" VARCHAR (50),
     "purchased" BOOLEAN,
-    "description" VARCHAR (1000)
+    "description" VARCHAR (1000),
+    "type" VARCHAR (50)
 );
 
 

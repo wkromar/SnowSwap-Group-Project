@@ -7,7 +7,7 @@ import "./EditGear.css";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
-
+  const [itemToEdit, setItemToEdit] = useState("");
   console.log(gearToEdit);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -60,8 +60,8 @@ function EditGear() {
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
-    setGearToAdd({
-      ...gearToEdit,
+    setItemToEdit({
+      ...itemToEdit,
       [event.target.name]: event.target.value,
     });
   };
@@ -69,7 +69,7 @@ function EditGear() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
-    console.log(gearToAdd);
+    console.log(gearToEdit);
     dispatch({ type: "FETCH_GEAR" });
     history.push("/myGear");
   };
@@ -84,7 +84,6 @@ function EditGear() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {/* {editGear.map((gearToEdit) =>(<div></div>))} */}
         <p>Title</p>
         <input
           type="text"
