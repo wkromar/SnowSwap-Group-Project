@@ -12,6 +12,7 @@ const {
 // ITEMS ACTIONS
 router.post("/", rejectUnauthenticated, (req, res) => {
   const item = req.body;
+  const id = req.user.id;
   console.log("sending item", item);
   const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
   "flex", "style", "brand", "shape", "gender", "profile", "condition", 
@@ -19,7 +20,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
   pool
     .query(queryText, [
-      item.user_id,
+      id,
       item.cat_id,
       item.title,
       item.size,
@@ -104,13 +105,13 @@ router.get('/favorites', rejectUnauthenticated, (req, res) => {
   console.log('GETting favorites for:', userId);
 
   const queryText = `
-  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "user"."username", "user"."email", "user"."user_image" FROM "items"
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "favorites"."id" AS "favorites_id", "user"."username", "user"."email", "user"."user_image" FROM "items"
   JOIN "categories" ON "items".cat_id = "categories".id
   LEFT JOIN "images" ON "items".id = "images".item_id
   JOIN "favorites" ON "favorites".item_id = "items".id
   JOIN "user" ON "items".user_id = "user".id
   WHERE "favorites".user_id = $1
-  GROUP BY "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image";`;
+  GROUP BY "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id";`;
 
   pool
     .query(queryText, [userId])
@@ -180,7 +181,7 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
 
 // FAVORITE ACTIONS
 // Add item to Favorites
-router.post("/addToFav", (req, rejectUnauthenticated, res) => {
+router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   const itemToFav = req.body;
   console.log("adding item to favorites", itemToFav);
@@ -202,41 +203,19 @@ router.post("/addToFav", (req, rejectUnauthenticated, res) => {
     });
 });
 
-router.get("/favorites", (req, res) => {
-  const userId = req.user.id;
-  console.log("GETting favorites for:", userId);
-
-  const queryText = `
-  SELECT * from "items"
-  JOIN "favorites" ON "favorites".item_id = "items".id
-  WHERE "favorites".user_id = $1;
-  `;
-
-  pool
-    .query(queryText, [userId])
-    .then((result) => {
-      console.log(result.rows);
-      res.send(result.rows);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
-    });
-});
-
 // delete function to remove the items from only the favorites
-router.delete("/deleteFav/:id", (req, rejectUnauthenticated, res) => {
+router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
   const favToDelete = req.params.id;
   console.log(favToDelete);
-  const queryText = `DELETE FROM "favorites" Where id = $1;`;
+  const queryText = `DELETE FROM "favorites" WHERE id = $1;`;
   pool
-    .query(queryText, [itemToDelete])
+    .query(queryText, [favToDelete])
     .then((result) => {
       res.sendStatus(200);
     })
     .catch((error) => {
       console.log(
-        `Error making favorites DELETE database query${queryText}`,
+        `Error making favorites DELETE database query: ${queryText}`,
         error
       );
       res.sendStatus(500);

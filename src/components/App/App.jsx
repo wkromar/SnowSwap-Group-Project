@@ -12,7 +12,6 @@ import Nav from '../Nav/Nav';
 import Footer from '../Footer/Footer';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
 import InfoPage from '../InfoPage/InfoPage';
@@ -20,12 +19,15 @@ import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
 import Profile from '../Profile/Profile.jsx';
+import AddGear from '../AddGear/AddGear';
 import Favorites from '../Favorites/Favorites.jsx';
 
 import './App.css';
 import MyGear from '../MyGear/MyGear';
 import CreateSwap from '../CreateSwap/CreateSwap';
 
+import SwapItems from '../SwapItems/SwapItems';
+import AllSwaps from '../AllSwaps/AllSwaps';
 function App() {
   const dispatch = useDispatch();
 
@@ -59,7 +61,7 @@ function App() {
             exact
             path="/user"
           >
-            <UserPage />
+            <AllSwaps />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -105,21 +107,31 @@ function App() {
           >
             <LandingPage />
           </ProtectedRoute>
+          <ProtectedRoute
+            // with authRedirect:
+            // - if logged in, redirects to "/user"
+            // - else shows LoginPage at /login
+            exact
+            path="/addGear"
+          >
+            <AddGear />
+          </ProtectedRoute>
 
           <ProtectedRoute exact path="/myGear">
             <MyGear />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/editGear">
+            <EditGear />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/favorites">
             <Favorites />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/swapView">
-            <Favorites />
-          </ProtectedRoute>
 
-          <ProtectedRoute exact path="/createEvent">
-            <CreateSwap />
+          <ProtectedRoute exact path="/swapItems">
+            <SwapItems />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}

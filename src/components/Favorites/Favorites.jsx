@@ -27,8 +27,8 @@ export default function Favorites() {
   const favorites = useSelector((state) => state?.favorites);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-  console.log(gearDetails)
 
+  console.log(gearDetails);
   
   const gearClicked = (piece) => {
     dispatch({type: "SELECTED_PIECE", payload: piece});
@@ -36,11 +36,7 @@ export default function Favorites() {
   };
 
   const unFavorite = (piece) => {
-    dispatch({type: "UNFAVORITE_ITEM", payload: piece})
-  }
-
-  const handleContactSeller = () => {
-    console.log('Clicked Contact Seller')
+    dispatch({type: "UNFAVORITE_ITEM", payload: piece});
   }
 
   return (
@@ -68,26 +64,6 @@ export default function Favorites() {
         contentLabel="Detail View"
       >
         <DetailsView />
-        <div className="seller-price">
-        <p className="seller">Seller: {gearDetails.username}</p>
-        <p className="price">Price: ${gearDetails.price}</p>
-        </div>
-        <button onClick = {() => handleContactSeller()} className="contact-seller-button">Contact Seller</button>
-        <div className="description-tags">
-          <h4>Description</h4>
-          <p>{gearDetails.description}</p>
-          <div className="container">
-          {gearDetails?.category_name && <div className="chip">{gearDetails?.category_name}</div>}
-          {gearDetails?.gender && <div className="chip">{gearDetails?.gender}</div>}
-          {gearDetails?.brand && <div className="chip">{gearDetails?.brand}</div>}
-          {gearDetails?.condition && <div className="chip">{gearDetails?.condition}</div>}
-          {gearDetails?.shape && <div className="chip">{gearDetails?.shape}</div>}
-          {gearDetails?.size && <div className="chip">{gearDetails?.size}</div>}
-          {gearDetails?.lacing_system && <div className="chip">{gearDetails?.lacing_system}</div>}
-          {gearDetails?.profile && <div className="chip">{gearDetails?.profile}</div>}
-          {gearDetails?.flex && <div className="chip">{gearDetails?.flex}</div>}
-          </div>
-        </div>
       </Modal>
     </>
   );

@@ -3,12 +3,12 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../ImageUpload/ImageUpload";
-import "./AddGear.css";
+import "./EditGear.css";
 
-function AddGear({ gear }) {
-  const [gearToAdd, setGearToAdd] = useState(gear);
-  const user = useSelector((store) => store.user);
-  console.log(gearToAdd);
+function EditGear() {
+  const gearToEdit = useSelector((state) => state.editItem);
+
+  console.log(gearToEdit);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -44,6 +44,7 @@ function AddGear({ gear }) {
     "New",
   ];
   const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
   }, []);
@@ -57,10 +58,10 @@ function AddGear({ gear }) {
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: "ADD_GEAR", payload: gearToAdd });
+    dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
     console.log(gearToAdd);
-    // setEditMode(!editMode);
-    // need to change
+    dispatch({ type: "FETCH_GEAR" });
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
@@ -73,19 +74,20 @@ function AddGear({ gear }) {
   return (
     <form onSubmit={handleSubmit}>
       <div>
+        {/* {editGear.map((gearToEdit) =>(<div></div>))} */}
         <p>Title</p>
         <input
           type="text"
-          value={gearToAdd?.title}
+          value={gearToEdit?.title}
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
+        {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
         <p>Size</p>
         <select
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToAdd?.size}
+          value={gearToEdit?.size}
         >
           <option value="" disabled>
             Choose a Size
@@ -102,7 +104,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="flex"
-          value={gearToAdd?.flex}
+          value={gearToEdit?.flex}
         >
           <option value="" disabled>
             Choose a Flex
@@ -119,7 +121,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="snowboardStyle"
-          value={gearToAdd?.style}
+          value={gearToEdit?.style}
         >
           <option value="" disabled>
             Choose a Style
@@ -137,7 +139,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="shape"
-          value={gearToAdd?.shape}
+          value={gearToEdit?.shape}
         >
           <option value="" disabled>
             Choose a Shape
@@ -154,7 +156,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="gender"
-          value={gearToAdd?.gender}
+          value={gearToEdit?.gender}
         >
           <option value="" disabled>
             Choose a Gender
@@ -171,7 +173,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToAdd?.condition}
+          value={gearToEdit?.condition}
         >
           <option value="" disabled>
             Choose a Condition
@@ -188,7 +190,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="lacing_system"
-          value={gearToAdd?.lacing_system}
+          value={gearToEdit?.lacing_system}
         >
           <option value="" disabled>
             Choose a Size
@@ -205,7 +207,7 @@ function AddGear({ gear }) {
         <select
           onChange={(event) => handleChange(event)}
           name="profile"
-          value={gearToAdd?.profile}
+          value={gearToEdit?.profile}
         >
           <option value="" disabled>
             Choose a Size
@@ -221,21 +223,21 @@ function AddGear({ gear }) {
         <p>Price</p>
         <input
           type="decimal"
-          value={gearToAdd?.price}
+          value={gearToEdit?.price}
           onChange={(event) => handleChange(event)}
           name="price"
         />
         <p>Brand</p>
         <input
           type="text"
-          value={gearToAdd?.brand}
+          value={gearToEdit?.brand}
           onChange={(event) => handleChange(event)}
           name="brand"
         />
         <p>Description</p>
         <input
           type="text"
-          value={gearToAdd?.description}
+          value={gearToEdit?.description}
           onChange={(event) => handleChange(event)}
           name="description"
         />
@@ -247,5 +249,4 @@ function AddGear({ gear }) {
     </form>
   );
 }
-
-export default AddGear;
+export default EditGear;

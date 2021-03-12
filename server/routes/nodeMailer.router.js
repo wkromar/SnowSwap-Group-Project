@@ -15,8 +15,6 @@ router.post('/', async (req, res) => {
     const lastName = req.body.last_name;
     const userName = req.body.username;
 
-    console.log(firstName, lastName, userName);
-
 
     try {
 
