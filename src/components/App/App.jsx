@@ -25,6 +25,9 @@ import EditGear from '../EditGear/EditGear.jsx'
 
 import './App.css';
 import MyGear from '../MyGear/MyGear';
+import CreateSwap from '../CreateSwap/CreateSwap';
+import EditGear from '../EditGear/EditGear';
+
 import SwapItems from '../SwapItems/SwapItems';
 import AllSwaps from '../AllSwaps/AllSwaps';
 function App() {
@@ -128,7 +131,6 @@ function App() {
             <Favorites />
           </ProtectedRoute>
 
-
           <ProtectedRoute exact path="/swapItems">
             <SwapItems />
           </ProtectedRoute>
@@ -138,6 +140,10 @@ function App() {
           <ProtectedRoute exact path="/profile">
             <Profile />
           </ProtectedRoute>
+          <ProtectedRoute exact path="/createEvent">
+            <CreateSwap />
+          </ProtectedRoute>
+
           <Route>
             <h1>404</h1>
           </Route>

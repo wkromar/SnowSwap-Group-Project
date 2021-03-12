@@ -42,11 +42,16 @@ function* upgradeUser(action) {
   yield axios.put(`/api/user/upgradeUser`, action.payload);
 }
 
+function* requestUpgrade(action) {
+  yield axios.post('/api/upgradeUser', action.payload);
+}
+
 function* userSaga() {
   yield takeLatest('FETCH_USER', fetchUser);
   yield takeLatest('EDIT_USER', editUser);
   yield takeLatest('USER_SEARCH', searchUser);
   yield takeLatest('USER_UPGRADE', upgradeUser);
+  yield takeLatest('REQUEST_UPGRADE', requestUpgrade);
 }
 
 export default userSaga;

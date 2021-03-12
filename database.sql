@@ -64,6 +64,7 @@ CREATE TABLE "swaps" (
     "sell_date" DATE,
     "stop_date" DATE,
     "swap_open" BOOLEAN DEFAULT FALSE,
+    "swap_img" TEXT,
     "access_code" TEXT
 );
 

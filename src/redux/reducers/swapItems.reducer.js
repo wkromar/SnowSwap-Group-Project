@@ -1,11 +1,11 @@
-const swapItems = (state = {}, action) => {
-    switch (action.type) {
-      case 'SET_SWAP_ITEMS':
-        return action.payload;
-      default:
-        return state;
-    }
-  };
+const swapItems = (state = [], action) => {
+  switch (action.type) {
+    case 'SET_SWAP_ITEMS':
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 
-  export default swapItems;
+export default swapItems;

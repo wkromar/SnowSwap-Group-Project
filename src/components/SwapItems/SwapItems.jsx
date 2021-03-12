@@ -19,13 +19,17 @@ const customStyles = {
 
 export default function SwapItems() {
   const dispatch = useDispatch();
-
-  const selectedSwap = useSelector((state) => state.selectedSwap);
+  
+  const selectedSwap = useSelector((state) => state?.selectedSwap);
   const swapItems = useSelector((state) => state?.swapItems);
   // const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-
+  
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+  }, []);
+  
   const handleAddGearToSwap = () => {
     return console.log('Clicked Add Gear To This Swap');
   };
@@ -41,9 +45,6 @@ export default function SwapItems() {
 
   console.log('swapItems:', swapItems);
 
-  useEffect(() => {
-    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
-  }, []);
 
   return (
     <>
