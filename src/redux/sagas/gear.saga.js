@@ -51,9 +51,8 @@ function* unFavoriteItem(action) {
 
 function* favoriteItem(action) {
   try {
-    console.log(action.payload);
-    yield axios.post("/api/item/addToFav", action.payload);
-    yield put({ type: "FETCH_FAVORITES" });
+    console.log('action.payload in favoriteItem', action.payload);
+    yield axios.post("/api/item/addToFav", action.payload.id);
   } catch (error) {
     console.log(error);
   }
