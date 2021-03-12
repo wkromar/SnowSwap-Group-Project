@@ -32,17 +32,6 @@ function AddGear({ gear }) {
     "Racing",
     "Powderhound Planks",
   ];
-  const type = [
-    "",
-    "Snowboard",
-    "Ski",
-    "Ski Poles",
-    "Gloves",
-    "Jacket",
-    "Snowpants",
-    "Snowboard Boots",
-    "Ski Boots",
-  ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
   const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
@@ -105,7 +94,7 @@ function AddGear({ gear }) {
           </option>
           {categories.map((categories) => {
             return (
-              <option key={categories} value={categories.id}>
+              <option key={categories.name} value={categories.id}>
                 {categories.name}
               </option>
             );
