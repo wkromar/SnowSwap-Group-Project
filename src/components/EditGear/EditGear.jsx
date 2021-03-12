@@ -8,7 +8,7 @@ import "./EditGear.css";
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
   const [itemToEdit, setItemToEdit] = useState(gearToEdit);
-
+  const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -31,16 +31,6 @@ function EditGear() {
     "Freestyle",
     "Racing",
     "Powderhound Planks",
-  ];
-  const type = [
-    "Snowboard",
-    "Ski",
-    "Ski Poles",
-    "Gloves",
-    "Jacket",
-    "Snowpants",
-    "Snowboard Boots",
-    "Ski Boots",
   ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
   const profile = ["Camber", "Camber Rocker Combo", "Rocker", "Reverse Camber"];
@@ -90,20 +80,24 @@ function EditGear() {
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Category</p>
+        <ImageUpload
+          itemToEdit={itemToEdit.url}
+          setItemToEdit={setItemToEdit}
+        />
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
           name="type"
-          value={itemToEdit?.type}
+          value={gearToAdd?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Category
+          <option default="" value="" disabled>
+            Choose a type
           </option>
-          {type.map((type) => {
+          {categories.map((categories) => {
             return (
-              <option key={type} value={type}>
-                {type}
+              <option key={categories.name} value={itemToEdit.id}>
+                {categories.name}
               </option>
             );
           })}
