@@ -61,6 +61,7 @@ function EditGear() {
     dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
     console.log(gearToAdd);
     dispatch({ type: "FETCH_GEAR" });
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
