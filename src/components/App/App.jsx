@@ -21,6 +21,7 @@ import RegisterPage from '../RegisterPage/RegisterPage';
 import Profile from '../Profile/Profile.jsx';
 import AddGear from '../AddGear/AddGear';
 import Favorites from '../Favorites/Favorites.jsx';
+import EditGear from '../EditGear/EditGear.jsx'
 
 import './App.css';
 import MyGear from '../MyGear/MyGear';
