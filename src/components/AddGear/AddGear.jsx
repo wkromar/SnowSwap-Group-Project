@@ -82,22 +82,12 @@ function AddGear({ gear }) {
         />
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
         <p>Size</p>
-        <select
+        <input
+          type="decimal"
+          value={gearToAdd?.size}
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToAdd?.size}
-        >
-          <option value="" disabled>
-            Choose a Size
-          </option>
-          {size.map((size) => {
-            return (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            );
-          })}
-        </select>
+        />
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -170,7 +160,7 @@ function AddGear({ gear }) {
         <p>Condition</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
+          name="condition"
           value={gearToAdd?.condition}
         >
           <option value="" disabled>
@@ -210,7 +200,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}

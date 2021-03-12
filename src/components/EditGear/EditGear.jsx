@@ -32,6 +32,16 @@ function EditGear() {
     "Racing",
     "Powderhound Planks",
   ];
+  const type = [
+    "snowboard",
+    "Ski",
+    "Ski Poles",
+    "Gloves",
+    "Jacket",
+    "Snowpants",
+    "Snowboard Boots",
+    "Ski Boots",
+  ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
   const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
@@ -51,7 +61,7 @@ function EditGear() {
   // packs up the data for shipment
   const handleChange = (event) => {
     setGearToAdd({
-      ...gearToAdd,
+      ...gearToEdit,
       [event.target.name]: event.target.value,
     });
   };
@@ -83,23 +93,7 @@ function EditGear() {
           name="title"
         />
         {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Size</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToEdit?.size}
-        >
-          <option value="" disabled>
-            Choose a Size
-          </option>
-          {size.map((size) => {
-            return (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            );
-          })}
-        </select>
+
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -120,7 +114,7 @@ function EditGear() {
         <p>Style</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="snowboardStyle"
+          name="style"
           value={gearToEdit?.style}
         >
           <option value="" disabled>
@@ -212,7 +206,7 @@ function EditGear() {
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -220,6 +214,13 @@ function EditGear() {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={gearToEdit?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
