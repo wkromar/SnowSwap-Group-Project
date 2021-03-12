@@ -40,14 +40,14 @@ function* unFavoriteItem(action) {
     console.log(`error in removing favorite: ${err}`);
   }
 }
-// function* editGear(action) {
-//   try {
-//     yield axios.put(`api/item/${action.payload.id}`, action.payload);
-//     yield put({ type: "FETCH_GEAR" });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
+function* changeGear(action) {
+  try {
+    yield axios.put(`api/item/${action.payload.id}`, action.payload);
+    yield put({ type: "FETCH_GEAR" });
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 function* favoriteItem(action) {
   try {
@@ -65,6 +65,7 @@ function* gearSaga() {
   yield takeLatest("FETCH_FAVORITES", fetchFavorites);
   yield takeLatest("UNFAVORITE_ITEM", unFavoriteItem);
   yield takeLatest("FAVORITE_ITEM", favoriteItem);
+  yield takeLatest("CHANGE_GEAR", changeGear);
 }
 
 export default gearSaga;

@@ -8,6 +8,7 @@ import "./AddGear.css";
 function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
   const user = useSelector((store) => store.user);
+  const categories = useSelector((store) => store.categories);
   console.log(gearToAdd);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -57,36 +58,7 @@ function AddGear({ gear }) {
   // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
-    // if (gear.title === undefined) {
-    //   setGearToAdd({ ...gearToAdd, title: "" });
-    // }
-    // if (gear.type === null) {
-    //   setGearToAdd({ ...gearToAdd, type: "" });
-    // }
-    // if (gear.size === null) {
-    //   setGearToAdd({ ...gearToAdd, size: "" });
-    // }
-    // if (gear.flex === null) {
-    //   setGearToAdd({ ...gearToAdd, flex: "" });
-    // }
-    // if (gear.style === null) {
-    //   setGearToAdd({ ...gearToAdd, style: "" });
-    // }
-    // if (gear.shape === null) {
-    //   setGearToAdd({ ...gearToAdd, shape: "" });
-    // }
-    // if (gear.gender === null) {
-    //   setGearToAdd({ ...gearToAdd, gender: "" });
-    // }
-    // if (gear.condition === null) {
-    //   setGearToAdd({ ...gearToAdd, condition: "" });
-    // }
-    // if (gear.lacing_system === null) {
-    //   setGearToAdd({ ...gearToAdd, lacing_system: "" });
-    // }
-    // if (gear.profile === null) {
-    //   setGearToAdd({ ...gearToAdd, profile: "" });
-    // }
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -101,8 +73,6 @@ function AddGear({ gear }) {
     dispatch({ type: "ADD_GEAR", payload: gearToAdd });
     console.log(gearToAdd);
     history.push("/myGear");
-    // setEditMode(!editMode);
-    // need to change
   };
   //go back to gear
   const returnToGear = () => {
@@ -123,7 +93,7 @@ function AddGear({ gear }) {
           name="title"
         />
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
-        <p>Type</p>
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
           name="type"
@@ -133,10 +103,10 @@ function AddGear({ gear }) {
           <option default="" value="" disabled>
             Choose a type
           </option>
-          {type.map((type) => {
+          {categories.map((categories) => {
             return (
-              <option key={type} value={type}>
-                {type}
+              <option key={categories} value={categories.id}>
+                {categories.name}
               </option>
             );
           })}
