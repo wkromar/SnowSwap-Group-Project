@@ -1,40 +1,27 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import Modal from "react-modal";
 import "../MyGear/MyGear.css";
-import DetailsView from "../DetailsView/DetailsView";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    position: "relative",
-  },
-};
 
 export default function MyGear() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
   }, []);
 
   const gear = useSelector((state) => state.gear);
-  const modalStatus = useSelector((state) => state.modal);
+  const gearDetails = useSelector((state) => state?.gearDetails);
 
   const handleAddGear = () => {
-    return console.log("Clicked Add Gear");
+    console.log("Clicked Add Gear");
+    history.push("/addGear");
   };
-
-  
+  // "SELECTED_PIECE";
   const gearClicked = (piece) => {
-    dispatch({type: "SELECTED_PIECE", payload: piece});
-    dispatch({ type: "OPEN_DETAIL_VIEW" });
+    dispatch({ type: "EDIT_GEAR", payload: piece });
+    history.push(`/editGear`);
   };
 
   return (
@@ -48,8 +35,11 @@ export default function MyGear() {
       <div className="container">
         {gear.map((piece) => (
           <div className="item">
-            <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
-            <img className="favorite-icon" src="images/favorite.svg" />
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
             <p className="name">
               {" "}
               {piece.title} | ${piece.price}{" "}
@@ -57,15 +47,6 @@ export default function MyGear() {
           </div>
         ))}
       </div>
-      <Modal
-        ariaHideApp={false}
-        isOpen={modalStatus.detailView}
-        onRequestClose={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
-        styles={customStyles}
-        contentLabel="Detail View"
-      >
-        <DetailsView />
-      </Modal>
     </>
   );
 }

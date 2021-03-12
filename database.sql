@@ -34,7 +34,7 @@ CREATE TABLE "items" (
     "user_id" INT REFERENCES "user",
     "cat_id" INT REFERENCES "categories",
     "title" VARCHAR (100),
-    "size" DECIMAL,
+    "size" VARCHAR (20),
     "price" DECIMAL,
     "flex" VARCHAR (50),
     "style" VARCHAR (50),
@@ -58,11 +58,13 @@ CREATE TABLE "images" (
 CREATE TABLE "swaps" (
     "id" SERIAL PRIMARY KEY,
     "owner" INT REFERENCES "user",
+    "name" VARCHAR (100),
     "is_private" BOOLEAN,
     "start_date" DATE,
     "sell_date" DATE,
     "stop_date" DATE,
     "swap_open" BOOLEAN DEFAULT FALSE,
+    "swap_img" TEXT,
     "access_code" TEXT
 );
 

@@ -1,28 +1,31 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   HashRouter as Router,
-  Route,
-  Redirect,
-  Switch,
+
+  Redirect, Route,
+
+  Switch
 } from 'react-router-dom';
-
-import { useDispatch } from 'react-redux';
-
-import Nav from '../Nav/Nav';
-import Footer from '../Footer/Footer';
-
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import AboutPage from '../AboutPage/AboutPage';
-import UserPage from '../UserPage/UserPage';
+import AddGear from '../AddGear/AddGear';
+import AllSwaps from '../AllSwaps/AllSwaps';
+import CreateSwap from '../CreateSwap/CreateSwap';
+import EditGear from '../EditGear/EditGear.jsx';
+import Favorites from '../Favorites/Favorites.jsx';
+import Footer from '../Footer/Footer';
 import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
-import RegisterPage from '../RegisterPage/RegisterPage';
-import Profile from '../Profile/Profile.jsx';
-
-import './App.css';
 import MyGear from '../MyGear/MyGear';
+import Nav from '../Nav/Nav';
+import Profile from '../Profile/Profile.jsx';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import SwapItems from '../SwapItems/SwapItems';
+import './App.css';
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -57,7 +60,7 @@ function App() {
             exact
             path="/user"
           >
-            <UserPage />
+            <AllSwaps />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -103,12 +106,30 @@ function App() {
           >
             <LandingPage />
           </ProtectedRoute>
-
           <ProtectedRoute
-           exact
-           path="/myGear"
+            // with authRedirect:
+            // - if logged in, redirects to "/user"
+            // - else shows LoginPage at /login
+            exact
+            path="/addGear"
           >
-            <MyGear/>
+            <AddGear />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/myGear">
+            <MyGear />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/editGear">
+            <EditGear />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/favorites">
+            <Favorites />
+          </ProtectedRoute>
+
+          <ProtectedRoute exact path="/swapItems">
+            <SwapItems />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
@@ -116,6 +137,10 @@ function App() {
           <ProtectedRoute exact path="/profile">
             <Profile />
           </ProtectedRoute>
+          <ProtectedRoute exact path="/createEvent">
+            <CreateSwap />
+          </ProtectedRoute>
+
           <Route>
             <h1>404</h1>
           </Route>

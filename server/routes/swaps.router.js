@@ -21,6 +21,23 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    SELECT * FROM "swaps" 
+    WHERE "owner" = $1
+    ORDER BY "id";`;
+  pool
+    .query(queryText, [req.user.id])
+    .then((result) => {
+      res.send(result.rows);
+      // console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 //insert into SWAPS database
 router.post("/", rejectUnauthenticated, (req, res) => {
   const swap = req.body;
@@ -67,9 +84,44 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 
 //join swap item join
 // using a get to grab all data from multiple tables
-router.get("/swapItems", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "items" JOIN "swap_item_join" ON "swap_item_join".item_id ="items".id 
-INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
+router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
+
+  const swapID = req.params.id;
+  console.log('swapID', swapID);
+
+  const queryText = `
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
+  "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id", 
+  "user"."username", "user"."email", "user"."user_image", "swaps"."id" AS "swap_id", "swaps"."access_code", "swaps"."is_private", "swaps"."sell_date",
+  "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open" FROM "items"
+
+  LEFT JOIN "categories" ON "items".cat_id = "categories".id
+  LEFT JOIN "images" ON "items".id = "images".item_id
+  LEFT JOIN "swap_item_join" ON "swap_item_join".item_id = "items".id 
+  LEFT JOIN "favorites" ON "favorites".item_id = "items".id
+  LEFT JOIN "user" ON "items".user_id = "user".id
+  LEFT JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id
+  WHERE "swaps".id = $1
+  GROUP BY "swaps"."id", "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id";`;
+  pool
+    .query(queryText, [swapID])
+    .then((result) => {
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+// JOINS get to grab only the swaps the user has joined
+router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    SELECT * FROM "swaps" JOIN "swap_users" 
+    ON "swap_users".swap_id = "swaps".id
+    JOIN "user" ON "user".id = "swap_users".user_id;
+    `;
   pool
     .query(queryText)
     .then((result) => {
@@ -86,7 +138,7 @@ INNER JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id ;`;
 // PUT route to edit existing swaps
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const swapToEdit = req.params.id;
-  const queryText = `UPDATE "swaps" where "id" = $1, "is_private" = $2, 
+  const queryText = `UPDATE "swaps" where "id" = $1, "is_private" = $2,
   "start_date" = $3, sell_date = $4, "stop_date" = $5, "swap_open" = $6, "access_code" = $7;`;
   pool
     .query(queryText, [

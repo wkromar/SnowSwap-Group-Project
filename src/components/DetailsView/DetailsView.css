@@ -11,6 +11,8 @@
     position: absolute;
     right: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items:center;
 }
 
 
@@ -20,4 +22,13 @@
     position: absolute;
     left: 0;
     background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items:center;
+}
+
+.cancel-button {
+    position:absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
 }
