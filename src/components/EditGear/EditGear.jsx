@@ -7,7 +7,7 @@ import "./EditGear.css";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
-
+  const [itemToEdit, setItemToEdit] = useState("");
   console.log(gearToEdit);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -32,8 +32,18 @@ function EditGear() {
     "Racing",
     "Powderhound Planks",
   ];
+  const type = [
+    "Snowboard",
+    "Ski",
+    "Ski Poles",
+    "Gloves",
+    "Jacket",
+    "Snowpants",
+    "Snowboard Boots",
+    "Ski Boots",
+  ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-  const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
+  const profile = ["Camber", "Camber Rocker Combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
   const condition = [
     "Boneyard",
@@ -50,8 +60,8 @@ function EditGear() {
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
-    setGearToAdd({
-      ...gearToAdd,
+    setItemToEdit({
+      ...itemToEdit,
       [event.target.name]: event.target.value,
     });
   };
@@ -59,7 +69,7 @@ function EditGear() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
-    console.log(gearToAdd);
+    console.log(gearToEdit);
     dispatch({ type: "FETCH_GEAR" });
     history.push("/myGear");
   };
@@ -74,7 +84,6 @@ function EditGear() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {/* {editGear.map((gearToEdit) =>(<div></div>))} */}
         <p>Title</p>
         <input
           type="text"
@@ -83,19 +92,19 @@ function EditGear() {
           name="title"
         />
         {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Size</p>
+        <p>Type</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToEdit?.size}
+          name="type"
+          value={gearToEdit?.type}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a type
           </option>
-          {size.map((size) => {
+          {type.map((type) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={type} value={type}>
+                {type}
               </option>
             );
           })}
@@ -120,7 +129,7 @@ function EditGear() {
         <p>Style</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="snowboardStyle"
+          name="style"
           value={gearToEdit?.style}
         >
           <option value="" disabled>
@@ -212,7 +221,7 @@ function EditGear() {
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -220,6 +229,13 @@ function EditGear() {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={gearToEdit?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
@@ -243,7 +259,7 @@ function EditGear() {
         />
       </div>
       <div>
-        <button type="submit">Add</button>
+        <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
       </div>
     </form>

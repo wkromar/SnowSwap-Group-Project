@@ -13,7 +13,6 @@ function AddGear({ gear }) {
   const history = useHistory();
 
   // selections for input fields
-  const size = ["XS", "S", "M", "L", "XL", "XXL"];
   const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
   const snowboardStyle = [
     "Freestyle",
@@ -32,6 +31,17 @@ function AddGear({ gear }) {
     "Racing",
     "Powderhound Planks",
   ];
+  const type = [
+    "",
+    "Snowboard",
+    "Ski",
+    "Ski Poles",
+    "Gloves",
+    "Jacket",
+    "Snowpants",
+    "Snowboard Boots",
+    "Ski Boots",
+  ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
   const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
@@ -44,8 +54,39 @@ function AddGear({ gear }) {
     "New",
   ];
   const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+  // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
+    // if (gear.title === undefined) {
+    //   setGearToAdd({ ...gearToAdd, title: "" });
+    // }
+    // if (gear.type === null) {
+    //   setGearToAdd({ ...gearToAdd, type: "" });
+    // }
+    // if (gear.size === null) {
+    //   setGearToAdd({ ...gearToAdd, size: "" });
+    // }
+    // if (gear.flex === null) {
+    //   setGearToAdd({ ...gearToAdd, flex: "" });
+    // }
+    // if (gear.style === null) {
+    //   setGearToAdd({ ...gearToAdd, style: "" });
+    // }
+    // if (gear.shape === null) {
+    //   setGearToAdd({ ...gearToAdd, shape: "" });
+    // }
+    // if (gear.gender === null) {
+    //   setGearToAdd({ ...gearToAdd, gender: "" });
+    // }
+    // if (gear.condition === null) {
+    //   setGearToAdd({ ...gearToAdd, condition: "" });
+    // }
+    // if (gear.lacing_system === null) {
+    //   setGearToAdd({ ...gearToAdd, lacing_system: "" });
+    // }
+    // if (gear.profile === null) {
+    //   setGearToAdd({ ...gearToAdd, profile: "" });
+    // }
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -59,6 +100,7 @@ function AddGear({ gear }) {
     event.preventDefault();
     dispatch({ type: "ADD_GEAR", payload: gearToAdd });
     console.log(gearToAdd);
+    history.push("/myGear");
     // setEditMode(!editMode);
     // need to change
   };
@@ -81,23 +123,25 @@ function AddGear({ gear }) {
           name="title"
         />
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
-        <p>Size</p>
+        <p>Type</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToAdd?.size}
+          name="type"
+          value={gearToAdd?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Size
+          <option default="" value="" disabled>
+            Choose a type
           </option>
-          {size.map((size) => {
+          {type.map((type) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={type} value={type}>
+                {type}
               </option>
             );
           })}
         </select>
+
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -170,7 +214,7 @@ function AddGear({ gear }) {
         <p>Condition</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
+          name="condition"
           value={gearToAdd?.condition}
         >
           <option value="" disabled>
@@ -210,7 +254,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -218,6 +262,13 @@ function AddGear({ gear }) {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={gearToAdd?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
