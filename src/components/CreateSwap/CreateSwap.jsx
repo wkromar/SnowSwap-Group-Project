@@ -34,19 +34,39 @@ export default function CreateSwap() {
       dayMathObj.sale
     );
 
+    console.log('!!!', dayMathObj.startDate);
+
     const dateFormat = 'MM/dd/yyyy';
 
+    const startDate = new Date(dayMathObj.startDate);
+
     const daysToAdd = Number(dayMathObj.preSale) + Number(dayMathObj.sale) + 1;
-    console.log(daysToAdd);
-    const addedDays = format(
-      addDays(new Date(dayMathObj.startDate), daysToAdd),
+
+    const stopDate = format(
+      addDays(new Date(startDate), daysToAdd),
       dateFormat
     );
-    console.log(addedDays);
+
+    const sellDate = format(
+      addDays(
+        new Date(
+          startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000
+        ),
+        dayMathObj.preSale
+      ),
+      dateFormat
+    );
+
     setSwapInfo({
       ...swapInfo,
-      stop_date: addedDays,
-      start_date: format(new Date(dayMathObj.startDate), dateFormat),
+      stop_date: stopDate,
+      sell_date: sellDate,
+      start_date: format(
+        new Date(
+          startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000
+        ),
+        dateFormat
+      ),
     });
   };
 
@@ -92,7 +112,12 @@ export default function CreateSwap() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <ImageUpload state={swapInfo} setState={setSwapInfo} />
+            Swap Cover Image
+          <ImageUpload
+            keyName={'swap_img'}
+            state={swapInfo}
+            setState={setSwapInfo}
+          />
           <label htmlFor="">Swap Name</label>
           <input
             name="swap_name"
