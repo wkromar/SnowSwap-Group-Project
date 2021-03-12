@@ -8,6 +8,8 @@ import favorites from './favorites.reducer';
 import ownedSwaps from './ownedSwaps.reducer';
 import searchedUser from './searchedUser.reducer';
 import swapItems from './swapItems.reducer';
+import allSwaps from './allSwaps.reducer';
+import selectedSwap from './selectedSwap.reducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -24,7 +26,10 @@ const rootReducer = combineReducers({
   favorites,
   ownedSwaps,
   searchedUser,
-  swapItems
+  swapItems,
+  allSwaps,
+  selectedSwap
+
 
 });
 

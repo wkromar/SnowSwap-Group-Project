@@ -84,9 +84,10 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 
 //join swap item join
 // using a get to grab all data from multiple tables
-router.get("/swapItems", rejectUnauthenticated, (req, res) => {
+router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
 
-  const swapID = req.body.id;
+  const swapID = req.params.id;
+  console.log('swapID', swapID);
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
@@ -105,7 +106,6 @@ router.get("/swapItems", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [swapID])
     .then((result) => {
-      console.log(result);
 
       res.send(result.rows);
     })
@@ -117,8 +117,11 @@ router.get("/swapItems", rejectUnauthenticated, (req, res) => {
 
 // JOINS get to grab only the swaps the user has joined
 router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "swaps" JOIN "swap_users" ON "swap_users".swap_id = "swaps".id
-INNER JOIN "user" ON "user".id = "swap_users".user_id;`;
+  const queryText = `
+    SELECT * FROM "swaps" JOIN "swap_users" 
+    ON "swap_users".swap_id = "swaps".id
+    JOIN "user" ON "user".id = "swap_users".user_id;
+    `;
   pool
     .query(queryText)
     .then((result) => {
