@@ -54,24 +54,25 @@ export default function SwapItems() {
       </div>
       <p className="title"> SWAP NAME HERE </p>
       <div className="container">
-        {swapItems.map((piece) => (
-          <div className="item">
-            <img
-              onClick={() => gearClicked(piece)}
-              className="image"
-              src={piece.image[0]}
-            />
-            <img
-              onClick={() => favoriteItem(piece)}
-              className="favorite-icon"
-              src="images/favorite.svg"
-            />
-            <p className="name">
-              {' '}
-              {piece.title} | ${piece.price}{' '}
-            </p>
-          </div>
-        ))}
+        {swapItems &&
+          swapItems?.map((piece) => (
+            <div className="item">
+              <img
+                onClick={() => gearClicked(piece)}
+                className="image"
+                src={piece.image[0]}
+              />
+              <img
+                onClick={() => favoriteItem(piece)}
+                className="favorite-icon"
+                src="images/favorite.svg"
+              />
+              <p className="name">
+                {' '}
+                {piece.title} | ${piece.price}{' '}
+              </p>
+            </div>
+          ))}
       </div>
       <Modal
         ariaHideApp={false}

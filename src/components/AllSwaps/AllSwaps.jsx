@@ -6,6 +6,7 @@ import './AllSwaps.css';
 export default function AllSwaps() {
   const dispatch = useDispatch();
   const allSwaps = useSelector((state) => state.allSwaps);
+  const selectedSwap = useSelector((state) => state.selectedSwap);
   const history = useHistory();
   console.log(allSwaps);
 
@@ -13,9 +14,10 @@ export default function AllSwaps() {
     dispatch({ type: 'FETCH_ALL_SWAPS' });
   }, []);
 
-  const handleClick = (swap) => {
-     dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
-     history.push('/swapItems');
+  const handleClick = async (swap) => {
+    await dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+    await dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+    await history.push('/swapItems');
   };
 
   return (
