@@ -31,8 +31,18 @@ function* fetchAllSwaps() {
     }
 }
 
+function* createSwap(action) {
+    try {
+        yield axios.post('/api/swaps/', action.payload);
+        yield put({ type: 'FETCH_ALL_SWAPS' });
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export default function* swapSaga() {
     yield takeLatest('FETCH_OWNED_SWAPS', fetchOwnedSwaps);
     yield takeLatest('FETCH_SWAP_ITEMS', fetchSwapItems);
     yield takeLatest('FETCH_ALL_SWAPS', fetchAllSwaps);
+    yield takeLatest('CREATE_SWAP', createSwap);
 }

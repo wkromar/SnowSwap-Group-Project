@@ -25,17 +25,6 @@ export default function CreateSwap() {
   });
 
   const dayMath = () => {
-    console.log(
-      'start',
-      dayMathObj.startDate,
-      'pre',
-      dayMathObj.preSale,
-      'sale',
-      dayMathObj.sale
-    );
-
-    console.log('!!!', dayMathObj.startDate);
-
     const dateFormat = 'MM/dd/yyyy';
 
     const startDate = new Date(dayMathObj.startDate);
@@ -72,8 +61,6 @@ export default function CreateSwap() {
 
   const authLevel = user.auth_level;
 
-  console.log(authLevel);
-
   const handleSwapInfo = (event) => {
     setSwapInfo({ ...swapInfo, [event.target.name]: event.target.value });
   };
@@ -92,7 +79,7 @@ export default function CreateSwap() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dayMath();
+    dispatch({ type: 'CREATE_SWAP', payload: swapInfo });
   };
 
   useEffect(() => {
@@ -103,6 +90,12 @@ export default function CreateSwap() {
     });
   }, []);
 
+  useEffect(() => {
+    if (dayMathObj.startDate) {
+      dayMath();
+    }
+  }, [dayMathObj]);
+
   return (
     <div>
       {authLevel < 1 ? (
@@ -112,7 +105,7 @@ export default function CreateSwap() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-            Swap Cover Image
+          Swap Cover Image
           <ImageUpload
             keyName={'swap_img'}
             state={swapInfo}
