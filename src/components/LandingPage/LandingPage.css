@@ -3,6 +3,7 @@ Grid
 -------------------------------------------------------------------------------- */
 
 .grid {
+  
   display: flex;
   flex: 0 1 auto;
   /* defaults to 'row' */
@@ -55,6 +56,8 @@ Grid
 }
 
 .grid-col_8 {
+  background-color: snow;
+  opacity: 0.75;
   flex-basis: 66.66666667%;
   max-width: 66.66666667%;
 }
@@ -77,4 +80,13 @@ Grid
 .grid-col_12 {
   flex-basis: 100%;
   max-width: 100%;
+}
+
+/* --------------------------------------------------------------------------------
+not Grid
+-------------------------------------------------------------------------------- */
+.container {
+  background-image: url('https://previews.123rf.com/images/alexvectors/alexvectors1411/alexvectors141100342/33830187-snowboard-gear-on-white-background-winter-active-outdoor-design-.jpg');
+  height: 92.5vh;
+  background-size: 75%;
 }
