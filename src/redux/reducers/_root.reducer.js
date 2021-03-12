@@ -1,3 +1,4 @@
+
 import { combineReducers } from "redux";
 import errors from "./errors.reducer";
 import user from "./user.reducer";
@@ -9,6 +10,9 @@ import ownedSwaps from "./ownedSwaps.reducer";
 import searchedUser from "./searchedUser.reducer";
 import swapItems from "./swapItems.reducer";
 import editItem from "./editItem.reducer";
+import allSwaps from './allSwaps.reducer';
+import selectedSwap from './selectedSwap.reducer';
+
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -27,6 +31,8 @@ const rootReducer = combineReducers({
   searchedUser,
   swapItems,
   editItem,
+  allSwaps,
+  selectedSwap
 });
 
 export default rootReducer;

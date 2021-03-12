@@ -1,38 +1,36 @@
-import React, { useEffect } from "react";
+import React, { useEffect } from 'react';
 import {
   HashRouter as Router,
   Route,
   Redirect,
   Switch,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import { useDispatch } from "react-redux";
+import { useDispatch } from 'react-redux';
 
-import Nav from "../Nav/Nav";
-import Footer from "../Footer/Footer";
+import Nav from '../Nav/Nav';
+import Footer from '../Footer/Footer';
 
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import AboutPage from '../AboutPage/AboutPage';
+import UserPage from '../UserPage/UserPage';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import Profile from '../Profile/Profile.jsx';
+import AddGear from '../AddGear/AddGear';
+import Favorites from '../Favorites/Favorites.jsx';
 
-import AboutPage from "../AboutPage/AboutPage";
-import UserPage from "../UserPage/UserPage";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import Profile from "../Profile/Profile.jsx";
-import AddGear from "../AddGear/AddGear";
-import Favorites from "../Favorites/Favorites.jsx";
-import EditGear from "../EditGear/EditGear.jsx";
-
-import "./App.css";
-import MyGear from "../MyGear/MyGear";
-import SwapItems from "../SwapItems/SwapItems";
-
+import './App.css';
+import MyGear from '../MyGear/MyGear';
+import SwapItems from '../SwapItems/SwapItems';
+import AllSwaps from '../AllSwaps/AllSwaps';
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER" });
+    dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
   return (
@@ -61,7 +59,7 @@ function App() {
             exact
             path="/user"
           >
-            <UserPage />
+            <AllSwaps />
           </ProtectedRoute>
 
           <ProtectedRoute
@@ -128,6 +126,7 @@ function App() {
           <ProtectedRoute exact path="/favorites">
             <Favorites />
           </ProtectedRoute>
+
 
           <ProtectedRoute exact path="/swapItems">
             <SwapItems />
