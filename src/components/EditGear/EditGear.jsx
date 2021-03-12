@@ -7,8 +7,8 @@ import "./EditGear.css";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
-  const [itemToEdit, setItemToEdit] = useState("");
-  console.log(gearToEdit);
+  const [itemToEdit, setItemToEdit] = useState(gearToEdit);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -68,9 +68,8 @@ function EditGear() {
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
+    dispatch({ type: "CHANGE_GEAR", payload: itemToEdit });
     console.log(gearToEdit);
-    dispatch({ type: "FETCH_GEAR" });
     history.push("/myGear");
   };
   //go back to gear
@@ -87,19 +86,19 @@ function EditGear() {
         <p>Title</p>
         <input
           type="text"
-          value={gearToEdit?.title}
+          value={itemToEdit?.title}
           onChange={(event) => handleChange(event)}
           name="title"
         />
         {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Type</p>
+        <p>Category</p>
         <select
           onChange={(event) => handleChange(event)}
           name="type"
-          value={gearToEdit?.type}
+          value={itemToEdit?.type}
         >
           <option value="" disabled>
-            Choose a type
+            Choose a Category
           </option>
           {type.map((type) => {
             return (
@@ -113,7 +112,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="flex"
-          value={gearToEdit?.flex}
+          value={itemToEdit?.flex}
         >
           <option value="" disabled>
             Choose a Flex
@@ -130,7 +129,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="style"
-          value={gearToEdit?.style}
+          value={itemToEdit?.style}
         >
           <option value="" disabled>
             Choose a Style
@@ -148,7 +147,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="shape"
-          value={gearToEdit?.shape}
+          value={itemToEdit?.shape}
         >
           <option value="" disabled>
             Choose a Shape
@@ -165,7 +164,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="gender"
-          value={gearToEdit?.gender}
+          value={itemToEdit?.gender}
         >
           <option value="" disabled>
             Choose a Gender
@@ -182,7 +181,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToEdit?.condition}
+          value={itemToEdit?.condition}
         >
           <option value="" disabled>
             Choose a Condition
@@ -199,7 +198,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="lacing_system"
-          value={gearToEdit?.lacing_system}
+          value={itemToEdit?.lacing_system}
         >
           <option value="" disabled>
             Choose a Size
@@ -216,7 +215,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="profile"
-          value={gearToEdit?.profile}
+          value={itemToEdit?.profile}
         >
           <option value="" disabled>
             Choose a Size
@@ -232,28 +231,28 @@ function EditGear() {
         <p>Size</p>
         <input
           type="decimal"
-          value={gearToEdit?.size}
+          value={itemToEdit?.size}
           onChange={(event) => handleChange(event)}
           name="size"
         />
         <p>Price</p>
         <input
           type="decimal"
-          value={gearToEdit?.price}
+          value={itemToEdit?.price}
           onChange={(event) => handleChange(event)}
           name="price"
         />
         <p>Brand</p>
         <input
           type="text"
-          value={gearToEdit?.brand}
+          value={itemToEdit?.brand}
           onChange={(event) => handleChange(event)}
           name="brand"
         />
         <p>Description</p>
         <input
           type="text"
-          value={gearToEdit?.description}
+          value={itemToEdit?.description}
           onChange={(event) => handleChange(event)}
           name="description"
         />
