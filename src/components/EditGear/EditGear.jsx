@@ -33,7 +33,7 @@ function EditGear() {
     "Powderhound Planks",
   ];
   const type = [
-    "snowboard",
+    "Snowboard",
     "Ski",
     "Ski Poles",
     "Gloves",
@@ -43,7 +43,7 @@ function EditGear() {
     "Ski Boots",
   ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-  const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
+  const profile = ["Camber", "Camber Rocker Combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
   const condition = [
     "Boneyard",
@@ -93,7 +93,23 @@ function EditGear() {
           name="title"
         />
         {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-
+        <p>Type</p>
+        <select
+          onChange={(event) => handleChange(event)}
+          name="type"
+          value={gearToEdit?.type}
+        >
+          <option value="" disabled>
+            Choose a type
+          </option>
+          {type.map((type) => {
+            return (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            );
+          })}
+        </select>
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -244,7 +260,7 @@ function EditGear() {
         />
       </div>
       <div>
-        <button type="submit">Add</button>
+        <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
       </div>
     </form>
