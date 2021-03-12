@@ -42,8 +42,8 @@ function* upgradeUser(action) {
   yield axios.put(`/api/user/upgradeUser`, action.payload);
 }
 
-function* requestUpgrade(action) {
-  yield axios.post('/api/upgradeUser', action.payload);
+function* requestUpgrade() {
+  yield axios.post('/api/upgradeUser');
 }
 
 function* userSaga() {
