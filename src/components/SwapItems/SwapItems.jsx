@@ -21,11 +21,11 @@ export default function SwapItems() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FETCH_SWAP_ITEMS" , payload: swapItems});
+    dispatch({ type: "FETCH_SWAP_ITEMS", payload: swapItems});
   }, []);
 
 
-  const swapItems = useSelector((state) => state.swapItems)
+  const swapItems = useSelector((state) => state?.swapItems)
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
@@ -35,13 +35,15 @@ export default function SwapItems() {
   };
 
   const favoriteItem = (piece) => {
-    
+    dispatch({type: "FAVORITE_ITEM", payload: piece  })
   }
   
   const gearClicked = (piece) => {
     dispatch({type: "SELECTED_PIECE", payload: piece});
     dispatch({ type: "OPEN_DETAIL_VIEW" });
   };
+
+  console.log('swapItems:', swapItems)
 
   return (
     <>

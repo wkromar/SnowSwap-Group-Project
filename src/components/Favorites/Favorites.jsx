@@ -27,8 +27,8 @@ export default function Favorites() {
   const favorites = useSelector((state) => state?.favorites);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-  console.log(gearDetails)
 
+  console.log(gearDetails);
   
   const gearClicked = (piece) => {
     dispatch({type: "SELECTED_PIECE", payload: piece});
@@ -36,7 +36,7 @@ export default function Favorites() {
   };
 
   const unFavorite = (piece) => {
-    dispatch({type: "UNFAVORITE_ITEM", payload: piece})
+    dispatch({type: "UNFAVORITE_ITEM", payload: piece});
   }
 
   return (
