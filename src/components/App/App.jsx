@@ -139,6 +139,10 @@ function App() {
           <ProtectedRoute exact path="/profile">
             <Profile />
           </ProtectedRoute>
+          <ProtectedRoute exact path="/createEvent">
+            <CreateSwap />
+          </ProtectedRoute>
+
           <Route>
             <h1>404</h1>
           </Route>
