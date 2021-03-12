@@ -25,6 +25,7 @@ import Favorites from '../Favorites/Favorites.jsx';
 import './App.css';
 import MyGear from '../MyGear/MyGear';
 import CreateSwap from '../CreateSwap/CreateSwap';
+import EditGear from '../EditGear/EditGear';
 
 import SwapItems from '../SwapItems/SwapItems';
 import AllSwaps from '../AllSwaps/AllSwaps';
@@ -128,7 +129,6 @@ function App() {
           <ProtectedRoute exact path="/favorites">
             <Favorites />
           </ProtectedRoute>
-
 
           <ProtectedRoute exact path="/swapItems">
             <SwapItems />
