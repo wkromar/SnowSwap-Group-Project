@@ -11,9 +11,9 @@ require('dotenv').config();
 router.post('/', async (req, res) => {
 
     const userId = req.user.id;
-    const firstName = req.body.first_name;
-    const lastName = req.body.last_name;
-    const userName = req.body.username;
+    const firstName = req.user.first_name;
+    const lastName = req.user.last_name;
+    const userName = req.user.username;
 
 
     try {
