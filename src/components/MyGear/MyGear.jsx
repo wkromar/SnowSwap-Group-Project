@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "../MyGear/MyGear.css";
 
-
 export default function MyGear() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -19,12 +18,10 @@ export default function MyGear() {
     console.log("Clicked Add Gear");
     history.push("/addGear");
   };
-
+  // "SELECTED_PIECE";
   const gearClicked = (piece) => {
-
-    dispatch({type: "SELECTED_PIECE", payload: piece});
-    history.push(`/editGear`)
-
+    dispatch({ type: "EDIT_GEAR", payload: piece });
+    history.push(`/editGear`);
   };
 
   return (
@@ -38,8 +35,11 @@ export default function MyGear() {
       <div className="container">
         {gear.map((piece) => (
           <div className="item">
-
-            <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
             <p className="name">
               {" "}
               {piece.title} | ${piece.price}{" "}
