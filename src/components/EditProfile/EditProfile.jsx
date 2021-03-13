@@ -35,7 +35,7 @@ export default function EditProfile({ user, setEditMode, editMode }) {
         <div className="profile-info-container">
           <div className="left-side">
             <ImageUpload
-              keyName={'userImg'}
+              keyName={'user_image'}
               state={userProfileEdit}
               setState={setUserProfileEdit}
             />
