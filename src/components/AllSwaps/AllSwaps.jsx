@@ -31,7 +31,7 @@ export default function AllSwaps() {
                 <div className="swap-card">
                   <img src={swap.swap_img} alt="Rad snowboard man" />
                   <div className="title-lock">
-                    <p>{swap.swap_name}</p>
+                    <p>{swap.name}</p>
                     {swap.is_private && <img src="images/lock.svg" />}
                   </div>
                   <div className="days-until">

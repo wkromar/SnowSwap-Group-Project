@@ -27,7 +27,7 @@ export default function Menu() {
           <Link to="/profile" className="menuItem">
             Profile
           </Link>
-          <Link to="/createEvent" className="menuItem">
+          <Link to="/createEvent/" className="menuItem">
             Create Swap
           </Link>
           <Link to="myGear" className="menuItem">

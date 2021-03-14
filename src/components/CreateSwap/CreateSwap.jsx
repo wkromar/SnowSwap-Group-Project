@@ -1,12 +1,16 @@
+import { addDays, format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { subDays, format, addDays } from 'date-fns';
+import { useHistory, useParams } from 'react-router-dom';
 import ImageUpload from '../ImageUpload/ImageUpload';
 
 export default function CreateSwap() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const [swapInfo, setSwapInfo] = useState({
+  const selectedSwap = useSelector((state) => state.selectedSwap);
+  console.log(`selectedSwap`, selectedSwap);
+
+  const defaultState = {
     is_private: 'true',
     start_date: '',
     sell_date: '',
@@ -14,9 +18,18 @@ export default function CreateSwap() {
     access_code: '',
     swap_name: '',
     swap_img: '',
-  });
+  };
+
+  const [swapInfo, setSwapInfo] = useState(defaultState);
+
+  console.log('wow', swapInfo);
+
+  const { slug } = useParams();
+
+  const history = useHistory();
 
   console.log(swapInfo);
+  console.log('params', slug);
 
   const [dayMathObj, setDayMathObj] = useState({
     preSale: '',
@@ -24,9 +37,9 @@ export default function CreateSwap() {
     startDate: '',
   });
 
-  const dayMath = () => {
-    const dateFormat = 'MM/dd/yyyy';
+  const dateFormat = 'yyyy-MM-dd';
 
+  const dayMath = () => {
     const startDate = new Date(dayMathObj.startDate);
 
     const daysToAdd = Number(dayMathObj.preSale) + Number(dayMathObj.sale) + 1;
@@ -82,12 +95,33 @@ export default function CreateSwap() {
     dispatch({ type: 'CREATE_SWAP', payload: swapInfo });
   };
 
+  const handleCancel = () => {
+    history.push('/');
+  };
+
   useEffect(() => {
-    //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
-    setSwapInfo({
-      ...swapInfo,
-      access_code: Math.random().toString(36).slice(2),
-    });
+    if (slug === 'edit' && selectedSwap.owner === user.id) {
+      setSwapInfo({
+        is_private: selectedSwap.is_private.toString(),
+        start_date: selectedSwap.start_date,
+        sell_date: selectedSwap.sell_date,
+        stop_date: selectedSwap.stop_date,
+        access_code: selectedSwap.access_code,
+        swap_name: selectedSwap.name,
+        swap_img: selectedSwap.swap_img,
+      });
+
+      setDayMathObj({
+        ...dayMathObj,
+        startDate: format(new Date(selectedSwap.start_date), dateFormat),
+      });
+    } else {
+      //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
+      setSwapInfo({
+        ...swapInfo,
+        access_code: Math.random().toString(36).slice(2),
+      });
+    }
   }, []);
 
   useEffect(() => {
@@ -106,11 +140,24 @@ export default function CreateSwap() {
       ) : (
         <form onSubmit={handleSubmit}>
           Swap Cover Image
-          <ImageUpload
-            keyName={'swap_img'}
-            state={swapInfo}
-            setState={setSwapInfo}
-          />
+          {swapInfo.swap_img ? (
+            <div>
+              <img src={swapInfo.swap_img} />
+              <button
+                type="button"
+                onClick={() => setSwapInfo({ ...swapInfo, swap_img: '' })}
+              >
+                Change Cover Image
+              </button>
+            </div>
+          ) : (
+            <ImageUpload
+              keyName={'swap_img'}
+              state={swapInfo}
+              setState={setSwapInfo}
+            />
+          )}
+          <br />
           <label htmlFor="">Swap Name</label>
           <input
             name="swap_name"
@@ -172,7 +219,9 @@ export default function CreateSwap() {
           <p>Your swap access code:</p>
           <h3>{swapInfo.access_code}</h3>
           <button type="submit">Create Swap</button>
-          <button type="button">Cancel</button>
+          <button onClick={handleCancel} type="button">
+            Cancel
+          </button>
         </form>
       )}
     </div>
