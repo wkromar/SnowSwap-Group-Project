@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../SwapItems/SwapItems.css';
 import DetailsView from '../DetailsView/DetailsView';
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
 
 const customStyles = {
   content: {
@@ -51,6 +52,9 @@ export default function SwapItems() {
       <div className="container">
         <button className="add-gear-button" onClick={handleAddGearToSwap}>
           Add Gear To This Swap
+        </button>
+        <button>
+          <FilterDrawer />
         </button>
       </div>
       <p className="title"> SWAP NAME HERE </p>
