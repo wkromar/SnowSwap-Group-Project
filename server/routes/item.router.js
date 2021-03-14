@@ -16,8 +16,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   console.log("sending item", item);
   const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
   "flex", "style", "brand", "shape", "gender", "profile", "condition", 
-  "lacing_system", "description")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
+  "lacing_system", "description","type")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
   pool
     .query(queryText, [
       id,
@@ -34,6 +34,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       item.condition,
       item.lacing_system,
       item.description,
+      item.type,
     ])
     .then((response) => {
       console.log(response);
@@ -75,9 +76,9 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.get('/favorites', rejectUnauthenticated, (req, res) => {
+router.get("/favorites", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  console.log('GETting favorites for:', userId);
+  console.log("GETting favorites for:", userId);
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "favorites"."id" AS "favorites_id", "user"."username", "user"."email", "user"."user_image" FROM "items"
@@ -92,23 +93,22 @@ router.get('/favorites', rejectUnauthenticated, (req, res) => {
     .query(queryText, [userId])
     .then((result) => {
       console.log(result.rows);
-      res.send(result.rows)
-
+      res.send(result.rows);
     })
     .catch((error) => {
       console.log(error);
       res.sendStatus(500);
     });
-  
-})
+});
 
 //route to edit an item using the ITEM_ID
 router.put("/:id", rejectUnauthenticated, (req, res) => {
   const itemToEdit = req.params.id;
-  const queryText = `UPDATE "items" WHERE "user_id" = $1, "cat_id" = $2, "size" = $3, "price" =$4, "flex" = $5, "style" = $6, 
+  const queryText = `UPDATE "items" SET "user_id" = $1, "cat_id" = $2, "size" = $3, "price" =$4, "flex" = $5, "style" = $6, 
   "brand" = $7, "shape" = $8, "gender" = $9, "profile" = $10, 
   "condition" = $11, "lacing_system" = $12, "purchased" = $13, 
-  "description" = $14`;
+  "description" = $14, "title" = $15 
+  WHERE id = $16`;
   pool
     .query(queryText, [
       req.body.user_id,
@@ -125,10 +125,11 @@ router.put("/:id", rejectUnauthenticated, (req, res) => {
       req.body.lacing_system,
       req.body.purchased,
       req.body.description,
+      req.body.title,
       itemToEdit,
     ])
-    .then((response) => {
-      response.sendStatus(200);
+    .then((result) => {
+      res.sendStatus(200);
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
@@ -197,5 +198,19 @@ router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 // END FAVORITES
+
+// START CATEGORIES
+router.get("/categories", rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM "categories";`;
+  pool
+    .query(queryText)
+    .then((result) => {
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(`Error making GET from categories: ${queryText}`, error);
+      res.sendStatus(500);
+    });
+});
 
 module.exports = router;

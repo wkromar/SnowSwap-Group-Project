@@ -7,8 +7,8 @@ import "./EditGear.css";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
-
-  console.log(gearToEdit);
+  const [itemToEdit, setItemToEdit] = useState(gearToEdit);
+  const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -33,7 +33,7 @@ function EditGear() {
     "Powderhound Planks",
   ];
   const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-  const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
+  const profile = ["Camber", "Camber Rocker Combo", "Rocker", "Reverse Camber"];
   const gender = ["Male", "Female"];
   const condition = [
     "Boneyard",
@@ -50,17 +50,16 @@ function EditGear() {
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
-    setGearToAdd({
-      ...gearToAdd,
+    setItemToEdit({
+      ...itemToEdit,
       [event.target.name]: event.target.value,
     });
   };
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
-    console.log(gearToAdd);
-    dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "CHANGE_GEAR", payload: itemToEdit });
+    console.log(gearToEdit);
     history.push("/myGear");
   };
   //go back to gear
@@ -74,28 +73,31 @@ function EditGear() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {/* {editGear.map((gearToEdit) =>(<div></div>))} */}
         <p>Title</p>
         <input
           type="text"
-          value={gearToEdit?.title}
+          value={itemToEdit?.title}
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Size</p>
+        <ImageUpload
+          itemToEdit={itemToEdit.url}
+          setItemToEdit={setItemToEdit}
+        />
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToEdit?.size}
+          name="type"
+          value={gearToAdd?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Size
+          <option default="" value="" disabled>
+            Choose a type
           </option>
-          {size.map((size) => {
+          {categories.map((categories) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={categories.name} value={itemToEdit.id}>
+                {categories.name}
               </option>
             );
           })}
@@ -104,7 +106,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="flex"
-          value={gearToEdit?.flex}
+          value={itemToEdit?.flex}
         >
           <option value="" disabled>
             Choose a Flex
@@ -120,8 +122,8 @@ function EditGear() {
         <p>Style</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="snowboardStyle"
-          value={gearToEdit?.style}
+          name="style"
+          value={itemToEdit?.style}
         >
           <option value="" disabled>
             Choose a Style
@@ -139,7 +141,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="shape"
-          value={gearToEdit?.shape}
+          value={itemToEdit?.shape}
         >
           <option value="" disabled>
             Choose a Shape
@@ -156,7 +158,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="gender"
-          value={gearToEdit?.gender}
+          value={itemToEdit?.gender}
         >
           <option value="" disabled>
             Choose a Gender
@@ -173,7 +175,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToEdit?.condition}
+          value={itemToEdit?.condition}
         >
           <option value="" disabled>
             Choose a Condition
@@ -190,7 +192,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="lacing_system"
-          value={gearToEdit?.lacing_system}
+          value={itemToEdit?.lacing_system}
         >
           <option value="" disabled>
             Choose a Size
@@ -207,12 +209,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="profile"
-          value={gearToEdit?.profile}
+          value={itemToEdit?.profile}
         >
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -220,30 +222,37 @@ function EditGear() {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={itemToEdit?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
-          value={gearToEdit?.price}
+          value={itemToEdit?.price}
           onChange={(event) => handleChange(event)}
           name="price"
         />
         <p>Brand</p>
         <input
           type="text"
-          value={gearToEdit?.brand}
+          value={itemToEdit?.brand}
           onChange={(event) => handleChange(event)}
           name="brand"
         />
         <p>Description</p>
         <input
           type="text"
-          value={gearToEdit?.description}
+          value={itemToEdit?.description}
           onChange={(event) => handleChange(event)}
           name="description"
         />
       </div>
       <div>
-        <button type="submit">Add</button>
+        <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
       </div>
     </form>

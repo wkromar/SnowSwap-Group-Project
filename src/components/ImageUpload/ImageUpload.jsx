@@ -1,10 +1,11 @@
 import React from 'react';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 
-export default function ImageUpload({ userProfileEdit, setUserProfileEdit }) {
+export default function ImageUpload({ state, setState, keyName }) {
   const handleFinishedUpload = (info) => {
     console.log('File uploaded with filename', info.filename);
-    setUserProfileEdit({ ...userProfileEdit, user_image: info.fileUrl });
+    setState({ ...state, [keyName]: info.fileUrl });
+    // setSwapInfo({ ...swapInfo, swap_img: info.filename });
   };
 
   const uploadOptions = {

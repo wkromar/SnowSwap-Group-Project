@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { subDays, format, addDays } from 'date-fns';
+import ImageUpload from '../ImageUpload/ImageUpload';
 
 export default function CreateSwap() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [swapInfo, setSwapInfo] = useState({
-    is_private: true,
+    is_private: 'true',
     start_date: '',
     sell_date: '',
     stop_date: '',
@@ -23,37 +24,45 @@ export default function CreateSwap() {
     startDate: '',
   });
 
-  const [swapAccessCode, setSwapAccessCode] = useState('');
-
   const dayMath = () => {
-    console.log(
-      'start',
-      dayMathObj.startDate,
-      'pre',
-      dayMathObj.preSale,
-      'sale',
-      dayMathObj.sale
-    );
+    const dateFormat = 'MM/dd/yyyy';
+
+    const startDate = new Date(dayMathObj.startDate);
 
     const daysToAdd = Number(dayMathObj.preSale) + Number(dayMathObj.sale) + 1;
-    console.log(daysToAdd);
-    const addedDays = format(
-      addDays(new Date(dayMathObj.startDate), daysToAdd),
-      'MM/dd/yyyy'
+
+    const stopDate = format(
+      addDays(new Date(startDate), daysToAdd),
+      dateFormat
     );
-    console.log(addedDays);
+
+    const sellDate = format(
+      addDays(
+        new Date(
+          startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000
+        ),
+        dayMathObj.preSale
+      ),
+      dateFormat
+    );
+
+    setSwapInfo({
+      ...swapInfo,
+      stop_date: stopDate,
+      sell_date: sellDate,
+      start_date: format(
+        new Date(
+          startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000
+        ),
+        dateFormat
+      ),
+    });
   };
 
   const authLevel = user.auth_level;
 
-  console.log(authLevel);
-
   const handleSwapInfo = (event) => {
     setSwapInfo({ ...swapInfo, [event.target.name]: event.target.value });
-  };
-
-  const handleRequestAccess = () => {
-    dispatch({ type: 'REQUEST_UPGRADE', payload: user });
   };
 
   const handleDurationChange = (event) => {
@@ -64,15 +73,28 @@ export default function CreateSwap() {
     setDayMathObj({ ...dayMathObj, startDate: event });
   };
 
+  const handleRequestAccess = () => {
+    dispatch({ type: 'REQUEST_UPGRADE' });
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    dayMath();
+    dispatch({ type: 'CREATE_SWAP', payload: swapInfo });
   };
 
   useEffect(() => {
     //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
-    setSwapAccessCode(Math.random().toString(36).slice(2));
+    setSwapInfo({
+      ...swapInfo,
+      access_code: Math.random().toString(36).slice(2),
+    });
   }, []);
+
+  useEffect(() => {
+    if (dayMathObj.startDate) {
+      dayMath();
+    }
+  }, [dayMathObj]);
 
   return (
     <div>
@@ -83,15 +105,26 @@ export default function CreateSwap() {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
+          Swap Cover Image
+          <ImageUpload
+            keyName={'swap_img'}
+            state={swapInfo}
+            setState={setSwapInfo}
+          />
           <label htmlFor="">Swap Name</label>
-          <input type="text" />
+          <input
+            name="swap_name"
+            onChange={(event) => handleSwapInfo(event)}
+            value={swapInfo.swap_name}
+            type="text"
+          />
           <div>
             <input
               id="public-button"
               type="radio"
               name="is_private"
-              value={!'false'}
-              checked={swapInfo.is_private === false}
+              value={'false'}
+              checked={swapInfo.is_private === 'false'}
               onChange={(event) => handleSwapInfo(event)}
             />
             <label htmlFor="public-button">Public</label>
@@ -99,8 +132,8 @@ export default function CreateSwap() {
               id="private-button"
               type="radio"
               name="is_private"
-              value={!!'true'}
-              checked={swapInfo.is_private === true}
+              value={'true'}
+              checked={swapInfo.is_private === 'true'}
               onChange={(event) => handleSwapInfo(event)}
             />
             <label htmlFor="private-button">Private</label>
@@ -137,7 +170,7 @@ export default function CreateSwap() {
             />
           </label>
           <p>Your swap access code:</p>
-          <h3>{swapAccessCode}</h3>
+          <h3>{swapInfo.access_code}</h3>
           <button type="submit">Create Swap</button>
           <button type="button">Cancel</button>
         </form>

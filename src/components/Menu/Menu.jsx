@@ -8,9 +8,9 @@ export default function Menu() {
 
   const handleMenuClick = () => {
     if (isOpen) {
-      return "menu-open";
+      return 'menu-open';
     } else {
-      return "menu-closed";
+      return 'menu-closed';
     }
   };
 
@@ -27,7 +27,7 @@ export default function Menu() {
             Profile
           </Link>
           <Link to="/createEvent" className="menuItem">
-            Create Event
+            Create Swap
           </Link>
           <Link to="myGear" className="menuItem">
             My Gear

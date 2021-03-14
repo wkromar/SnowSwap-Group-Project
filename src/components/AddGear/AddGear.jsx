@@ -8,12 +8,12 @@ import "./AddGear.css";
 function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
   const user = useSelector((store) => store.user);
+  const categories = useSelector((store) => store.categories);
   console.log(gearToAdd);
   const dispatch = useDispatch();
   const history = useHistory();
 
   // selections for input fields
-  const size = ["XS", "S", "M", "L", "XL", "XXL"];
   const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
   const snowboardStyle = [
     "Freestyle",
@@ -44,8 +44,10 @@ function AddGear({ gear }) {
     "New",
   ];
   const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+  // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -59,8 +61,7 @@ function AddGear({ gear }) {
     event.preventDefault();
     dispatch({ type: "ADD_GEAR", payload: gearToAdd });
     console.log(gearToAdd);
-    // setEditMode(!editMode);
-    // need to change
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
@@ -81,23 +82,25 @@ function AddGear({ gear }) {
           name="title"
         />
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
-        <p>Size</p>
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToAdd?.size}
+          name="type"
+          value={gearToAdd?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Size
+          <option default="" value="" disabled>
+            Choose a type
           </option>
-          {size.map((size) => {
+          {categories.map((categories) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={categories.name} value={categories.id}>
+                {categories.name}
               </option>
             );
           })}
         </select>
+
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -170,7 +173,7 @@ function AddGear({ gear }) {
         <p>Condition</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
+          name="condition"
           value={gearToAdd?.condition}
         >
           <option value="" disabled>
@@ -210,7 +213,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Size
           </option>
-          {lacing_system.map((profile) => {
+          {profile.map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -218,6 +221,13 @@ function AddGear({ gear }) {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={gearToAdd?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
