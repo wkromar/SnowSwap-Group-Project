@@ -62,7 +62,7 @@ function AddGear({ gear }) {
           default=""
         >
           <option default="" value="" disabled>
-            Choose a type
+            Choose an item
           </option>
           {categories.map((categories) => {
             return (
@@ -166,7 +166,7 @@ function AddGear({ gear }) {
           value={gearToAdd?.lacing_system}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a System
           </option>
           {GearTags[7].map((lacing_system) => {
             return (
@@ -183,7 +183,7 @@ function AddGear({ gear }) {
           value={gearToAdd?.profile}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a Profile
           </option>
           {GearTags[4].map((profile) => {
             return (
