@@ -88,7 +88,7 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="type"
-          value={gearToAdd?.type}
+          value={itemToEdit?.type}
           default=""
         >
           <option default="" value="" disabled>
