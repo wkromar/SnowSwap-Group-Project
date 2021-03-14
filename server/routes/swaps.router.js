@@ -43,8 +43,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   const swap = req.body;
   console.log("sending swap", swap);
   const queryText = `INSERT INTO "swaps" ("is_private", "start_date", "sell_date", 
-  "stop_date", "access_code", "name", "swap_img")
-    VALUES($1, $2, $3, $4, $5, $6, $7)`;
+  "stop_date", "access_code", "name", "swap_img", "owner")
+    VALUES($1, $2, $3, $4, $5, $6, $7, $8)`;
   pool
     .query(queryText, [
       swap.is_private,
@@ -53,7 +53,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       swap.stop_date,
       swap.access_code,
       swap.swap_name,
-      swap.swap_img
+      swap.swap_img,
+      req.user.id
     ])
     .then((response) => {
       console.log(response);
