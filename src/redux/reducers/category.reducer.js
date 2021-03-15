@@ -1,4 +1,4 @@
-const Categories = (state = [], action) => {
+const categories = (state = [], action) => {
   switch (action.type) {
     case "SET_CATEGORIES":
       return action.payload;
@@ -8,4 +8,4 @@ const Categories = (state = [], action) => {
   }
 };
 
-export default Categories;
+export default categories;
