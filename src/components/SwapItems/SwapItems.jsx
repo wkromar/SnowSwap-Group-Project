@@ -19,23 +19,24 @@ const customStyles = {
 
 export default function SwapItems() {
   const dispatch = useDispatch();
-  
+
   const selectedSwap = useSelector((state) => state?.selectedSwap);
+
   const swapItems = useSelector((state) => state?.swapItems);
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-  
-  useEffect(() => {
-    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
-  }, []);
-  
+
   const handleAddGearToSwap = () => {
     return console.log('Clicked Add Gear To This Swap');
   };
 
   const favoriteItem = (piece) => {
-    dispatch({ type: 'FAVORITE_ITEM', payload: piece });
+    if (piece.favorites_id) {
+      dispatch({ type: 'UNFAVORITE_ITEM', payload: [piece, selectedSwap]})
+    } else {
+      dispatch({ type: 'FAVORITE_ITEM', payload: [piece, selectedSwap] });
+    }
   };
 
   const gearClicked = (piece) => {
@@ -45,6 +46,10 @@ export default function SwapItems() {
 
   console.log('swapItems:', swapItems);
 
+  useEffect(() => {
+    const swapDetails = localStorage.getItem('swap-object');
+      dispatch({ type: 'FETCH_SWAP_ITEMS', payload: JSON.parse(swapDetails) });
+  }, []);
 
   return (
     <>
@@ -53,7 +58,9 @@ export default function SwapItems() {
           Add Gear To This Swap
         </button>
       </div>
-      <p className="title"> Swap ID: {selectedSwap.id} (need access to swap name) </p>
+
+      <p className="title">{selectedSwap.name}</p>
+
       <div className="container">
         {swapItems &&
           swapItems?.map((piece) => (
@@ -63,11 +70,17 @@ export default function SwapItems() {
                 className="image"
                 src={piece.image[0]}
               />
-              <img
-                onClick={() => favoriteItem(piece)}
+              <div
+              onClick={() => favoriteItem(piece)}
+              >
+                {piece.favorites_id ? <img
                 className="favorite-icon"
                 src="images/favorite.svg"
-              />
+              /> : <img
+              className="favorite-icon"
+              src="images/unfavorite.svg"
+            />}
+                </div>
               <p className="name">
                 {' '}
                 {piece.title} | ${piece.price}{' '}

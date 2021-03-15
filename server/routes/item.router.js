@@ -159,7 +159,7 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
 // Add item to Favorites
 router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  const itemToFav = req.body;
+  const itemToFav = req.body.id;
   console.log("adding item to favorites", itemToFav);
 
   const queryText = `
@@ -168,7 +168,7 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   `;
 
   pool
-    .query(queryText, [userId, itemToFav.id])
+    .query(queryText, [userId, itemToFav])
     .then((result) => {
       console.log(result);
       res.sendStatus(201);
@@ -181,8 +181,8 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
 
 // delete function to remove the items from only the favorites
 router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
-  const favToDelete = req.params.id;
-  console.log(favToDelete);
+  const favToDelete = Number(req.params.id);
+  console.log('favToDelete', favToDelete);
   const queryText = `DELETE FROM "favorites" WHERE id = $1;`;
   pool
     .query(queryText, [favToDelete])
