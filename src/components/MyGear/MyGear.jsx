@@ -41,8 +41,10 @@ export default function MyGear() {
               src={piece.image[0]}
             />
             <p className="name">
-              {" "}
-              {piece.title} | ${piece.price}{" "}
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
             </p>
           </div>
         ))}
