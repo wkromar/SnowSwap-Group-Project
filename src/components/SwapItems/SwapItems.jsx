@@ -26,6 +26,9 @@ export default function SwapItems() {
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
+
+  const [filter, setFilter] = useState('')
+  
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
@@ -54,13 +57,18 @@ export default function SwapItems() {
           Add Gear To This Swap
         </button>
         <button>
-          <FilterDrawer />
+          <FilterDrawer 
+          filter={filter}
+          setFilter={setFilter}
+          />
         </button>
       </div>
       <p className="title"> Swap ID: {selectedSwap.id} (need access to swap name) </p>
       <div className="container">
         {swapItems &&
           swapItems?.map((piece) => (
+            
+            piece.category_name.toString().toLowerCase().includes(filter) &&
             <div className="item">
               <img
                 onClick={() => gearClicked(piece)}

@@ -13,6 +13,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+import GearTags from "../GearTags/GearTags";
+
 import './FilterDrawer.css'
 
 const useStyles = makeStyles({
@@ -24,50 +26,36 @@ const useStyles = makeStyles({
     },
 });
 
-function FilterDrawer() {
+function FilterDrawer( {filter, setFilter} ) {
 
-    const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
-    const snowboardStyle = [
-        "Freestyle",
-        "Freeride",
-        "All-Mountain",
-        "Powder",
-        "Race",
-        "Swallowtail",
-    ];
-    const skiStyle = [
-        "Alpine",
-        "Freeride",
-        "Telemark",
-        "Cross-country",
-        "Freestyle",
-        "Racing",
-        "Powderhound Planks",
-    ];
-    const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-    const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
-    const condition = [
-        "Boneyard",
-        "Heavily used",
-        "Moderately used",
-        "Lightly used",
-        "Like new",
-        "New",
-    ];
-    const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+
+    const flex = GearTags[0];
+    const snowboardStyle = GearTags[1];
+    const skiStyle = GearTags[2];
+    const shape = GearTags[3];
+    const profile = GearTags[4];
+    const condition = GearTags[6];
+    const lacing_system = GearTags[7];
     const size = ["XS", "S", "M", "L", "XL", "XXL"]
 
     const [isOpen, setIsOpen] = useState(false);
 
-    const [filter, setFilter] = useState('');
+    // const [filter, setFilter] = useState('');
     const [category, setCategory] = useState('');
     const [snowboardStyleSearch, setSnowboardStyleSearch] = useState('');
-    const [skiStyleSearch, setSnowboardStyleSearch] = useState('')
-    const [profileSearch, setProfileStyleSearch] = useState('')
+    const [conditionSearch, setConditionSearch] = useState('');
+    const [skiStyleSearch, setSkiStyleSearch] = useState('');
+    const [profileSearch, setProfileSearch] = useState('');
+    const [flexSearch, setFlexSearch] = useState('');
+    const [shapeSearch, setShapeSearch] = useState('');
+    const [lacingSystemSearch, setLacingSystemSearch] = useState('');
+    const [sizeSearch, setSizeStyleSearch] = useState('');
 
     const whatToFilterFor = (event) => {
         setFilter(event)
         console.log(event);
+        
+        
     }
 
     const classes = useStyles();
@@ -86,6 +74,7 @@ function FilterDrawer() {
         setState({ ...state, [anchor]: open });
     };
 
+    // filter list dropdown
     const list = (anchor) => (
         <div
             className={clsx(classes.list, {
@@ -98,9 +87,12 @@ function FilterDrawer() {
         >
             <List>
                 <div className="filterSelect">
+                    {/* condition section */}
                     <div>
                         <label>Condition: </label>
-                        <select name="condition" id="">
+                        <select name="condition" id="" 
+                        value={conditionSearch}
+                        onChange={(event) => { setConditionSearch(event.target.value) }}>
                             <option>Select Condition</option>
                             {condition.map((con) => {
                                 return (
@@ -113,7 +105,9 @@ function FilterDrawer() {
                     </div>
                     <div>
                         <label>Gender: </label>
-                        <select name="gender" id="">
+                        <select name="gender" id=""
+                        
+                        >
                             <option value="">Select Gender</option>
                             <option value="men">Men</option>
                             <option value="woman">Women</option>
@@ -121,7 +115,10 @@ function FilterDrawer() {
                     </div>
                     <div>
                         <label>Category: </label>
-                        <select name="cat" id="" onChange={(event) => { setCategory(event.target.value) }}>
+                        <select name="cat" id="" 
+                        value={category}
+                        onChange={(event) => { setCategory(event.target.value) }}
+                        >
                             <option value="">Select Category</option>
                             <option value="snowboard">Snowboard</option>
                             <option value="snowboardBoots">Snowboard Boots</option>
@@ -133,11 +130,15 @@ function FilterDrawer() {
                             <option value="apparel">Apparel</option>
                         </select>
                     </div>
+                    {/* conditionally renders if snowboard is selected */}
                     <div>
                         {category === "snowboard" ?
                             <div>
                                 <label>Board Style: </label>
-                                <select name="snowboardStyle" id="">
+                                <select name="snowboardStyle" id=""
+                                value={snowboardStyleSearch}
+                                onChange={(event) => { setSnowboardStyleSearch(event.target.value) }}
+                                >
                                     <option>Select Style</option>
                                     {snowboardStyle.map((style) => {
                                         return (
@@ -155,7 +156,10 @@ function FilterDrawer() {
                             <div>
                                 <div>
                                 <label>Ski Style: </label>
-                                <select name="skiStyle" id="">
+                                <select name="skiStyle" id=""
+                                value={skiStyleSearch}
+                                onChange={(event) => { setSkiStyleSearch(event.target.value) }}
+                                >
                                     <option>Select Style</option>
                                     {skiStyle.map((style) => {
                                         return (
@@ -168,7 +172,10 @@ function FilterDrawer() {
                                 </div>
                                 <div>
                                 <label>Ski Profile: </label>
-                                <select name="skiProfile" id="">
+                                <select name="skiProfile" id=""
+                                value={profileSearch}
+                                onChange={(event) => { setProfileSearch(event.target.value) }}
+                                >
                                     <option>Select Profile</option>
                                     {profile.map((prof) => {
                                         return (
