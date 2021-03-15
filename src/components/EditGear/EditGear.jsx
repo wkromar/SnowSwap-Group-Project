@@ -37,7 +37,6 @@ function EditGear() {
   };
 
   //one form, multiple inputs. cancel brings you back to myGear
-  // need inputs to actually be selects
   return (
     <form onSubmit={handleSubmit}>
       <div>

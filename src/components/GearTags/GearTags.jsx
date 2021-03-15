@@ -1,5 +1,6 @@
-const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
+const flex = ["", "Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
 const snowboardStyle = [
+  "",
   "Freestyle",
   "Freeride",
   "All-Mountain",
@@ -8,6 +9,7 @@ const snowboardStyle = [
   "Swallowtail",
 ];
 const skiStyle = [
+  "",
   "Alpine",
   "Freeride",
   "Telemark",
@@ -16,10 +18,17 @@ const skiStyle = [
   "Racing",
   "Powderhound Planks",
 ];
-const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
-const gender = ["Male", "Female"];
+const shape = ["", "Directional", "Directional Twin", "Twin", "Volume Shifted"];
+const profile = [
+  "",
+  "Camber",
+  "Camber rocker combo",
+  "Rocker",
+  "Reverse Camber",
+];
+const gender = ["", "Male", "Female"];
 const condition = [
+  "",
   "Boneyard",
   "Heavily used",
   "Moderately used",
@@ -27,7 +36,7 @@ const condition = [
   "Like new",
   "New",
 ];
-const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+const lacing_system = ["", "Traditional", "Quick-pull", "BOA"];
 let GearTags = [
   flex,
   snowboardStyle,
