@@ -28,6 +28,7 @@ export default function SwapItems() {
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+
   }, []);
   
   const handleAddGearToSwap = () => {
@@ -35,7 +36,11 @@ export default function SwapItems() {
   };
 
   const favoriteItem = (piece) => {
-    dispatch({ type: 'FAVORITE_ITEM', payload: piece });
+    if (piece.favorites_id) {
+      dispatch({ type: 'UNFAVORITE_ITEM', payload: [piece, selectedSwap]})
+    } else {
+      dispatch({ type: 'FAVORITE_ITEM', payload: [piece, selectedSwap] });
+    }
   };
 
   const gearClicked = (piece) => {
@@ -63,11 +68,17 @@ export default function SwapItems() {
                 className="image"
                 src={piece.image[0]}
               />
-              <img
-                onClick={() => favoriteItem(piece)}
+              <div
+              onClick={() => favoriteItem(piece)}
+              >
+                {piece.favorites_id ? <img
                 className="favorite-icon"
                 src="images/favorite.svg"
-              />
+              /> : <img
+              className="favorite-icon"
+              src="images/unfavorite.svg"
+            />}
+                </div>
               <p className="name">
                 {' '}
                 {piece.title} | ${piece.price}{' '}

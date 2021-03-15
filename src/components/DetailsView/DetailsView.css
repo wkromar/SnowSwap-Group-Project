@@ -3,6 +3,7 @@
     position: relative;
     height: 160px;
     width: 160px;
+    justify-content: center;
 }
 
 .right-arrow {
