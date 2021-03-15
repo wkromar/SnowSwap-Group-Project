@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   HashRouter as Router,
   Redirect,
   Route,
   Switch,
-} from "react-router-dom";
-import AboutPage from "../AboutPage/AboutPage";
-import AddGear from "../AddGear/AddGear";
-import AllSwaps from "../AllSwaps/AllSwaps";
-import CreateSwap from "../CreateSwap/CreateSwap";
-import EditGear from "../EditGear/EditGear.jsx";
-import Favorites from "../Favorites/Favorites.jsx";
-import Footer from "../Footer/Footer";
-import InfoPage from "../InfoPage/InfoPage";
-import LandingPage from "../LandingPage/LandingPage";
-import LoginPage from "../LoginPage/LoginPage";
-import MyGear from "../MyGear/MyGear";
-import Nav from "../Nav/Nav";
-import Profile from "../Profile/Profile.jsx";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import RegisterPage from "../RegisterPage/RegisterPage";
-import SwapItems from "../SwapItems/SwapItems";
-import "./App.css";
+} from 'react-router-dom';
+import AboutPage from '../AboutPage/AboutPage';
+import AddGear from '../AddGear/AddGear';
+import AllSwaps from '../AllSwaps/AllSwaps';
+import CreateSwap from '../CreateSwap/CreateSwap';
+import EditGear from '../EditGear/EditGear.jsx';
+import Favorites from '../Favorites/Favorites.jsx';
+import Footer from '../Footer/Footer';
+import InfoPage from '../InfoPage/InfoPage';
+import LandingPage from '../LandingPage/LandingPage';
+import LoginPage from '../LoginPage/LoginPage';
+import MyGear from '../MyGear/MyGear';
+import Nav from '../Nav/Nav';
+import Profile from '../Profile/Profile.jsx';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import RegisterPage from '../RegisterPage/RegisterPage';
+import SwapItems from '../SwapItems/SwapItems';
+import './App.css';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch({ type: "FETCH_USER" });
+    dispatch({ type: 'FETCH_USER' });
   }, [dispatch]);
 
   return (
@@ -134,7 +134,13 @@ function App() {
           <ProtectedRoute exact path="/profile">
             <Profile />
           </ProtectedRoute>
+
           <ProtectedRoute exact path="/createEvent">
+            <CreateSwap />
+          </ProtectedRoute>
+
+          {/* edit route */}
+          <ProtectedRoute exact path="/createEvent/:slug">
             <CreateSwap />
           </ProtectedRoute>
 
