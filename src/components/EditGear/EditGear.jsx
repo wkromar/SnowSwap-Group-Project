@@ -12,9 +12,11 @@ function EditGear() {
   const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log(categories);
 
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -61,10 +63,10 @@ function EditGear() {
           <option default="" value="" disabled>
             Choose an item
           </option>
-          {categories.map((categories) => {
+          {categories.map((category) => {
             return (
-              <option key={categories.name} value={categories.id}>
-                {categories.name}
+              <option key={category.name} value={category.id}>
+                {category.name}
               </option>
             );
           })}

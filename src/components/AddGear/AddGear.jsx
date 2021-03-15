@@ -10,7 +10,7 @@ function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
   const user = useSelector((store) => store.user);
   const categories = useSelector((store) => store.categories);
-  console.log(gearToAdd);
+  console.log(categories);
   console.log(category);
   const dispatch = useDispatch();
   const history = useHistory();
