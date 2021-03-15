@@ -15,6 +15,7 @@ export default function AllSwaps() {
 
   const handleClick = (swap) => {
     dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+    localStorage.setItem('swap-object', JSON.stringify(swap));
     history.push('/swapItems');
   };
 
