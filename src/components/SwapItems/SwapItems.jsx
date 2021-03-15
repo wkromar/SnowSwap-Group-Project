@@ -58,7 +58,7 @@ export default function SwapItems() {
           Add Gear To This Swap
         </button>
       </div>
-      <p className="title"> Swap ID: {selectedSwap.id} (need access to swap name) </p>
+      <p className="title"> {selectedSwap.name} </p>
       <div className="container">
         {swapItems &&
           swapItems?.map((piece) => (
