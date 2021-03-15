@@ -22,7 +22,7 @@ export default function SwapItems() {
   
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const swapItems = useSelector((state) => state?.swapItems);
-  // const gear = useSelector((state) => state.gear);
+  const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
   
@@ -53,7 +53,7 @@ export default function SwapItems() {
           Add Gear To This Swap
         </button>
       </div>
-      <p className="title"> SWAP NAME HERE </p>
+      <p className="title"> Swap ID: {selectedSwap.id} (need access to swap name) </p>
       <div className="container">
         {swapItems &&
           swapItems?.map((piece) => (

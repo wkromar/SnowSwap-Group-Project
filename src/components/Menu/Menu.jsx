@@ -1,17 +1,17 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import LogOutButton from "../LogOutButton/LogOutButton";
-import "../Menu/Menu.css";
+import React from 'react';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import LogOutButton from '../LogOutButton/LogOutButton';
+import '../Menu/Menu.css';
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMenuClick = () => {
     if (isOpen) {
-      return "menu-open";
+      return 'menu-open';
     } else {
-      return "menu-closed";
+      return 'menu-closed';
     }
   };
 
@@ -28,7 +28,7 @@ export default function Menu() {
             Profile
           </Link>
           <Link to="/createEvent" className="menuItem">
-            Create Event
+            Create Swap
           </Link>
           <Link to="myGear" className="menuItem">
             My Gear

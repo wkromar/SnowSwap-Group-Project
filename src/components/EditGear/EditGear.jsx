@@ -4,63 +4,30 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import "./EditGear.css";
+import GearTags from "../GearTags/GearTags";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
-
-  console.log(gearToEdit);
+  const [itemToEdit, setItemToEdit] = useState(gearToEdit);
+  const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
-
-  // selections for input fields
-  const size = ["XS", "S", "M", "L", "XL", "XXL"];
-  const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
-  const snowboardStyle = [
-    "Freestyle",
-    "Freeride",
-    "All-Mountain",
-    "Powder",
-    "Race",
-    "Swallowtail",
-  ];
-  const skiStyle = [
-    "Alpine",
-    "Freeride",
-    "Telemark",
-    "Cross-country",
-    "Freestyle",
-    "Racing",
-    "Powderhound Planks",
-  ];
-  const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-  const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
-  const gender = ["Male", "Female"];
-  const condition = [
-    "Boneyard",
-    "Heavily used",
-    "Moderately used",
-    "Lightly used",
-    "Like new",
-    "New",
-  ];
-  const lacing_system = ["Traditional", "Quick-pull", "BOA"];
 
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
-    setGearToAdd({
-      ...gearToAdd,
+    setItemToEdit({
+      ...itemToEdit,
       [event.target.name]: event.target.value,
     });
   };
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: "EDIT_GEAR", payload: gearToEdit });
-    console.log(gearToAdd);
-    dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "CHANGE_GEAR", payload: itemToEdit });
+    console.log(gearToEdit);
     history.push("/myGear");
   };
   //go back to gear
@@ -74,28 +41,31 @@ function EditGear() {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        {/* {editGear.map((gearToEdit) =>(<div></div>))} */}
         <p>Title</p>
         <input
           type="text"
-          value={gearToEdit?.title}
+          value={itemToEdit?.title}
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        {/* <ImageUpload gearToEdit={gearToEdit} setGearToEdit={setGearToEdit} /> */}
-        <p>Size</p>
+        <ImageUpload
+          itemToEdit={itemToEdit.url}
+          setItemToEdit={setItemToEdit}
+        />
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToEdit?.size}
+          name="type"
+          value={itemToEdit?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Size
+          <option default="" value="" disabled>
+            Choose an item
           </option>
-          {size.map((size) => {
+          {categories.map((categories) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={categories.name} value={categories.id}>
+                {categories.name}
               </option>
             );
           })}
@@ -104,12 +74,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="flex"
-          value={gearToEdit?.flex}
+          value={itemToEdit?.flex}
         >
           <option value="" disabled>
             Choose a Flex
           </option>
-          {flex.map((flex) => {
+          {GearTags[0].map((flex) => {
             return (
               <option key={flex} value={flex}>
                 {flex}
@@ -120,13 +90,13 @@ function EditGear() {
         <p>Style</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="snowboardStyle"
-          value={gearToEdit?.style}
+          name="style"
+          value={itemToEdit?.style}
         >
           <option value="" disabled>
             Choose a Style
           </option>
-          {snowboardStyle.map((style) => {
+          {GearTags[1].map((style) => {
             return (
               <option key={style} value={style}>
                 {style}
@@ -139,12 +109,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="shape"
-          value={gearToEdit?.shape}
+          value={itemToEdit?.shape}
         >
           <option value="" disabled>
             Choose a Shape
           </option>
-          {shape.map((shape) => {
+          {GearTags[3].map((shape) => {
             return (
               <option key={shape} value={shape}>
                 {shape}
@@ -156,12 +126,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="gender"
-          value={gearToEdit?.gender}
+          value={itemToEdit?.gender}
         >
           <option value="" disabled>
             Choose a Gender
           </option>
-          {gender.map((gender) => {
+          {GearTags[5].map((gender) => {
             return (
               <option key={gender} value={gender}>
                 {gender}
@@ -173,12 +143,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="size"
-          value={gearToEdit?.condition}
+          value={itemToEdit?.condition}
         >
           <option value="" disabled>
             Choose a Condition
           </option>
-          {condition.map((condition) => {
+          {GearTags[6].map((condition) => {
             return (
               <option key={condition} value={condition}>
                 {condition}
@@ -190,12 +160,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="lacing_system"
-          value={gearToEdit?.lacing_system}
+          value={itemToEdit?.lacing_system}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a System
           </option>
-          {lacing_system.map((lacing_system) => {
+          {GearTags[7].map((lacing_system) => {
             return (
               <option key={lacing_system} value={lacing_system}>
                 {lacing_system}
@@ -207,12 +177,12 @@ function EditGear() {
         <select
           onChange={(event) => handleChange(event)}
           name="profile"
-          value={gearToEdit?.profile}
+          value={itemToEdit?.profile}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a Profile
           </option>
-          {lacing_system.map((profile) => {
+          {GearTags[4].map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -220,30 +190,37 @@ function EditGear() {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={itemToEdit?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"
-          value={gearToEdit?.price}
+          value={itemToEdit?.price}
           onChange={(event) => handleChange(event)}
           name="price"
         />
         <p>Brand</p>
         <input
           type="text"
-          value={gearToEdit?.brand}
+          value={itemToEdit?.brand}
           onChange={(event) => handleChange(event)}
           name="brand"
         />
         <p>Description</p>
         <input
           type="text"
-          value={gearToEdit?.description}
+          value={itemToEdit?.description}
           onChange={(event) => handleChange(event)}
           name="description"
         />
       </div>
       <div>
-        <button type="submit">Add</button>
+        <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
       </div>
     </form>

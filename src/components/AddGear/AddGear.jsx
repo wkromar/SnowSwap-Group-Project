@@ -4,48 +4,22 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import ImageUpload from "../ImageUpload/ImageUpload";
 import "./AddGear.css";
+import GearTags from "../GearTags/GearTags";
 
 function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
   const user = useSelector((store) => store.user);
+  const categories = useSelector((store) => store.categories);
   console.log(gearToAdd);
   const dispatch = useDispatch();
   const history = useHistory();
-
+  let showField = false;
   // selections for input fields
-  const size = ["XS", "S", "M", "L", "XL", "XXL"];
-  const flex = ["Stiff", "Semi-stiff", "Mid", "Semi-flex", "Flex"];
-  const snowboardStyle = [
-    "Freestyle",
-    "Freeride",
-    "All-Mountain",
-    "Powder",
-    "Race",
-    "Swallowtail",
-  ];
-  const skiStyle = [
-    "Alpine",
-    "Freeride",
-    "Telemark",
-    "Cross-country",
-    "Freestyle",
-    "Racing",
-    "Powderhound Planks",
-  ];
-  const shape = ["Directional", "Directional Twin", "Twin", "Volume Shifted"];
-  const profile = ["Camber", "Camber rocker combo", "Rocker", "Reverse Camber"];
-  const gender = ["Male", "Female"];
-  const condition = [
-    "Boneyard",
-    "Heavily used",
-    "Moderately used",
-    "Lightly used",
-    "Like new",
-    "New",
-  ];
-  const lacing_system = ["Traditional", "Quick-pull", "BOA"];
+  console.log(GearTags);
+  // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -59,8 +33,7 @@ function AddGear({ gear }) {
     event.preventDefault();
     dispatch({ type: "ADD_GEAR", payload: gearToAdd });
     console.log(gearToAdd);
-    // setEditMode(!editMode);
-    // need to change
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
@@ -81,23 +54,25 @@ function AddGear({ gear }) {
           name="title"
         />
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
-        <p>Size</p>
+        <p>Categories</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
-          value={gearToAdd?.size}
+          name="type"
+          value={gearToAdd?.type}
+          default=""
         >
-          <option value="" disabled>
-            Choose a Size
+          <option default="" value="" disabled>
+            Choose an item
           </option>
-          {size.map((size) => {
+          {categories.map((categories) => {
             return (
-              <option key={size} value={size}>
-                {size}
+              <option key={categories.name} value={categories.id}>
+                {categories.name}
               </option>
             );
           })}
         </select>
+
         <p>Flex</p>
         <select
           onChange={(event) => handleChange(event)}
@@ -107,7 +82,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Flex
           </option>
-          {flex.map((flex) => {
+          {GearTags[0].map((flex) => {
             return (
               <option key={flex} value={flex}>
                 {flex}
@@ -124,7 +99,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Style
           </option>
-          {snowboardStyle.map((style) => {
+          {GearTags[1].map((style) => {
             return (
               <option key={style} value={style}>
                 {style}
@@ -142,7 +117,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Shape
           </option>
-          {shape.map((shape) => {
+          {GearTags[3].map((shape) => {
             return (
               <option key={shape} value={shape}>
                 {shape}
@@ -159,7 +134,7 @@ function AddGear({ gear }) {
           <option value="" disabled>
             Choose a Gender
           </option>
-          {gender.map((gender) => {
+          {GearTags[5].map((gender) => {
             return (
               <option key={gender} value={gender}>
                 {gender}
@@ -170,13 +145,13 @@ function AddGear({ gear }) {
         <p>Condition</p>
         <select
           onChange={(event) => handleChange(event)}
-          name="size"
+          name="condition"
           value={gearToAdd?.condition}
         >
           <option value="" disabled>
             Choose a Condition
           </option>
-          {condition.map((condition) => {
+          {GearTags[6].map((condition) => {
             return (
               <option key={condition} value={condition}>
                 {condition}
@@ -191,9 +166,9 @@ function AddGear({ gear }) {
           value={gearToAdd?.lacing_system}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a System
           </option>
-          {lacing_system.map((lacing_system) => {
+          {GearTags[7].map((lacing_system) => {
             return (
               <option key={lacing_system} value={lacing_system}>
                 {lacing_system}
@@ -208,9 +183,9 @@ function AddGear({ gear }) {
           value={gearToAdd?.profile}
         >
           <option value="" disabled>
-            Choose a Size
+            Choose a Profile
           </option>
-          {lacing_system.map((profile) => {
+          {GearTags[4].map((profile) => {
             return (
               <option key={profile} value={profile}>
                 {profile}
@@ -218,6 +193,13 @@ function AddGear({ gear }) {
             );
           })}
         </select>
+        <p>Size</p>
+        <input
+          type="decimal"
+          value={gearToAdd?.size}
+          onChange={(event) => handleChange(event)}
+          name="size"
+        />
         <p>Price</p>
         <input
           type="decimal"

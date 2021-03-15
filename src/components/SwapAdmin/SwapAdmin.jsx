@@ -19,7 +19,7 @@ export default function SwapAdmin() {
         {ownedSwaps?.map((swap) => {
           return (
             <li className="li-with-button" key={swap.id}>
-              <div>{swap.swap_name}</div>
+              <div>{swap.name}</div>
               <div>
                 {new Date(swap.stop_date) > new Date() ? (
                   <button>Edit Swap</button>
