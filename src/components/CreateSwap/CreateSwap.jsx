@@ -18,6 +18,8 @@ export default function CreateSwap() {
     access_code: '',
     swap_name: '',
     swap_img: '',
+    pre_sale_duration: '',
+    sale_duration: '',
   };
 
   const [swapInfo, setSwapInfo] = useState(defaultState);
@@ -31,18 +33,13 @@ export default function CreateSwap() {
   console.log(swapInfo);
   console.log('params', slug);
 
-  const [dayMathObj, setDayMathObj] = useState({
-    preSale: '',
-    sale: '',
-    startDate: '',
-  });
-
   const dateFormat = 'yyyy-MM-dd';
 
   const dayMath = () => {
-    const startDate = new Date(dayMathObj.startDate);
+    const startDate = new Date(swapInfo.start_date);
 
-    const daysToAdd = Number(dayMathObj.preSale) + Number(dayMathObj.sale) + 1;
+    const daysToAdd =
+      Number(swapInfo.pre_sale_duration) + Number(swapInfo.sale_duration) + 1;
 
     const stopDate = format(
       addDays(new Date(startDate), daysToAdd),
@@ -54,7 +51,7 @@ export default function CreateSwap() {
         new Date(
           startDate.valueOf() + startDate.getTimezoneOffset() * 60 * 1000
         ),
-        dayMathObj.preSale
+        swapInfo.pre_sale_duration
       ),
       dateFormat
     );
@@ -78,14 +75,6 @@ export default function CreateSwap() {
     setSwapInfo({ ...swapInfo, [event.target.name]: event.target.value });
   };
 
-  const handleDurationChange = (event) => {
-    setDayMathObj({ ...dayMathObj, [event.target.name]: event.target.value });
-  };
-
-  const handleDateChange = (event) => {
-    setDayMathObj({ ...dayMathObj, startDate: event });
-  };
-
   const handleRequestAccess = () => {
     dispatch({ type: 'REQUEST_UPGRADE' });
   };
@@ -103,17 +92,12 @@ export default function CreateSwap() {
     if (slug === 'edit' && selectedSwap.owner === user.id) {
       setSwapInfo({
         is_private: selectedSwap.is_private.toString(),
-        start_date: selectedSwap.start_date,
+        start_date: format(new Date(selectedSwap.start_date), dateFormat),
         sell_date: selectedSwap.sell_date,
         stop_date: selectedSwap.stop_date,
         access_code: selectedSwap.access_code,
         swap_name: selectedSwap.name,
         swap_img: selectedSwap.swap_img,
-      });
-
-      setDayMathObj({
-        ...dayMathObj,
-        startDate: format(new Date(selectedSwap.start_date), dateFormat),
       });
     } else {
       //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
@@ -125,10 +109,10 @@ export default function CreateSwap() {
   }, []);
 
   useEffect(() => {
-    if (dayMathObj.startDate) {
+    if (swapInfo.start_date) {
       dayMath();
     }
-  }, [dayMathObj]);
+  }, [swapInfo.start_date]);
 
   return (
     <div>
@@ -188,9 +172,9 @@ export default function CreateSwap() {
           <label>
             Pre-Sale Duration
             <input
-              onChange={(event) => handleDurationChange(event)}
-              value={dayMathObj.preSale}
-              name="preSale"
+              onChange={(event) => handleSwapInfo(event)}
+              value={swapInfo.pre_sale_duration}
+              name="pre_sale_duration"
               required
               type="number"
             />
@@ -199,9 +183,9 @@ export default function CreateSwap() {
           <label>
             Sale Duration
             <input
-              onChange={(event) => handleDurationChange(event)}
-              value={dayMathObj.sale}
-              name="sale"
+              onChange={(event) => handleSwapInfo(event)}
+              value={swapInfo.sale_duration}
+              name="sale_duration"
               required
               type="number"
             />
@@ -210,8 +194,9 @@ export default function CreateSwap() {
           <label>
             Start Date
             <input
-              onChange={(event) => handleDateChange(event.target.value)}
-              value={dayMathObj.startDate}
+              onChange={(event) => handleSwapInfo(event)}
+              value={swapInfo.start_date}
+              name="start_date"
               required
               type="date"
             />
