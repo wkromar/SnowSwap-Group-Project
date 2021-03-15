@@ -36,7 +36,7 @@ export default function Favorites() {
   };
 
   const unFavorite = (piece) => {
-    dispatch({type: "UNFAVORITE_ITEM", payload: piece});
+    dispatch({type: "UNFAVORITE_FROM_FAVORITES", payload: piece});
   }
 
   return (
@@ -48,10 +48,12 @@ export default function Favorites() {
         {favorites.map((piece) => (
           <div className="item">
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
-            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/unfavorite.svg" />
+            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/favorite.svg" />
             <p className="name">
-              {" "}
-              {piece.title} | ${piece.price}{" "}
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
             </p>
           </div>
         ))}
