@@ -28,6 +28,7 @@ const useStyles = makeStyles({
 
 function FilterDrawer({ filter, setFilter }) {
 
+    const dispatch = useDispatch();
 
     const flex = GearTags[0];
     const snowboardStyle = GearTags[1];
@@ -47,36 +48,108 @@ function FilterDrawer({ filter, setFilter }) {
     const [profileSearch, setProfileSearch] = useState('');
     const [flexSearch, setFlexSearch] = useState('');
     const [shapeSearch, setShapeSearch] = useState('');
+    const [gender, setGender] = useState('');
     const [lacingSystemSearch, setLacingSystemSearch] = useState('');
-    const [sizeSearch, setSizeStyleSearch] = useState('');
+    const [sizeSearch, setSizeSearch] = useState('');
 
-    // const [searchObj, setSearchObj] = useState({})
-    const searchObj = {}
+    const [searchObj, setSearchObj] = useState({})
+    
 
     const whatToFilterFor = (event) => {
-        
+
         console.log(event);
 
     }
 
-    const catSelected = (event) => {
-        
+
+// Updates the object that will be used to filter the items displayed
+    const updateSearchObj = (key, value) => {
+            setSearchObj({...searchObj, [key] : value})
+        }
+
+// These functions will call the update function and set the select values.
+    const catSelected = (cat) => {
+
         console.log('cat selected');
-        // setCategory(event);
-        updateSearchObj('category', event);
+        setCategory(cat);
+        setSearchObj({'category' : cat});
+        setConditionSearch('')
+        setGender('')
     }
 
+    const conditionSelected = (con) => {
+
+        console.log('con selected');
+        setConditionSearch(con);
+        updateSearchObj('condition', con);
+    }
+
+    const genderSelected = (gen) => {
+
+        console.log('gen selected');
+        setGender(gen);
+        updateSearchObj('gender', gen);
+    }
+
+    const snowboardStyleSelected = (board) => {
+
+        console.log('board style selected');
+        setSnowboardStyleSearch(board);
+        updateSearchObj('style', board);
+    }
+
+    const skiStyleSelected = (ski) => {
+
+        console.log('ski style selected');
+        setSkiStyleSearch(ski);
+        updateSearchObj('style', ski);
+    }
+
+    const profileSelected = (profile) => {
+
+        console.log('profile selected');
+        setProfileSearch(profile);
+        updateSearchObj('profile', profile);
+    }
+
+    const lacingSystemSelected = (ski) => {
+
+        console.log('lacing system selected');
+        setLacingSystemSearch(ski);
+        updateSearchObj('lacing_system', ski);
+    }
+
+    const flexSelected = (flex) => {
+
+        console.log('flex selected');
+        setFlexSearch(flex);
+        updateSearchObj('flex', flex);
+    }
+
+    const sizeSelected = (size) => {
+
+        console.log('size selected');
+        setSizeSearch(size);
+        updateSearchObj('size', size);
+    }
+
+
+
+    
+// When apply is clicked it sends over the object to be filtered against.
     const applyFilter = () => {
         console.log('apply clicked');
         console.log('searchObj:', searchObj);
-        
-    }
 
-    const updateSearchObj =(key, value) => {
-        searchObj[key] = value
+        dispatch({type: 'SET_FILTER_OBJECT', payload: searchObj})
     }
 
     
+
+    
+    
+
+
 
     const classes = useStyles();
     const [state, setState] = React.useState({
@@ -107,32 +180,7 @@ function FilterDrawer({ filter, setFilter }) {
         >
             <List>
                 <div className="filterSelect">
-                    {/* condition section */}
-                    <div>
-                        <label>Condition: </label>
-                        <select name="condition" id=""
-                            value={conditionSearch}
-                            onChange={(event) => { updateSearchObj('condition', event.target.value) }}>
-                            <option>Select Condition</option>
-                            {condition.map((con) => {
-                                return (
-                                    <option key={con} value={con}>
-                                        {con}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
-                    <div>
-                        <label>Gender: </label>
-                        <select name="gender" id=""
 
-                        >
-                            <option value="">Select Gender</option>
-                            <option value="men">Men</option>
-                            <option value="woman">Women</option>
-                        </select>
-                    </div>
                     <div>
                         <label>Category: </label>
                         <select name="cat" id=""
@@ -150,6 +198,34 @@ function FilterDrawer({ filter, setFilter }) {
                             <option value="apparel">Apparel</option>
                         </select>
                     </div>
+                    {/* condition section */}
+                    <div>
+                        <label>Condition: </label>
+                        <select name="condition" id=""
+                            value={conditionSearch}
+                            onChange={(event) => { conditionSelected(event.target.value) }}>
+                            <option>Select Condition</option>
+                            {condition.map((con) => {
+                                return (
+                                    <option key={con} value={con}>
+                                        {con}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                    </div>
+                    <div>
+                        <label>Gender: </label>
+                        <select name="gender" id=""
+                            value={gender}
+                            onChange={(event) => { genderSelected(event.target.value) }}
+                        >
+                            <option value="">Select Gender</option>
+                            <option value="men">Men</option>
+                            <option value="woman">Women</option>
+                        </select>
+                    </div>
+                    
                     {/* conditionally renders if snowboard is selected */}
                     <div>
                         {category === "snowboard" ?
@@ -157,7 +233,7 @@ function FilterDrawer({ filter, setFilter }) {
                                 <label>Board Style: </label>
                                 <select name="snowboardStyle" id=""
                                     value={snowboardStyleSearch}
-                                    onChange={(event) => { updateSearchObj('style', event.target.value) }}
+                                    onChange={(event) => { snowboardStyleSelected( event.target.value) }}
                                 >
                                     <option>Select Style</option>
                                     {snowboardStyle.map((style) => {
@@ -178,7 +254,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     <label>Ski Style: </label>
                                     <select name="skiStyle" id=""
                                         value={skiStyleSearch}
-                                        onChange={(event) => { updateSearchObj('style', event.target.value) }}
+                                        onChange={(event) => { skiStyleSelected(event.target.value) }}
                                     >
                                         <option>Select Style</option>
                                         {skiStyle.map((style) => {
@@ -194,7 +270,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     <label>Ski Profile: </label>
                                     <select name="skiProfile" id=""
                                         value={profileSearch}
-                                        onChange={(event) => { updateSearchObj('profile', event.target.value) }}
+                                        onChange={(event) => { profileSelected(event.target.value) }}
                                     >
                                         <option>Select Profile</option>
                                         {profile.map((prof) => {
@@ -215,9 +291,9 @@ function FilterDrawer({ filter, setFilter }) {
                             <div>
                                 <label>Lacing System: </label>
                                 <select name="lacing_system" id=""
-                                value={lacingSystemSearch}
-                                onChange={(event) => { updateSearchObj('lacing_system', event.target.value) }}
-                            >
+                                    value={lacingSystemSearch}
+                                    onChange={(event) => { lacingSystemSelected(event.target.value) }}
+                                >
                                     <option>Select Laces</option>
                                     {lacing_system.map((system) => {
                                         return (
@@ -234,7 +310,10 @@ function FilterDrawer({ filter, setFilter }) {
                         {category === "skiBoots" ?
                             <div>
                                 <label>Boot Flex: </label>
-                                <select name="flex" id="">
+                                <select name="flex" id=""
+                                    value={flexSearch}
+                                    onChange={(event) => { flexSelected(event.target.value) }}
+                                >
                                     <option>Select Laces</option>
                                     {flex.map((flex) => {
                                         return (
@@ -248,10 +327,16 @@ function FilterDrawer({ filter, setFilter }) {
                             :
                             null}
 
-                        {category === "helmet" ?
+                        {category === "helmet" ||
+                            category === "apparel" ||
+                            category === "snowboardBoots" ||
+                            category === "skiBoots" ?
                             <div>
-                                <label>Helmet Size: </label>
-                                <select name="helmet" id="">
+                                <label>Size: </label>
+                                <select name="size" id=""
+                                    value={sizeSearch}
+                                    onChange={(event) => { sizeSelected(event.target.value) }}
+                                >
                                     <option>Select Size</option>
                                     {size.map((size) => {
                                         return (

@@ -20,6 +20,8 @@ const customStyles = {
 
 export default function SwapItems() {
   const dispatch = useDispatch();
+
+  const filterObject = useSelector((state) => state?.filterObject)
   
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const swapItems = useSelector((state) => state?.swapItems);
@@ -50,6 +52,7 @@ export default function SwapItems() {
 
   console.log('swapItems:', swapItems);
 
+  console.log('swapItems - filterObject:', filterObject);
 
   // let filteredSwapItems = swapItems.filter(item => {
   //   if (reduxItem.cat) {
