@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import Modal from 'react-modal';
 import '../SwapItems/SwapItems.css';
 import DetailsView from '../DetailsView/DetailsView';
+import AddGearToSwap from '../AddGearToSwap/AddGearToSwap';
 
 const customStyles = {
   content: {
@@ -27,7 +28,7 @@ export default function SwapItems() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
   const handleAddGearToSwap = () => {
-    return console.log('Clicked Add Gear To This Swap');
+    dispatch({type: "OPEN_ADD_VIEW"})
   };
 
   const favoriteItem = (piece) => {
@@ -95,6 +96,15 @@ export default function SwapItems() {
         contentLabel="Detail View"
       >
         <DetailsView />
+      </Modal>
+      <Modal
+        ariaHideApp={false}
+        isOpen={modalStatus.addGearView}
+        onRequestClose={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
+        styles={customStyles}
+        contentLabel="Add View"
+      >
+        <AddGearToSwap/>
       </Modal>
     </>
   );

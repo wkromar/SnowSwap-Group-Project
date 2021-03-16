@@ -40,6 +40,12 @@ function* createSwap(action) {
     }
 }
 
+function* addSelectedToSwap(action) {
+    try {
+        console.log('!!!!!', action.payload.gearToAdd)
+        yield axios.post('api/swaps/addToSwap', action.payload);
+        yield put({ type: 'FETCH_SWAP_ITEMS'})
+
 function* editSwap(action) {
     try {
         yield axios.put(`/api/swaps/edit/${action.payload.id}`, action.payload);
@@ -63,6 +69,7 @@ export default function* swapSaga() {
     yield takeLatest('FETCH_SWAP_ITEMS', fetchSwapItems);
     yield takeLatest('FETCH_ALL_SWAPS', fetchAllSwaps);
     yield takeLatest('CREATE_SWAP', createSwap);
+    yield takeLatest('ADD_SELECTED_TO_SWAP', addSelectedToSwap)
     yield takeLatest('EDIT_SWAP', editSwap);
     yield takeLatest('REMOVE_FROM_SWAP', removeFromSwap);
 }
