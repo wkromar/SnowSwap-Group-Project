@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 
 export default function SwapAdmin() {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ export default function SwapAdmin() {
   const handleClick = (swap) => {
     dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
     localStorage.setItem('swap-object', JSON.stringify(swap));
-    history.push('/createEvent/edit')
+    history.push(`/createEvent/edit/${swap.id}`)
   };
 
   return (
