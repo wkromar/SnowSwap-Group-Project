@@ -26,6 +26,8 @@ function* fetchAllSwaps() {
     try {
         const response = yield axios.get('/api/swaps');
         yield put({ type: 'SET_ALL_SWAPS', payload: response.data });
+        const joinedResponse = yield axios.get('/api/swaps/swapsJoined');
+        yield put({ type: 'SET_JOINED_SWAPS', payload: joinedResponse.data });
     } catch (err) {
         console.log(err);
     }
