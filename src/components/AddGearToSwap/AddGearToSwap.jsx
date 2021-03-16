@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import AddGear from "../AddGear/AddGear";
+import { useHistory, useParams } from "react-router-dom";
 import "../AddGearToSwap/AddGearToSwap.css";
 
 export default function AddGearToSwap({selectedSwap}) {
   const dispatch = useDispatch();
 
+    //grab id out of the url
+    const { id } = useParams();
   
   const gear = useSelector((state) => state?.gear);
   const gearToAdd = useSelector((state) => state?.gearToAdd);
@@ -21,7 +23,7 @@ export default function AddGearToSwap({selectedSwap}) {
   // }, [swapItems]);
 
   const addGear = (piece) => {
-    dispatch({ type: "ADD_SELECTED_TO_SWAP", payload: {piece_id: piece.id, selectedSwap} });
+    dispatch({ type: "ADD_SELECTED_TO_SWAP", payload: {piece_id: piece.id, id} });
   };
 
   // const unaddedItems = () => {

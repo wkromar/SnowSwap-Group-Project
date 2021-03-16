@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import "../SwapItems/SwapItems.css";
 import DetailsView from "../DetailsView/DetailsView";
@@ -20,6 +20,9 @@ const customStyles = {
 
 export default function SwapItems() {
   const dispatch = useDispatch();
+
+  //grab id out of the url
+  const { id } = useParams();
 
   const selectedSwap = useSelector((state) => state?.selectedSwap);
 
@@ -45,15 +48,16 @@ export default function SwapItems() {
     dispatch({ type: "OPEN_DETAIL_VIEW" });
   };
 
-  const removeGear = (id) => {
-    dispatch({ type: "REMOVE_FROM_SWAP", payload: {swap_item_id: id, swap_id: selectedSwap.id} });
+  const removeGear = (swapItemId) => {
+    dispatch({ type: "REMOVE_FROM_SWAP", payload: {swap_item_id: swapItemId, swap_id: id} });
   };
 
   console.log("swapItems:", swapItems);
 
   useEffect(() => {
-    const swapDetails = localStorage.getItem("swap-object");
-    dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
+    // const swapDetails = localStorage.getItem("swap-object");
+    // dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
+    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
 
   return (

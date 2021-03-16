@@ -77,7 +77,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
-    .query(queryText, [item.piece_id, item.selectedSwap.id])
+    .query(queryText, [item.piece_id, item.id])
     .then((response) => {
       console.log(response);
       res.sendStatus(200);
@@ -93,6 +93,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
 
   const swapID = req.params.id;
+  console.log(`req.params`, req.params)
   console.log('swapID', swapID);
 
   const queryText = `

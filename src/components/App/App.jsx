@@ -125,7 +125,7 @@ function App() {
             <Favorites />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/swapItems">
+          <ProtectedRoute exact path="/swapItems/:id">
             <SwapItems />
           </ProtectedRoute>
 
