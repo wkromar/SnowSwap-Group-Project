@@ -1,11 +1,27 @@
 import React, { useEffect } from 'react';
+import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import SwapCodeModal from '../SwapCodeModal/SwapCodeModal';
 import './AllSwaps.css';
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    position: 'relative',
+  },
+};
 
 export default function AllSwaps() {
   const dispatch = useDispatch();
   const allSwaps = useSelector((state) => state.allSwaps);
+  const joinedSwaps = useSelector((state) => state.joinedSwaps);
+  const modalStatus = useSelector((state) => state.modal);
   const history = useHistory();
   console.log(allSwaps);
 
@@ -19,27 +35,48 @@ export default function AllSwaps() {
     history.push('/swapItems');
   };
 
+  const handleClickAll = (swap) => {
+    if (swap.is_private) {
+      dispatch({ type: 'SWAP_CODE_OPEN' });
+      dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+      localStorage.setItem('swap-object', JSON.stringify(swap));
+    } else {
+      dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+      localStorage.setItem('swap-object', JSON.stringify(swap));
+      history.push('/swapItems');
+    }
+  };
+
   return (
     <div>
       <div>My Swaps:</div>
-
-      <div>All Swaps:</div>
       <div className="card-container">
-        {allSwaps.map((swap) => {
+        {joinedSwaps.map((swap) => {
           return (
             <div onClick={() => handleClick(swap)}>
               {new Date(swap.stop_date) > new Date() && (
                 <div className="swap-card">
-                  <img src={swap.swap_img} alt="Rad snowboard man" />
+                  <img src={swap.swap_img} alt="" />
                   <div className="title-lock">
                     <p>{swap.name}</p>
-                    {swap.is_private && <img src="images/lock.svg" />}
                   </div>
                   <div className="days-until">
                     {swap.swap_open ? (
-                      <p>Days Remaining:</p>
+                      <p>
+                        Days Remaing:{' '}
+                        {Math.round(
+                          (new Date() - new Date(swap.stop_date)) /
+                            (1000 * 60 * 60 * 24)
+                        ).toString()}
+                      </p>
                     ) : (
-                      <p>Days until swap:</p>
+                      <p>
+                        Days until swap:{' '}
+                        {Math.round(
+                          (new Date(swap.sell_date) - new Date()) /
+                            (1000 * 60 * 60 * 24)
+                        ).toString()}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -48,6 +85,53 @@ export default function AllSwaps() {
           );
         })}
       </div>
+      <div>All Swaps:</div>
+      <div className="card-container">
+        {allSwaps.map((swap) => {
+          return (
+            <div onClick={() => handleClickAll(swap)}>
+              {new Date(swap.stop_date) > new Date() && (
+                <div className="swap-card">
+                  <img src={swap.swap_img} alt="" />
+                  <div className="title-lock">
+                    <p>{swap.name}</p>
+                    {swap.is_private && <img src="images/lock.svg" />}
+                  </div>
+                  <div className="days-until">
+                    {swap.swap_open ? (
+
+                      <p>
+                        Days Remaing:{' '}
+                        {Math.round(
+                          (new Date() - new Date(swap.stop_date)) /
+                            (1000 * 60 * 60 * 24)
+                        ).toString()}
+                      </p>
+                    ) : (
+                      <p>
+                        Days until swap:{' '}
+                        {Math.round(
+                          (new Date(swap.sell_date) - new Date()) /
+                            (1000 * 60 * 60 * 24)
+                        ).toString()}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <Modal
+        ariaHideApp={false}
+        isOpen={modalStatus.swapCodeView}
+        onRequestClose={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}
+        styles={customStyles}
+        contentLabel="Detail View"
+      >
+        <SwapCodeModal />
+      </Modal>
     </div>
   );
 }
