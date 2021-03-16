@@ -11,6 +11,10 @@ const modalReducer = (
       return { ...state, enlargeView: true };
     case "ENLARGE_IMAGE_CLOSE":
       return { ...state, enlargeView: false };
+    case "SWAP_CODE_OPEN":
+      return { ...state, swapCodeView: true };
+    case "SWAP_CODE_CLOSE":
+      return { ...state, swapCodeView: false };
     default:
       return state;
   }
