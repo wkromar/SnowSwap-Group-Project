@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .item {
+      border: 1px solid black;
+      border-radius: 5px;
+      width: 10rem;
+      height: 10rem;
+      margin: 10px;
+      justify-content: space-evenly;
+      align-items: center;
+      position: relative;
+  }
+  
+  .add-gear-button {
+      height: 3rem;
+      width: 8rem;
+      border-radius: 16px;
+      align-items: flex-start;
+  }
+  
+  .title {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      margin: 5px 0px 5px 30px;
+  }
+  
+  .name {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+  }
+  
+  .image {
+      height: 8.5rem;
+      width: 10rem;
+  }
+  
+  .name {
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+      margin-left: 5px;
+  }
+  
+  .mygear-price {
+      position: absolute;
+      top: 0;
+      left: 0;
+      color: white;
+      text-shadow: 0 0 20px black;
+  }
