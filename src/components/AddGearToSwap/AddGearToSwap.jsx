@@ -1,29 +1,32 @@
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import "../AddGearToSwap/AddGearToSwap.css";
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import '../AddGearToSwap/AddGearToSwap.css';
 
-export default function AddGearToSwap({selectedSwap}) {
+export default function AddGearToSwap({ selectedSwap }) {
   const dispatch = useDispatch();
 
-    //grab id out of the url
-    const { id } = useParams();
-  
+  //grab id out of the url
+  const { id } = useParams();
+
   const gear = useSelector((state) => state?.gear);
   const gearToAdd = useSelector((state) => state?.gearToAdd);
-  const swapItems = useSelector(state => state?.swapItems)
-  const [availableItems, setAvailableItems] = useState([])
+  const swapItems = useSelector((state) => state?.swapItems);
+  const [availableItems, setAvailableItems] = useState([]);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_GEAR" });
-  }, []);
+    dispatch({ type: 'FETCH_GEAR_TO_ADD', payload: id });
+  }, [swapItems]);
 
   // useEffect(() => {
   //   unaddedItems();
   // }, [swapItems]);
 
   const addGear = (piece) => {
-    dispatch({ type: "ADD_SELECTED_TO_SWAP", payload: {piece_id: piece.id, id} });
+    dispatch({
+      type: 'ADD_SELECTED_TO_SWAP',
+      payload: { piece_id: piece.id, id },
+    });
   };
 
   // const unaddedItems = () => {
@@ -38,8 +41,6 @@ export default function AddGearToSwap({selectedSwap}) {
   //   setAvailableItems(result)
   // }
 
-  
-
   return (
     <>
       <p className="title"> Add Items to Swap Here: </p>
@@ -49,10 +50,9 @@ export default function AddGearToSwap({selectedSwap}) {
             <img className="image" src={piece.image[0]} />
             <p className="name">{piece.title}</p>
             <p className="mygear-price">${piece.price}</p>
-              <button onClick={() => addGear(piece)} className="add-button">
-                Add
-              </button>
-            
+            <button onClick={() => addGear(piece)} className="add-button">
+              Add
+            </button>
           </div>
         ))}
       </div>

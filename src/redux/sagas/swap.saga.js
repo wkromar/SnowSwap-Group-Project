@@ -74,7 +74,7 @@ function* removeFromSwap(action) {
 function* fetchSelectedSwap(action) {
     try {
         // yield console.log('action!!!', action.payload.id);
-        const response = yield axios.get(`/api/swaps/swapItems/${action.payload}`);
+        const response = yield axios.get(`/api/swaps/selectedswap/${action.payload}`);
         console.log('response', response);
         yield put({ type: 'SET_SELECTED_SWAP', payload: response.data });
     } catch (err) {

@@ -9,7 +9,9 @@ import './CreateSwap.css';
 export default function CreateSwap() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state?.user);
-  const selectedSwap = useSelector((state) => state?.selectedSwap);
+  const selectedSwap = useSelector((state) => state?.selectedSwap[0]);
+
+  console.log('metro boomin', selectedSwap);
 
   const defaultState = {
     is_private: 'true',
@@ -56,19 +58,23 @@ export default function CreateSwap() {
   };
 
   useEffect(() => {
+    dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+  }, []);
+
+  useEffect(() => {
     const dateFormat = 'yyyy-MM-dd';
-    if (slug === 'edit' && selectedSwap.owner === user.id) {
+    if (slug === 'edit' && selectedSwap?.owner === user.id) {
       setSwapInfo({
-        id: selectedSwap.id,
-        is_private: selectedSwap.is_private.toString(),
-        start_date: format(new Date(selectedSwap.start_date), dateFormat),
-        sell_date: format(new Date(selectedSwap.sell_date), dateFormat),
-        stop_date: format(new Date(selectedSwap.stop_date), dateFormat),
-        access_code: selectedSwap.access_code,
-        swap_name: selectedSwap.name,
-        swap_img: selectedSwap.swap_img,
-        pre_sale_duration: selectedSwap.pre_sale_duration,
-        sale_duration: selectedSwap.sale_duration,
+        id: selectedSwap?.id,
+        is_private: selectedSwap?.is_private.toString(),
+        start_date: format(new Date(selectedSwap?.start_date), dateFormat),
+        sell_date: format(new Date(selectedSwap?.sell_date), dateFormat),
+        stop_date: format(new Date(selectedSwap?.stop_date), dateFormat),
+        access_code: selectedSwap?.access_code,
+        swap_name: selectedSwap?.name,
+        swap_img: selectedSwap?.swap_img,
+        pre_sale_duration: selectedSwap?.pre_sale_duration,
+        sale_duration: selectedSwap?.sale_duration,
       });
     } else {
       //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
@@ -77,7 +83,7 @@ export default function CreateSwap() {
         access_code: Math.random().toString(36).slice(2),
       });
     }
-  }, []);
+  }, [selectedSwap]);
 
   return (
     <div>
@@ -204,7 +210,7 @@ export default function CreateSwap() {
               Cancel
             </button>
           </form>
-          {slug === 'edit' && <SwapItemAdmin selectedSwap={selectedSwap} />}
+          {slug === 'edit' ? <SwapItemAdmin /> : <></>}
         </div>
       )}
     </div>
