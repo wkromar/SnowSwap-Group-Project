@@ -45,6 +45,10 @@ function* addSelectedToSwap(action) {
         console.log('!!!!!', action.payload.gearToAdd)
         yield axios.post('api/swaps/addToSwap', action.payload);
         yield put({ type: 'FETCH_SWAP_ITEMS'})
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 function* editSwap(action) {
     try {
