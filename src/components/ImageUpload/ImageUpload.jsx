@@ -1,6 +1,5 @@
 import React from "react";
 import DropzoneS3Uploader from "react-dropzone-s3-uploader";
-import { setState } from "react";
 
 export default function ImageUpload({ state, setState, keyName }) {
   const handleFinishedUpload = (info) => {

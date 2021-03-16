@@ -10,12 +10,18 @@ function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState(gear);
   const user = useSelector((store) => store.user);
   const categories = useSelector((store) => store.categories);
-  console.log(gearToAdd);
+  console.log(categories);
+  console.log(category);
   const dispatch = useDispatch();
   const history = useHistory();
-  let showField = false;
-  // selections for input fields
-  console.log(GearTags);
+  // conditional rendering depending on the category
+  const [skiOrBoard, setSkiOrBoard] = useState(false);
+  const [showFlex, setShowFlex] = useState(false);
+  const [style, setStyle] = useState(false);
+  const [shape, setShape] = useState(false);
+  const [lacing_system, setLacingSystem] = useState(false);
+  const [profile, setProfile] = useState(false);
+  const [category, setCategory] = useState("");
   // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
@@ -27,6 +33,53 @@ function AddGear({ gear }) {
       ...gearToAdd,
       [event.target.name]: event.target.value,
     });
+  };
+  const handleView = (id) => {
+    if (id === "4") {
+      // snowboard
+      setSkiOrBoard(true);
+      setShowFlex(true);
+      setStyle(true);
+      setShape(true);
+      setProfile(true);
+      setLacingSystem(false);
+    } else if (id === "1") {
+      // ski
+      setSkiOrBoard(false);
+      setShowFlex(true);
+      setStyle(true);
+      setShape(true);
+      setProfile(true);
+      setLacingSystem(false);
+    } else if (id === "3") {
+      // ski_boots
+      setShowFlex(false);
+      setStyle(false);
+      setShape(false);
+      setProfile(false);
+      setLacingSystem(false);
+    } else if (id === "5") {
+      // snowboard_boots;
+      setShowFlex(false);
+      setStyle(false);
+      setShape(false);
+      setProfile(false);
+      setLacingSystem(true);
+    } else if (id === "2" || id === "6") {
+      // ski_binding, snowboard_bindings
+      setShowFlex(false);
+      setStyle(false);
+      setShape(false);
+      setProfile(false);
+      setLacingSystem(false);
+    } else if (id === "8" || id === "7") {
+      // apparel, helmet
+      setShowFlex(false);
+      setStyle(false);
+      setShape(false);
+      setProfile(false);
+      setLacingSystem(false);
+    }
   };
   // sends items to database
   const handleSubmit = (event) => {
@@ -56,82 +109,101 @@ function AddGear({ gear }) {
         <ImageUpload gearToAdd={gearToAdd} setGearToAdd={setGearToAdd} />
         <p>Categories</p>
         <select
-          onChange={(event) => handleChange(event)}
+          onChange={(event) => {
+            setCategory(event.target.value);
+            handleView(event.target.value);
+            console.log(event.target.value);
+            handleChange(event);
+          }}
           name="type"
-          value={gearToAdd?.type}
+          value={category}
           default=""
         >
           <option default="" value="" disabled>
             Choose an item
           </option>
-          {categories.map((categories) => {
+          {categories.map((category) => {
             return (
-              <option key={categories.name} value={categories.id}>
-                {categories.name}
+              <option key={category.name} value={category.id}>
+                {category.name}
               </option>
             );
           })}
         </select>
-
-        <p>Flex</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="flex"
-          value={gearToAdd?.flex}
-        >
-          <option value="" disabled>
-            Choose a Flex
-          </option>
-          {GearTags[0].map((flex) => {
-            return (
-              <option key={flex} value={flex}>
-                {flex}
+        {category === "4" ? (
+          <div>
+            <p>Flex</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="flex"
+              value={gearToAdd?.flex}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a Flex
               </option>
-            );
-          })}
-        </select>
-        <p>Style</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="snowboardStyle"
-          value={gearToAdd?.style}
-        >
-          <option value="" disabled>
-            Choose a Style
-          </option>
-          {GearTags[1].map((style) => {
-            return (
-              <option key={style} value={style}>
-                {style}
+              {GearTags[0].map((flex) => {
+                return (
+                  <option key={flex} value={flex}>
+                    {flex}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
+        {category === "4" || category === "1" ? (
+          <div>
+            <p>Style</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="snowboardStyle"
+              value={gearToAdd?.style}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a Style
               </option>
-            );
-          })}
-        </select>
-
-        <p>Shape</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="shape"
-          value={gearToAdd?.shape}
-        >
-          <option value="" disabled>
-            Choose a Shape
-          </option>
-          {GearTags[3].map((shape) => {
-            return (
-              <option key={shape} value={shape}>
-                {shape}
+              {GearTags[1].map((style) => {
+                return (
+                  <option key={style} value={style}>
+                    {style}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
+        {category === "4" ? (
+          <div>
+            <p>Shape</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="shape"
+              value={gearToAdd?.shape}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a Shape
               </option>
-            );
-          })}
-        </select>
+              {GearTags[3].map((shape) => {
+                return (
+                  <option key={shape} value={shape}>
+                    {shape}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
         <p>Gender</p>
         <select
           onChange={(event) => handleChange(event)}
           name="gender"
           value={gearToAdd?.gender}
+          default=""
         >
-          <option value="" disabled>
+          <option default="" value="" disabled>
             Choose a Gender
           </option>
           {GearTags[5].map((gender) => {
@@ -142,57 +214,72 @@ function AddGear({ gear }) {
             );
           })}
         </select>
-        <p>Condition</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="condition"
-          value={gearToAdd?.condition}
-        >
-          <option value="" disabled>
-            Choose a Condition
-          </option>
-          {GearTags[6].map((condition) => {
-            return (
-              <option key={condition} value={condition}>
-                {condition}
+        {category === "4" ? (
+          <div>
+            <p>Condition</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="condition"
+              value={gearToAdd?.condition}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a Condition
               </option>
-            );
-          })}
-        </select>
-        <p>Lacing System</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="lacing_system"
-          value={gearToAdd?.lacing_system}
-        >
-          <option value="" disabled>
-            Choose a System
-          </option>
-          {GearTags[7].map((lacing_system) => {
-            return (
-              <option key={lacing_system} value={lacing_system}>
-                {lacing_system}
+              {GearTags[6].map((condition) => {
+                return (
+                  <option key={condition} value={condition}>
+                    {condition}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
+        {category === "5" ? (
+          <div>
+            <p>Lacing System</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="lacing_system"
+              value={gearToAdd?.lacing_system}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a System
               </option>
-            );
-          })}
-        </select>
-        <p>Profile</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="profile"
-          value={gearToAdd?.profile}
-        >
-          <option value="" disabled>
-            Choose a Profile
-          </option>
-          {GearTags[4].map((profile) => {
-            return (
-              <option key={profile} value={profile}>
-                {profile}
+              {GearTags[7].map((lacing_system) => {
+                return (
+                  <option key={lacing_system} value={lacing_system}>
+                    {lacing_system}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
+        {category === "4" || category === "1" ? (
+          <div>
+            <p>Profile</p>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="profile"
+              value={gearToAdd?.profile}
+              default=""
+            >
+              <option default="" value="" disabled>
+                Choose a Profile
               </option>
-            );
-          })}
-        </select>
+              {GearTags[4].map((profile) => {
+                return (
+                  <option key={profile} value={profile}>
+                    {profile}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        ) : null}
         <p>Size</p>
         <input
           type="decimal"

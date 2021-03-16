@@ -18,6 +18,7 @@ export default function MyGear() {
     console.log("Clicked Add Gear");
     history.push("/addGear");
   };
+  
   // "SELECTED_PIECE";
   const gearClicked = (piece) => {
     dispatch({ type: "EDIT_GEAR", payload: piece });
@@ -41,8 +42,10 @@ export default function MyGear() {
               src={piece.image[0]}
             />
             <p className="name">
-              {" "}
-              {piece.title} | ${piece.price}{" "}
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
             </p>
           </div>
         ))}
