@@ -99,7 +99,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
   "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id", 
   "user"."username", "user"."email", "user"."user_image", "swaps"."id" AS "swap_id", "swaps"."access_code", "swaps"."is_private", "swaps"."sell_date",
-  "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open" FROM "items"
+  "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open", "swap_item_join".id AS "swap_item_id" FROM "items"
 
   LEFT JOIN "categories" ON "items".cat_id = "categories".id
   LEFT JOIN "images" ON "items".id = "images".item_id
@@ -108,7 +108,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   LEFT JOIN "user" ON "items".user_id = "user".id
   LEFT JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id
   WHERE "swaps".id = $1
-  GROUP BY "swaps"."id", "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id";`;
+  GROUP BY "swaps"."id", "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id", "swap_item_join".id;`;
   pool
     .query(queryText, [swapID])
     .then((result) => {
@@ -171,6 +171,24 @@ router.put("/edit/:id", rejectUnauthenticated, (req, res) => {
     })
     .catch((error) => {
       console.log(`Error making Edit to database query ${queryText}`, error);
+    });
+});
+
+router.delete('/removeFromSwap/:id', rejectUnauthenticated, (req, res) => {
+  const id = req.params.id;
+
+  const queryText = `
+    DELETE FROM "swap_item_join"
+    WHERE "id" = $1
+  `;
+
+  pool.query(queryText, [id])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
     });
 });
 
