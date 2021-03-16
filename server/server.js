@@ -42,8 +42,7 @@ app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
   ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
 }));
 
-// cron.schedule('1 * * * * *', 
-const test = async () => {
+cron.schedule('0 10 * * * *', async () => {
   const getQueryText = `
     SELECT * FROM "swaps"
   `;
@@ -52,17 +51,24 @@ const test = async () => {
     UPDATE "swaps"
     SET "swap_open" = TRUE
     WHERE "id" = $1;
-  `
+  `;
+
+  const putStopQueryText = `
+    UPDATE "swaps"
+    SET "swap_open" = FALSE
+    WHERE "id" = $1;
+  `;
 
   const getResult = await pool.query(getQueryText);
   await getResult.rows.forEach(async (swap) => {
-    if (new Date(swap.sell_date) <= new Date()) {
-      await pool.query(putStartQueryText, [swap.id])
+    if (new Date(swap.sell_date) <= new Date() && new Date(swap.stop_date) > new Date()) {
+      await pool.query(putStartQueryText, [swap.id]);
+    } else if (new Date(swap.stop_date) <= new Date()) {
+      await pool.query(putStopQueryText, [swap.id]);
     }
   });
-};
+});
 
-test();
 
 // App Set //
 const PORT = process.env.PORT || 5000;
