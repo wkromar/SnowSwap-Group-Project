@@ -5,16 +5,16 @@ import "../DetailsView/DetailsView.css";
 import "../Favorites/Favorites.css";
 
 const customStyles = {
-    content: {
-      top: "50%",
-      left: "50%",
-      right: "auto",
-      bottom: "auto",
-      marginRight: "-50%",
-      transform: "translate(-50%, -50%)",
-      position: "relative",
-    },
-  };
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    position: "relative",
+  },
+};
 
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
@@ -22,63 +22,106 @@ export default function DetailsView() {
   const modalStatus = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
-
+  // const itemOfInterest = detailsView.id;
   const [imageCounter, setImageCounter] = useState(0);
 
+  const [contactSeller, setContactSeller] = useState(true);
   const handleNextPicture = (direction) => {
-      console.log(direction)
-      console.log(gearDetails.image.length-1)
-      if (direction === 'next' && imageCounter < gearDetails.image.length-1){
-          setImageCounter(imageCounter + 1);
-      }
-      else if (direction === 'next' && imageCounter === gearDetails.image.length-1) {
-        setImageCounter(0);
-      }
-      else if (direction === 'back' && imageCounter > 0) {
-          setImageCounter(imageCounter -1);
-      }
-      else if (direction === 'back' && imageCounter === 0) {
-        setImageCounter(gearDetails.image.length-1);
-      }
+    console.log(direction);
+    console.log(gearDetails.image.length - 1);
+    if (direction === "next" && imageCounter < gearDetails.image.length - 1) {
+      setImageCounter(imageCounter + 1);
+    } else if (
+      direction === "next" &&
+      imageCounter === gearDetails.image.length - 1
+    ) {
+      setImageCounter(0);
+    } else if (direction === "back" && imageCounter > 0) {
+      setImageCounter(imageCounter - 1);
+    } else if (direction === "back" && imageCounter === 0) {
+      setImageCounter(gearDetails.image.length - 1);
+    }
   };
 
   const handleContactSeller = () => {
-    console.log('Clicked Contact Seller')
-  }
+    console.log("Clicked Contact Seller");
+    setContactSeller(!contactSeller);
+  };
 
-  console.log('imageCounter:', imageCounter);
+  console.log("imageCounter:", imageCounter);
 
   return (
     <>
       <div className="modalImages">
-        <div onClick = {() => handleNextPicture('back')} className="left-arrow">
-            <img className="right-arrow-icon" src="images/left_arrow.svg"/>
+        <div onClick={() => handleNextPicture("back")} className="left-arrow">
+          <img className="right-arrow-icon" src="images/left_arrow.svg" />
         </div>
-        <img onClick = {() => dispatch({type: 'ENLARGE_IMAGE_OPEN'})} src={gearDetails?.image[imageCounter]} />
-        <div onClick = {() => handleNextPicture('next')} className="right-arrow">
-            <img className="right-arrow-icon" src="images/right_arrow.svg" />
+        <img
+          onClick={() => dispatch({ type: "ENLARGE_IMAGE_OPEN" })}
+          src={gearDetails?.image[imageCounter]}
+        />
+        <div onClick={() => handleNextPicture("next")} className="right-arrow">
+          <img className="right-arrow-icon" src="images/right_arrow.svg" />
         </div>
       </div>
       <div className="seller-price">
         <p className="seller">Seller: {gearDetails.username}</p>
         <p className="price">Price: ${gearDetails.price}</p>
-        </div>
-        <button onClick = {() => handleContactSeller()} className="contact-seller-button">Contact Seller</button>
-        <div className="description-tags">
-          <h4>Description</h4>
-          <p>{gearDetails.description}</p>
-          <div className="container">
-          {gearDetails?.category_name && <div className="chip">{gearDetails?.category_name}</div>}
-          {gearDetails?.gender && <div className="chip">{gearDetails?.gender}</div>}
-          {gearDetails?.brand && <div className="chip">{gearDetails?.brand}</div>}
-          {gearDetails?.condition && <div className="chip">{gearDetails?.condition}</div>}
-          {gearDetails?.shape && <div className="chip">{gearDetails?.shape}</div>}
-          {gearDetails?.size && <div className="chip">{gearDetails?.size}</div>}
-          {gearDetails?.lacing_system && <div className="chip">{gearDetails?.lacing_system}</div>}
-          {gearDetails?.profile && <div className="chip">{gearDetails?.profile}</div>}
-          {gearDetails?.flex && <div className="chip">{gearDetails?.flex}</div>}
+      </div>
+      <button
+        onClick={() => handleContactSeller()}
+        className="contact-seller-button"
+      >
+        Details View
+      </button>
+      {contactSeller ? (
+        <div>
+          <button
+            onClick={() => handleContactSeller()}
+            className="contact-seller-button"
+          >
+            Contact Seller
+          </button>
+          <div className="description-tags">
+            <h4>Description</h4>
+            <p>{gearDetails.description}</p>
+            <div className="container">
+              {gearDetails?.category_name && (
+                <div className="chip">{gearDetails?.category_name}</div>
+              )}
+              {gearDetails?.gender && (
+                <div className="chip">{gearDetails?.gender}</div>
+              )}
+              {gearDetails?.brand && (
+                <div className="chip">{gearDetails?.brand}</div>
+              )}
+              {gearDetails?.condition && (
+                <div className="chip">{gearDetails?.condition}</div>
+              )}
+              {gearDetails?.shape && (
+                <div className="chip">{gearDetails?.shape}</div>
+              )}
+              {gearDetails?.size && (
+                <div className="chip">{gearDetails?.size}</div>
+              )}
+              {gearDetails?.lacing_system && (
+                <div className="chip">{gearDetails?.lacing_system}</div>
+              )}
+              {gearDetails?.profile && (
+                <div className="chip">{gearDetails?.profile}</div>
+              )}
+              {gearDetails?.flex && (
+                <div className="chip">{gearDetails?.flex}</div>
+              )}
+            </div>
           </div>
         </div>
+      ) : (
+        <div>
+          <p>Contact Seller</p>
+          <a href="mailto:${gearDetails.email}">{gearDetails.email}</a>
+        </div>
+      )}
       <button
         className="close-button"
         onClick={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
@@ -92,7 +135,11 @@ export default function DetailsView() {
         styles={customStyles}
         contentLabel="Detail View"
       >
-        <img onClick={() => dispatch({ type: "ENLARGE_IMAGE_CLOSE" })} className="cancel-button" src="images/cancel.svg"/>
+        <img
+          onClick={() => dispatch({ type: "ENLARGE_IMAGE_CLOSE" })}
+          className="cancel-button"
+          src="images/cancel.svg"
+        />
         <img src={gearDetails?.image[imageCounter]} />
       </Modal>
     </>
