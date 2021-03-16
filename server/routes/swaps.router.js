@@ -77,7 +77,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
-    .query(queryText, [item.item_id, item.swap_id])
+    .query(queryText, [item.piece_id, item.selectedSwap.id])
     .then((response) => {
       console.log(response);
       res.sendStatus(200);
@@ -97,7 +97,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
-  "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id", 
+  "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id" AS "fav_user_id",
   "user"."username", "user"."email", "user"."user_image", "swaps"."id" AS "swap_id", "swaps"."access_code", "swaps"."is_private", "swaps"."sell_date",
   "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open", "swap_item_join".id AS "swap_item_id" FROM "items"
 

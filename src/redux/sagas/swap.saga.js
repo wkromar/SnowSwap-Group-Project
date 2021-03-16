@@ -44,7 +44,7 @@ function* addSelectedToSwap(action) {
     try {
         console.log('!!!!!', action.payload.gearToAdd)
         yield axios.post('api/swaps/addToSwap', action.payload);
-        yield put({ type: 'FETCH_SWAP_ITEMS'})
+        yield put({ type: 'FETCH_SWAP_ITEMS', payload: action.payload.selectedSwap})
     } catch (err) {
         console.log(err);
     }
@@ -61,6 +61,7 @@ function* editSwap(action) {
 
 function* removeFromSwap(action) {
     try {
+        console.log(`action.payload.swap_id`, action.payload.swap_id);
         yield axios.delete(`/api/swaps/removeFromSwap/${action.payload.swap_item_id}`);
         yield put({ type: 'FETCH_SWAP_ITEMS', payload: { id: action.payload.swap_id } });
     } catch (err) {
