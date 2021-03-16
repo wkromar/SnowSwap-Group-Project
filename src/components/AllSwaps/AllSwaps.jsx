@@ -99,6 +99,7 @@ export default function AllSwaps() {
                   </div>
                   <div className="days-until">
                     {swap.swap_open ? (
+
                       <p>
                         Days Remaing:{' '}
                         {Math.round(

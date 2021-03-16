@@ -108,7 +108,7 @@ INSERT INTO "items"
      "condition",
      "lacing_system",
      "purchased",
-     "description",
+     "description"
      )
 VALUES  ('1', '1', 'K2 Skiis', '171cm', '80', '', 'Racing', 'K2', '', 'Womens', 'Rocker', 'Lightly Used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!  Willing to negotiate price.'),
         ('1', '1', 'Dynastar Argyl Skis', '175cm', '120', '', 'Alpine', 'Dynastar', '', 'Mens', 'Camber', 'Lightly Used', '', 'false', 'Dynastar is a really great brand of skiis.  Very high quality. Dont try to low-ball me.  I know what these are worth'),

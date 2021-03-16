@@ -18,6 +18,7 @@ export default function MyGear() {
     console.log("Clicked Add Gear");
     history.push("/addGear");
   };
+  
   // "SELECTED_PIECE";
   const gearClicked = (piece) => {
     dispatch({ type: "EDIT_GEAR", payload: piece });
