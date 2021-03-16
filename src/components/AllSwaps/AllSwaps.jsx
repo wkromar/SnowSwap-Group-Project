@@ -37,7 +37,7 @@ export default function AllSwaps() {
                   </div>
                   <div className="days-until">
                     {swap.swap_open ? (
-                      <p>Days Remaing:</p>
+                      <p>Days Remaining:</p>
                     ) : (
                       <p>Days until swap:</p>
                     )}
