@@ -124,8 +124,8 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
 // JOINS get to grab only the swaps the user has joined
 router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
   const queryText = `
-    SELECT * FROM "swaps" JOIN "swap_users" 
-    ON "swap_users".swap_id = "swaps".id
+    SELECT *, "swap_users".id AS "swap_users_id", "swaps".id AS "id"  FROM "swaps"
+    JOIN "swap_users" ON "swap_users".swap_id = "swaps".id
     JOIN "user" ON "user".id = "swap_users".user_id;
     `;
   pool
