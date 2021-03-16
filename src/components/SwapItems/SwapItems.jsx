@@ -29,6 +29,7 @@ export default function SwapItems() {
 
   const [filter, setFilter] = useState('')
   
+  // condition, gender, category_name, flex, lacing_system, profile, shape, size, style, 
   
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
@@ -50,6 +51,13 @@ export default function SwapItems() {
   console.log('swapItems:', swapItems);
 
 
+  // let filteredSwapItems = swapItems.filter(item => {
+  //   if (reduxItem.cat) {
+  //   item.cat === reduxItem.cat
+  //   }
+  // });
+  
+
   return (
     <>
       <div className="container">
@@ -68,7 +76,7 @@ export default function SwapItems() {
         {swapItems &&
           swapItems?.map((piece) => (
             
-            piece.category_name.toString().toLowerCase().includes(filter) &&
+            // piece.category_name.toString().toLowerCase().includes(filter) &&
             <div className="item">
               <img
                 onClick={() => gearClicked(piece)}
