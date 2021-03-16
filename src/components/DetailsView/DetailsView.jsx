@@ -22,10 +22,10 @@ export default function DetailsView() {
   const modalStatus = useSelector((state) => state.modal);
 
   const dispatch = useDispatch();
-
+  // const itemOfInterest = detailsView.id;
   const [imageCounter, setImageCounter] = useState(0);
 
-  const [contactSeller, setContactSeller] = useState(false);
+  const [contactSeller, setContactSeller] = useState(true);
   const handleNextPicture = (direction) => {
     console.log(direction);
     console.log(gearDetails.image.length - 1);
@@ -68,6 +68,12 @@ export default function DetailsView() {
         <p className="seller">Seller: {gearDetails.username}</p>
         <p className="price">Price: ${gearDetails.price}</p>
       </div>
+      <button
+        onClick={() => handleContactSeller()}
+        className="contact-seller-button"
+      >
+        Details View
+      </button>
       {contactSeller ? (
         <div>
           <button
@@ -111,7 +117,10 @@ export default function DetailsView() {
           </div>
         </div>
       ) : (
-        <p>seller email</p>
+        <div>
+          <p>Contact Seller</p>
+          <a href="mailto:${gearDetails.email}">{gearDetails.email}</a>
+        </div>
       )}
       <button
         className="close-button"
