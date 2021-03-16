@@ -26,7 +26,7 @@ export default function CreateSwap() {
   const [swapInfo, setSwapInfo] = useState(defaultState);
   console.log(`swapInfo`, swapInfo);
 
-  const { slug } = useParams();
+  const { slug, id } = useParams();
 
   const history = useHistory();
 
