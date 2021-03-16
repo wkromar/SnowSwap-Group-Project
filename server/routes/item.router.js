@@ -76,6 +76,40 @@ router.get("/", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/availableGear/:id", rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const swapId = req.params.id;
+  console.log("GETting items");
+
+  const queryText = `
+    SELECT "items".*, ARRAY_AGG(url) image FROM "items"
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
+    LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
+    WHERE "user_id" = $1
+    GROUP BY "items".id
+    EXCEPT
+    SELECT "items".*, ARRAY_AGG(url) image FROM "items"
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
+    LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
+    WHERE "items".id = "swap_item_join".item_id AND "swap_item_join".swap_id = $2
+    GROUP BY "items".id
+    ORDER BY "title" ASC;
+    `;
+  pool
+    .query(queryText, [userId, swapId])
+    .then((result) => {
+      console.log(result);
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 router.get("/favorites", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
   console.log("GETting favorites for:", userId);

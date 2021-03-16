@@ -38,6 +38,23 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
+  const id = req.params.id
+  const queryText = `
+    SELECT * FROM "swaps" 
+    WHERE "id" = $1;`
+  pool
+    .query(queryText, [id])
+    .then((result) => {
+      res.send(result.rows);
+      // console.log(result);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
 //insert into SWAPS database
 router.post("/", rejectUnauthenticated, (req, res) => {
   const swap = req.body;
