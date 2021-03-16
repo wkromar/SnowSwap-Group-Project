@@ -37,9 +37,9 @@ export default function SwapItems() {
 
   const favoriteItem = (piece) => {
     if (piece.favorites_id) {
-      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, selectedSwap] });
+      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, id] });
     } else {
-      dispatch({ type: "FAVORITE_ITEM", payload: [piece, selectedSwap] });
+      dispatch({ type: "FAVORITE_ITEM", payload: [piece, id] });
     }
   };
 
