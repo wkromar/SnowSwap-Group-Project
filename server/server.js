@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
+const cron = require('node-cron');
 
 const sessionMiddleware = require("./modules/session-middleware");
 const passport = require("./strategies/user.strategy");
@@ -12,6 +13,7 @@ const userRouter = require("./routes/user.router");
 const itemRouter = require("./routes/item.router");
 const swapRouter = require("./routes/swaps.router");
 const mailRouter = require("./routes/nodeMailer.router");
+const pool = require("./modules/pool");
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -28,7 +30,7 @@ app.use(passport.session());
 app.use("/api/user", userRouter);
 app.use("/api/item", itemRouter);
 app.use("/api/swaps", swapRouter);
-app.use("/api/upgradeUser", mailRouter)
+app.use("/api/upgradeUser", mailRouter);
 
 // Serve static files
 app.use(express.static("build"));
@@ -36,9 +38,37 @@ app.use(express.static("build"));
 app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
   bucket: process.env.AWS_S3_BUCKET,                           // required
   region: process.env.AWS_S3_REGION,                            // optional
-  headers: {'Access-Control-Allow-Origin': '*'},  		    // optional
+  headers: { 'Access-Control-Allow-Origin': '*' },  		    // optional
   ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
 }));
+
+cron.schedule('0 10 * * * *', async () => {
+  const getQueryText = `
+    SELECT * FROM "swaps"
+  `;
+
+  const putStartQueryText = `
+    UPDATE "swaps"
+    SET "swap_open" = TRUE
+    WHERE "id" = $1;
+  `;
+
+  const putStopQueryText = `
+    UPDATE "swaps"
+    SET "swap_open" = FALSE
+    WHERE "id" = $1;
+  `;
+
+  const getResult = await pool.query(getQueryText);
+  await getResult.rows.forEach(async (swap) => {
+    if (new Date(swap.sell_date) <= new Date() && new Date(swap.stop_date) > new Date()) {
+      await pool.query(putStartQueryText, [swap.id]);
+    } else if (new Date(swap.stop_date) <= new Date()) {
+      await pool.query(putStopQueryText, [swap.id]);
+    }
+  });
+});
+
 
 // App Set //
 const PORT = process.env.PORT || 5000;
