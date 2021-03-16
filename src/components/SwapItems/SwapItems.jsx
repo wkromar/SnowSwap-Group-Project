@@ -26,7 +26,6 @@ export default function SwapItems() {
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-
   const handleAddGearToSwap = () => {
     return console.log('Clicked Add Gear To This Swap');
   };
