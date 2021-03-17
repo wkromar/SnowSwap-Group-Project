@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import '../Menu/Menu.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import "../Menu/Menu.css";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
