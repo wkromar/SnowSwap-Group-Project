@@ -29,6 +29,15 @@ INSERT INTO "categories" ("name")
 VALUES ('ski'),('ski_binding'),('ski_boots'),('snowboard'),('snowboard_boots'),
 ('snowboard_bindings'),('apparel'),('helmet');
 
+ALTER TABLE "categories"
+ADD COLUMN "display_name" VARCHAR (50);
+
+INSERT INTO "categories" ("display_name")
+VALUES ('Ski'), ('Ski Binding'), ('Ski Boots'), 
+('Snowboard'), ('Snowboard Boots'), ('Snowboard Bindings'), 
+('Apparel'), ('Helmet');
+
+
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
     "user_id" INT REFERENCES "user",
