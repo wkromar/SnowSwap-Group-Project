@@ -7,11 +7,6 @@ import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 import GearTags from "../GearTags/GearTags";
 
@@ -26,7 +21,7 @@ const useStyles = makeStyles({
     },
 });
 
-function FilterDrawer({ filter, setFilter }) {
+function FilterDrawer() {
 
     const dispatch = useDispatch();
 
@@ -73,22 +68,35 @@ function FilterDrawer({ filter, setFilter }) {
         console.log('cat selected');
         setCategory(cat);
         setSearchObj({ 'category_name': cat });
-        setConditionSearch('')
-        setGender('')
+        // setConditionSearch('')
+        // setGender('')
     }
 
     const conditionSelected = (con) => {
+        if (con === "") {
+            delete searchObj['condition']
+            setConditionSearch(con);
+            setSearchObj({ ...searchObj });
+        } else {
 
-        console.log('con selected');
-        setConditionSearch(con);
-        updateSearchObj('condition', con);
+            console.log('con selected');
+            setConditionSearch(con);
+            updateSearchObj('condition', con);
+        }
     }
 
     const genderSelected = (gen) => {
 
-        console.log('gen selected');
-        setGender(gen);
-        updateSearchObj('gender', gen);
+        if (gen === "") {
+            delete searchObj['gender']
+            setGender(gen);
+            setSearchObj({ ...searchObj });
+        } else {
+
+            console.log('gen selected');
+            setGender(gen);
+            updateSearchObj('gender', gen);
+        }
     }
 
     const snowboardStyleSelected = (board) => {
@@ -144,9 +152,25 @@ function FilterDrawer({ filter, setFilter }) {
         dispatch({ type: 'SET_FILTER_OBJECT', payload: searchObj })
     }
 
+    const clearFilter = () => {
+        console.log('Clear filter');
+        setSearchObj({});
+        dispatch({ type: 'SET_FILTER_OBJECT', payload: {} })
+
+        setCategory('');
+        setSnowboardStyleSearch('');
+        setConditionSearch('');
+        setSkiStyleSearch('');
+        setProfileSearch('');
+        setFlexSearch('');
+        setShapeSearch('');
+        setGender('');
+        setLacingSystemSearch('');
+        setSizeSearch('');
 
 
 
+    }
 
 
 
@@ -204,7 +228,7 @@ function FilterDrawer({ filter, setFilter }) {
                         <select name="condition" id=""
                             value={conditionSearch}
                             onChange={(event) => { conditionSelected(event.target.value) }}>
-                            <option>Select Condition</option>
+                            <option value="">Select Condition</option>
                             {condition.map((con) => {
                                 return (
                                     <option key={con} value={con}>
@@ -235,7 +259,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     value={snowboardStyleSearch}
                                     onChange={(event) => { snowboardStyleSelected(event.target.value) }}
                                 >
-                                    <option>Select Style</option>
+                                    <option value="">Select Style</option>
                                     {snowboardStyle.map((style) => {
                                         return (
                                             <option key={style} value={style}>
@@ -256,7 +280,7 @@ function FilterDrawer({ filter, setFilter }) {
                                         value={skiStyleSearch}
                                         onChange={(event) => { skiStyleSelected(event.target.value) }}
                                     >
-                                        <option>Select Style</option>
+                                        <option value="">Select Style</option>
                                         {skiStyle.map((style) => {
                                             return (
                                                 <option key={style} value={style}>
@@ -272,7 +296,7 @@ function FilterDrawer({ filter, setFilter }) {
                                         value={profileSearch}
                                         onChange={(event) => { profileSelected(event.target.value) }}
                                     >
-                                        <option>Select Profile</option>
+                                        <option value="">Select Profile</option>
                                         {profile.map((prof) => {
                                             return (
                                                 <option key={prof} value={prof}>
@@ -294,7 +318,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     value={lacingSystemSearch}
                                     onChange={(event) => { lacingSystemSelected(event.target.value) }}
                                 >
-                                    <option>Select Laces</option>
+                                    <option value="">Select Laces</option>
                                     {lacing_system.map((system) => {
                                         return (
                                             <option key={system} value={system}>
@@ -314,7 +338,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     value={flexSearch}
                                     onChange={(event) => { flexSelected(event.target.value) }}
                                 >
-                                    <option>Select Laces</option>
+                                    <option value="">Select Laces</option>
                                     {flex.map((flex) => {
                                         return (
                                             <option key={flex} value={flex}>
@@ -337,7 +361,7 @@ function FilterDrawer({ filter, setFilter }) {
                                     value={sizeSearch}
                                     onChange={(event) => { sizeSelected(event.target.value) }}
                                 >
-                                    <option>Select Size</option>
+                                    <option value="">Select Size</option>
                                     {size.map((size) => {
                                         return (
                                             <option key={size} value={size}>
@@ -357,6 +381,8 @@ function FilterDrawer({ filter, setFilter }) {
             <Divider />
             <div>
                 <Button onClick={applyFilter}>Apply</Button>
+                <br />
+                <Button onClick={clearFilter}>Clear</Button>
             </div>
 
         </div>

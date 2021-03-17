@@ -23,17 +23,12 @@ export default function SwapItems() {
   const dispatch = useDispatch();
 
   const filterObject = useSelector((state) => state?.filterObject)
-
-  // condition, gender, category_name, flex, lacing_system, profile, shape, size, style, 
-
   const selectedSwap = useSelector((state) => state?.selectedSwap);
-
   const user = useSelector((state) => state?.user);
   const swapItems = useSelector((state) => state?.swapItems);
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-
 
 
   useEffect(() => {
@@ -61,12 +56,7 @@ export default function SwapItems() {
     dispatch({ type: "REMOVE_FROM_SWAP", payload: { swap_item_id: id, swap_id: selectedSwap.id } });
   };
 
-
-
   console.log('swapItems - filterObject:', filterObject);
-  console.log(Object.keys(filterObject));
-
-  // const filterObject = useSelector((state) => state?.filterObject)
 
   let filteredSwapItems = swapItems.filter(item => {
     
@@ -80,16 +70,12 @@ export default function SwapItems() {
     
   });
 
-
-
-
   console.log("swapItems:", swapItems);
 
   useEffect(() => {
     const swapDetails = localStorage.getItem("swap-object");
     dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
   }, []);
-
 
 
   return (
