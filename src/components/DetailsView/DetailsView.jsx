@@ -27,7 +27,6 @@ export default function DetailsView() {
 
   const [contactSeller, setContactSeller] = useState(true);
 
-
   const handleNextPicture = (direction) => {
     console.log(direction);
     console.log(gearDetails.image.length - 1);

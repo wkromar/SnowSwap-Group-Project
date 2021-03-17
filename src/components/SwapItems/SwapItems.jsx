@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import "../SwapItems/SwapItems.css";
 import DetailsView from "../DetailsView/DetailsView";
 import AddGearToSwap from "../AddGearToSwap/AddGearToSwap";
+import FilterDrawer from '../FilterDrawer/FilterDrawer'
 
 const customStyles = {
   content: {
@@ -21,16 +22,22 @@ const customStyles = {
 export default function SwapItems() {
   const dispatch = useDispatch();
 
+  const filterObject = useSelector((state) => state?.filterObject);
   //grab id out of the url
   const { id } = useParams();
 
   const selectedSwap = useSelector((state) => state?.selectedSwap);
-
   const user = useSelector((state) => state?.user);
   const swapItems = useSelector((state) => state?.swapItems);
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
+
+
+  useEffect(() => {
+    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+  }, []);
+
   const handleAddGearToSwap = () => {
     dispatch({ type: "OPEN_ADD_VIEW" });
   };
@@ -52,6 +59,22 @@ export default function SwapItems() {
     dispatch({ type: "REMOVE_FROM_SWAP", payload: {swap_item_id: swapItemId, swap_id: id} });
   };
 
+  console.log('swapItems - filterObject:', filterObject);
+
+  // const filterObject = useSelector((state) => state?.filterObject);
+  
+  let filteredSwapItems = swapItems.filter(item => {
+    
+    for (let key in filterObject) {
+      if (item[key] !== filterObject[key]) {
+        console.log(`it's a match`);
+        return false;
+      }
+    } 
+    return true;
+    
+  });
+
   console.log("swapItems:", swapItems);
 
   useEffect(() => {
@@ -60,46 +83,79 @@ export default function SwapItems() {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
 
+
   return (
     <>
       <div className="container">
         <button className="add-gear-button" onClick={handleAddGearToSwap}>
           Add Gear To This Swap
         </button>
+        <button>
+          <FilterDrawer />
+        </button>
       </div>
 
       <p className="title">{selectedSwap.name}</p>
 
       <div className="container">
-        {swapItems &&
-          swapItems?.map((piece) => (
-            <div className="item">
-              <img
-                onClick={() => gearClicked(piece)}
-                className="image"
-                src={piece.image[0]}
-              />
-              <div onClick={() => favoriteItem(piece)}>
-                {piece.favorites_id ? (
-                  <img className="favorite-icon" src="images/favorite.svg" />
-                ) : (
-                  <img className="favorite-icon" src="images/unfavorite.svg" />
-                )}
-              </div>
-              <p className="name">
-                {" "}
-                {piece.title} | ${piece.price}{" "}
-              </p>
-              {user.id == piece.user_id && (
-                <button
-                  onClick={() => removeGear(piece.swap_item_id)}
-                  className="remove-button"
-                >
-                  Remove
-                </button>
+        {filteredSwapItems ? 
+        filteredSwapItems?.map((piece) => (
+
+          <div className="item">
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
+            <div onClick={() => favoriteItem(piece)}>
+              {piece.favorites_id ? (
+                <img className="favorite-icon" src="images/favorite.svg" />
+              ) : (
+                <img className="favorite-icon" src="images/unfavorite.svg" />
               )}
             </div>
-          ))}
+            <p className="name">
+              {" "}
+              {piece.title} | ${piece.price}{" "}
+            </p>
+            {user.id == piece.user_id && (
+              <button
+                onClick={() => removeGear(piece.swap_item_id)}
+                className="remove-button"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        )) : swapItems?.map((piece) => (
+
+          <div className="item">
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
+            <div onClick={() => favoriteItem(piece)}>
+              {piece.favorites_id ? (
+                <img className="favorite-icon" src="images/favorite.svg" />
+              ) : (
+                <img className="favorite-icon" src="images/unfavorite.svg" />
+              )}
+            </div>
+            <p className="name">
+              {" "}
+              {piece.title} | ${piece.price}{" "}
+            </p>
+            {user.id == piece.user_id && (
+              <button
+                onClick={() => removeGear(piece.swap_item_id)}
+                className="remove-button"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        ))}
       </div>
       <Modal
         ariaHideApp={false}

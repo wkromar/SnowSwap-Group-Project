@@ -12,6 +12,7 @@ import editItem from "./editItem.reducer";
 import allSwaps from "./allSwaps.reducer";
 import selectedSwap from "./selectedSwap.reducer";
 import categories from "./category.reducer";
+import filterObject from "./filter.reducer";
 import joinedSwaps from './joinedSwaps.reducer';
 
 // rootReducer is the primary reducer for our entire project
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   allSwaps,
   selectedSwap,
   categories,
+  filterObject,
   joinedSwaps
 });
 
