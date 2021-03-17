@@ -26,6 +26,8 @@ export default function DetailsView() {
   const [imageCounter, setImageCounter] = useState(0);
 
   const [contactSeller, setContactSeller] = useState(true);
+
+
   const handleNextPicture = (direction) => {
     console.log(direction);
     console.log(gearDetails.image.length - 1);
@@ -87,7 +89,7 @@ export default function DetailsView() {
             <p>{gearDetails.description}</p>
             <div className="container">
               {gearDetails?.category_name && (
-                <div className="chip">{gearDetails?.category_name}</div>
+                <div className="chip">{gearDetails?.display_name}</div>
               )}
               {gearDetails?.gender && (
                 <div className="chip">{gearDetails?.gender}</div>

@@ -13,9 +13,7 @@ function* fetchOwnedSwaps() {
 function* fetchSwapItems(action) {
   try {
     // yield console.log('action!!!', action.payload.id);
-    const response = yield axios.get(
-      `/api/swaps/swapItems/${action.payload.id}`
-    );
+    const response = yield axios.get(`/api/swaps/swapItems/${action.payload}`);
     console.log("!!!!!!!!!!", response);
     yield put({ type: "SET_SWAP_ITEMS", payload: response.data });
   } catch (err) {
@@ -47,10 +45,7 @@ function* addSelectedToSwap(action) {
   try {
     console.log("!!!!!", action.payload.gearToAdd);
     yield axios.post("api/swaps/addToSwap", action.payload);
-    yield put({
-      type: "FETCH_SWAP_ITEMS",
-      payload: action.payload.selectedSwap,
-    });
+    yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload.id });
   } catch (err) {
     console.log(err);
   }
@@ -71,19 +66,20 @@ function* removeFromSwap(action) {
     yield axios.delete(
       `/api/swaps/removeFromSwap/${action.payload.swap_item_id}`
     );
-    yield put({
-      type: "FETCH_SWAP_ITEMS",
-      payload: { id: action.payload.swap_id },
-    });
+    yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload.swap_id });
   } catch (err) {
     console.log(err);
   }
 }
 
-function* privateAccess(action) {
+function* fetchSelectedSwap(action) {
   try {
-    console.log("adding swap to My Swaps", action.payload);
-    yield axios.post(`/api/swaps/enterPrivate`, action.payload);
+    // yield console.log('action!!!', action.payload.id);
+    const response = yield axios.get(
+      `/api/swaps/selectedswap/${action.payload}`
+    );
+    console.log("response", response);
+    yield put({ type: "SET_SELECTED_SWAP", payload: response.data });
   } catch (err) {
     console.log(err);
   }
@@ -97,5 +93,5 @@ export default function* swapSaga() {
   yield takeLatest("ADD_SELECTED_TO_SWAP", addSelectedToSwap);
   yield takeLatest("EDIT_SWAP", editSwap);
   yield takeLatest("REMOVE_FROM_SWAP", removeFromSwap);
-  yield takeLatest("PRIVATE_TO_PUBLIC", privateAccess);
+  yield takeLatest("FETCH_SELECTED_SWAP", fetchSelectedSwap);
 }
