@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "../Favorites/Favorites.css";
 import DetailsView from "../DetailsView/DetailsView";
+import Swal from "sweetalert2";
 
 const customStyles = {
   content: {
@@ -36,7 +37,20 @@ export default function Favorites() {
   };
 
   const unFavorite = (piece) => {
-    dispatch({type: "UNFAVORITE_FROM_FAVORITES", payload: piece});
+    Swal.fire({
+      title: `Remove ${piece.title} from favorites?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Removed from favorites!", "", "success");
+        dispatch({type: "UNFAVORITE_FROM_FAVORITES", payload: piece});
+      }
+    });
+   
   }
 
   return (
