@@ -12,7 +12,7 @@ export default function ImageUpload({ state, setState, keyName }) {
     server: "http://localhost:5000",
   };
 
-  const s3Url = "https://snowswaps.s3.amazonaws.com";
+  const s3Url = process.env.REACT_APP_S3URL
 
   return (
     <DropzoneS3Uploader
