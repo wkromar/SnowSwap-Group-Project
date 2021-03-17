@@ -22,13 +22,10 @@ const customStyles = {
 export default function SwapItems() {
   const dispatch = useDispatch();
 
-<<<<<<< HEAD
   const filterObject = useSelector((state) => state?.filterObject);
-=======
   //grab id out of the url
   const { id } = useParams();
 
->>>>>>> c382cbae58da546f544af72ba31abff74b624f58
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const user = useSelector((state) => state?.user);
   const swapItems = useSelector((state) => state?.swapItems);
