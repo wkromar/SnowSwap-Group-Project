@@ -125,7 +125,7 @@ function App() {
             <Favorites />
           </ProtectedRoute>
 
-          <ProtectedRoute exact path="/swapItems">
+          <ProtectedRoute exact path="/swapItems/:id">
             <SwapItems />
           </ProtectedRoute>
 
@@ -140,7 +140,7 @@ function App() {
           </ProtectedRoute>
 
           {/* edit route */}
-          <ProtectedRoute exact path="/createEvent/:slug">
+          <ProtectedRoute exact path="/createEvent/:slug/:id">
             <CreateSwap />
           </ProtectedRoute>
 

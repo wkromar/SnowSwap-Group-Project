@@ -9,9 +9,17 @@ const {
 // gathers ALL SWAPS
 // sends to front end
 router.get("/", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "swaps" ORDER BY "id";`;
+  const queryText = `
+    SELECT "swaps".* FROM "swaps"
+    LEFT JOIN "swap_users" ON "swaps".id = "swap_users".swap_id
+    WHERE NOT EXISTS
+    ( SELECT * FROM "swap_users" 
+    WHERE "swap_users".swap_id = "swaps".id AND "swap_users".user_id = $1)
+    GROUP BY "swaps".id
+    ORDER BY "swaps".id ASC;
+  `;
   pool
-    .query(queryText)
+    .query(queryText, [req.user.id])
     .then((result) => {
       res.send(result.rows);
     })
@@ -38,20 +46,20 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     });
 });
 
-//enter a private swap once using a code
-router.post("/enterPrivate", rejectUnauthenticated, (req, res) => {
-  const privateEntry = req.body;
-  console.log("entering swap", privateEntry);
-  const queryText = `INSERT INTO "swap_users" ("user_id", "swap_id")
-  VALUES ($1, $2);`;
+
+router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
+  const id = req.params.id;
+  const queryText = `
+    SELECT * FROM "swaps" 
+    WHERE "id" = $1;`;
   pool
-    .query(queryText, [privateEntry.id, privateEntry.swapId])
-    .then((response) => {
-      console.log(response);
-      res.sendStatus(200);
+    .query(queryText, [id])
+    .then((result) => {
+      res.send(result.rows);
+      // console.log(result);
     })
     .catch((error) => {
-      console.log("error in swaps POST", error);
+      console.log(error);
       res.sendStatus(500);
     });
 });
@@ -95,7 +103,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
-    .query(queryText, [item.piece_id, item.selectedSwap.id])
+    .query(queryText, [item.piece_id, item.id])
     .then((response) => {
       console.log(response);
       res.sendStatus(200);
@@ -110,10 +118,13 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 // using a get to grab all data from multiple tables
 router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   const swapID = req.params.id;
-  console.log("swapID", swapID);
+
+  console.log(`req.params`, req.params);
+  console.log('swapID', swapID);
+
 
   const queryText = `
-  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "categories"."display_name",
   "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id" AS "fav_user_id",
   "user"."username", "user"."email", "user"."user_image", "swaps"."id" AS "swap_id", "swaps"."access_code", "swaps"."is_private", "swaps"."sell_date",
   "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open", "swap_item_join".id AS "swap_item_id" FROM "items"
@@ -125,7 +136,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   LEFT JOIN "user" ON "items".user_id = "user".id
   LEFT JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id
   WHERE "swaps".id = $1
-  GROUP BY "swaps"."id", "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id", "swap_item_join".id;`;
+  GROUP BY "swaps"."id", "items".id, "categories".name, "categories".display_name, "user"."username", "user"."email", "user"."user_image", "favorites"."id", "swap_item_join".id;`;
   pool
     .query(queryText, [swapID])
     .then((result) => {
@@ -142,10 +153,11 @@ router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
   const queryText = `
     SELECT *, "swap_users".id AS "swap_users_id", "swaps".id AS "id"  FROM "swaps"
     JOIN "swap_users" ON "swap_users".swap_id = "swaps".id
-    JOIN "user" ON "user".id = "swap_users".user_id;
+    JOIN "user" ON "user".id = "swap_users".user_id
+    WHERE "swap_users".user_id = $1;
     `;
   pool
-    .query(queryText)
+    .query(queryText, [req.user.id])
     .then((result) => {
       console.log(result);
 

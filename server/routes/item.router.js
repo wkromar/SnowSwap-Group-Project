@@ -57,14 +57,43 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("GETting items");
 
   const queryText = `
-      SELECT items.*, ARRAY_AGG(url) image FROM "items" 
-      LEFT JOIN "images" ON "items".id = "images".item_id
-      WHERE "user_id" = $1
-      GROUP BY "items".id
-      ORDER BY "cat_id" ASC;
+    SELECT items.*, "categories"."name" AS "category_name", ARRAY_AGG(url) image FROM "items" 
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "categories" ON "items".cat_id = "categories".id
+    WHERE "user_id" = $1
+    GROUP BY "items".id, "categories"."name"
+    ORDER BY "cat_id" ASC;
     `;
   pool
     .query(queryText, [userId])
+    .then((result) => {
+      console.log(result);
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/availableGear/:id", rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const swapId = req.params.id;
+  console.log("GETting items");
+
+  const queryText = `
+    SELECT "items".*, ARRAY_AGG(url) image FROM "items"
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
+    LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
+    WHERE "items".user_id = $1 AND NOT EXISTS
+    ( SELECT * FROM "swap_item_join" 
+    WHERE "swap_item_join".swap_id = $2 AND "swap_item_join".item_id = "items".id)
+    GROUP BY "items".id;
+    `;
+  pool
+    .query(queryText, [userId, swapId])
     .then((result) => {
       console.log(result);
 
