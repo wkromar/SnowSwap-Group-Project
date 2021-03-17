@@ -114,7 +114,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   console.log('swapID', swapID);
 
   const queryText = `
-  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "categories"."display_name",
   "favorites"."id" AS "favorites_id", "favorites"."item_id", "favorites"."user_id" AS "fav_user_id",
   "user"."username", "user"."email", "user"."user_image", "swaps"."id" AS "swap_id", "swaps"."access_code", "swaps"."is_private", "swaps"."sell_date",
   "swaps"."start_date", "swaps"."stop_date", "swaps"."swap_open", "swap_item_join".id AS "swap_item_id" FROM "items"
@@ -126,7 +126,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   LEFT JOIN "user" ON "items".user_id = "user".id
   LEFT JOIN "swaps" ON "swaps".id = "swap_item_join".swap_id
   WHERE "swaps".id = $1
-  GROUP BY "swaps"."id", "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id", "swap_item_join".id;`;
+  GROUP BY "swaps"."id", "items".id, "categories".name, "categories".display_name, "user"."username", "user"."email", "user"."user_image", "favorites"."id", "swap_item_join".id;`;
   pool
     .query(queryText, [swapID])
     .then((result) => {
