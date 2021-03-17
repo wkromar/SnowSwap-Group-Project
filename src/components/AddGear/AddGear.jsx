@@ -7,7 +7,7 @@ import './AddGear.css';
 import GearTags from '../GearTags/GearTags';
 
 function AddGear({ gear }) {
-  const [gearToAdd, setGearToAdd] = useState({img: []});
+  const [gearToAdd, setGearToAdd] = useState({ img: [] });
   const user = useSelector((store) => store.user);
   const categories = useSelector((store) => store.categories);
   console.log(categories);

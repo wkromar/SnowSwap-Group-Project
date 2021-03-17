@@ -24,6 +24,7 @@ export default function ImageUpload({ state, setState, keyName }) {
       s3Url={s3Url}
       maxSize={1024 * 1024 * 5}
       upload={uploadOptions}
+      styles={{ previewImage: { display: 'none' } }}
     />
   );
 }
