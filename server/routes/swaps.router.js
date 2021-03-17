@@ -9,9 +9,17 @@ const {
 // gathers ALL SWAPS
 // sends to front end
 router.get("/", rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM "swaps" ORDER BY "id";`;
+  const queryText = `
+    SELECT "swaps".* FROM "swaps"
+    LEFT JOIN "swap_users" ON "swaps".id = "swap_users".swap_id
+    WHERE NOT EXISTS
+    ( SELECT * FROM "swap_users" 
+    WHERE "swap_users".swap_id = "swaps".id AND "swap_users".user_id = $1)
+    GROUP BY "swaps".id
+    ORDER BY "swaps".id ASC;
+  `;
   pool
-    .query(queryText)
+    .query(queryText, [req.user.id])
     .then((result) => {
       res.send(result.rows);
     })
@@ -39,10 +47,10 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
 });
 
 router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
-  const id = req.params.id
+  const id = req.params.id;
   const queryText = `
     SELECT * FROM "swaps" 
-    WHERE "id" = $1;`
+    WHERE "id" = $1;`;
   pool
     .query(queryText, [id])
     .then((result) => {
@@ -110,7 +118,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
 
   const swapID = req.params.id;
-  console.log(`req.params`, req.params)
+  console.log(`req.params`, req.params);
   console.log('swapID', swapID);
 
   const queryText = `
@@ -144,10 +152,11 @@ router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
   const queryText = `
     SELECT *, "swap_users".id AS "swap_users_id", "swaps".id AS "id"  FROM "swaps"
     JOIN "swap_users" ON "swap_users".swap_id = "swaps".id
-    JOIN "user" ON "user".id = "swap_users".user_id;
+    JOIN "user" ON "user".id = "swap_users".user_id
+    WHERE "swap_users".user_id = $1;
     `;
   pool
-    .query(queryText)
+    .query(queryText, [req.user.id])
     .then((result) => {
       console.log(result);
 
