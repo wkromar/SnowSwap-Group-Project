@@ -143,7 +143,6 @@ function FilterDrawer() {
 
 
 
-
     // When apply is clicked it sends over the object to be filtered against.
     const applyFilter = () => {
         console.log('apply clicked');
@@ -167,8 +166,6 @@ function FilterDrawer() {
         setGender('');
         setLacingSystemSearch('');
         setSizeSearch('');
-
-
 
     }
 

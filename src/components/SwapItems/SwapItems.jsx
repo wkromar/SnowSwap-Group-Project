@@ -22,7 +22,7 @@ const customStyles = {
 export default function SwapItems() {
   const dispatch = useDispatch();
 
-  const filterObject = useSelector((state) => state?.filterObject)
+  const filterObject = useSelector((state) => state?.filterObject);
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const user = useSelector((state) => state?.user);
   const swapItems = useSelector((state) => state?.swapItems);
@@ -58,6 +58,8 @@ export default function SwapItems() {
 
   console.log('swapItems - filterObject:', filterObject);
 
+  // const filterObject = useSelector((state) => state?.filterObject);
+  
   let filteredSwapItems = swapItems.filter(item => {
     
     for (let key in filterObject) {
