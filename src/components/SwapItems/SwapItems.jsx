@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Modal from "react-modal";
 import "../SwapItems/SwapItems.css";
 import DetailsView from "../DetailsView/DetailsView";
@@ -22,7 +22,13 @@ const customStyles = {
 export default function SwapItems() {
   const dispatch = useDispatch();
 
+<<<<<<< HEAD
   const filterObject = useSelector((state) => state?.filterObject);
+=======
+  //grab id out of the url
+  const { id } = useParams();
+
+>>>>>>> c382cbae58da546f544af72ba31abff74b624f58
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const user = useSelector((state) => state?.user);
   const swapItems = useSelector((state) => state?.swapItems);
@@ -41,9 +47,9 @@ export default function SwapItems() {
 
   const favoriteItem = (piece) => {
     if (piece.favorites_id) {
-      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, selectedSwap] });
+      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, id] });
     } else {
-      dispatch({ type: "FAVORITE_ITEM", payload: [piece, selectedSwap] });
+      dispatch({ type: "FAVORITE_ITEM", payload: [piece, id] });
     }
   };
 
@@ -52,8 +58,8 @@ export default function SwapItems() {
     dispatch({ type: "OPEN_DETAIL_VIEW" });
   };
 
-  const removeGear = (id) => {
-    dispatch({ type: "REMOVE_FROM_SWAP", payload: { swap_item_id: id, swap_id: selectedSwap.id } });
+  const removeGear = (swapItemId) => {
+    dispatch({ type: "REMOVE_FROM_SWAP", payload: {swap_item_id: swapItemId, swap_id: id} });
   };
 
   console.log('swapItems - filterObject:', filterObject);
@@ -75,8 +81,9 @@ export default function SwapItems() {
   console.log("swapItems:", swapItems);
 
   useEffect(() => {
-    const swapDetails = localStorage.getItem("swap-object");
-    dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
+    // const swapDetails = localStorage.getItem("swap-object");
+    // dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
+    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
 
 

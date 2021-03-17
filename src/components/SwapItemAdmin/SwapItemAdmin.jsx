@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
-export default function SwapItemAdmin({ selectedSwap }) {
+export default function SwapItemAdmin() {
   const dispatch = useDispatch();
   const swapItems = useSelector((state) => state.swapItems);
 
@@ -11,8 +12,10 @@ export default function SwapItemAdmin({ selectedSwap }) {
     dispatch({ type: 'REMOVE_FROM_SWAP', payload: item });
   };
 
+  const { id } = useParams();
+
   useEffect(() => {
-    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
   return (
     <div>

@@ -10,6 +10,15 @@ function* fetchGear() {
   }
 }
 
+function* fetchGearToAdd(action) {
+  try {
+    const response = yield axios.get(`/api/item/availableGear/${action.payload}`);
+    yield put({ type: "SET_GEAR", payload: response.data });
+  } catch (err) {
+    console.log(`error in fetching gear ${err}`);
+  }
+}
+
 function* addGear(action) {
   try {
     console.log(action.payload);
@@ -31,11 +40,11 @@ function* fetchFavorites() {
 
 function* unFavoriteItem(action) {
   try {
-    console.log('action.payload:', action.payload[0].favorites_id)
+    console.log('action.payload:', action.payload[0].favorites_id);
     const favoriteID = action.payload[0].favorites_id;
     console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
-    yield put({ type: "FETCH_SWAP_ITEMS" , payload: action.payload[1]});
+    yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload[1] });
   } catch (err) {
     console.log(`error in removing favorite: ${err}`);
   }
@@ -53,7 +62,7 @@ function* favoriteItem(action) {
   try {
     console.log('action.payload in favoriteItem', action.payload[0]);
     yield axios.post("/api/item/addToFav", action.payload[0]);
-    yield put({ type: "FETCH_SWAP_ITEMS" , payload: action.payload[1]});
+    yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload[1] });
   } catch (error) {
     console.log(error);
   }
@@ -61,11 +70,11 @@ function* favoriteItem(action) {
 
 function* unfavoriteFromFavorites(action) {
   try {
-    console.log('action.payload:', action.payload.favorites_id)
+    console.log('action.payload:', action.payload.favorites_id);
     const favoriteID = action.payload.favorites_id;
     console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
-    yield put({type: "FETCH_FAVORITES"})
+    yield put({ type: "FETCH_FAVORITES" });
   } catch (err) {
     console.log(`error in removing favorite: ${err}`);
   }
@@ -80,7 +89,8 @@ function* gearSaga() {
   yield takeLatest("UNFAVORITE_ITEM", unFavoriteItem);
   yield takeLatest("FAVORITE_ITEM", favoriteItem);
   yield takeLatest("CHANGE_GEAR", changeGear);
-  yield takeLatest("UNFAVORITE_FROM_FAVORITES", unfavoriteFromFavorites)
+  yield takeLatest("UNFAVORITE_FROM_FAVORITES", unfavoriteFromFavorites);
+  yield takeLatest("FETCH_GEAR_TO_ADD", fetchGearToAdd);
 }
 
 export default gearSaga;
