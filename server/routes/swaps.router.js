@@ -97,8 +97,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //push existing items into swap
 
 router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
-  const swapItem = req.body;
-  console.log("adding item to swap", swapItem);
+  const item = req.body;
+  console.log("adding item to swap", item);
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
