@@ -16,12 +16,12 @@ router.post("/", rejectUnauthenticated, (req, res) => {
   console.log("sending item", item);
   const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
   "flex", "style", "brand", "shape", "gender", "profile", "condition", 
-  "lacing_system", "description","type")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
+  "lacing_system", "description")
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
   pool
     .query(queryText, [
       id,
-      item.cat_id,
+      item.type,
       item.title,
       item.size,
       item.price,
@@ -34,10 +34,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       item.condition,
       item.lacing_system,
       item.description,
-      item.type,
     ])
     .then((response) => {
-      console.log(response);
       res.sendStatus(200);
     })
     .catch((error) => {
@@ -67,7 +65,6 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [userId])
     .then((result) => {
-      console.log(result);
 
       res.send(result.rows);
     })
@@ -95,7 +92,6 @@ router.get("/availableGear/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [userId, swapId])
     .then((result) => {
-      console.log(result);
 
       res.send(result.rows);
     })
@@ -121,7 +117,6 @@ router.get("/favorites", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [userId])
     .then((result) => {
-      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -199,7 +194,6 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [userId, itemToFav])
     .then((result) => {
-      console.log(result);
       res.sendStatus(201);
     })
     .catch((error) => {
