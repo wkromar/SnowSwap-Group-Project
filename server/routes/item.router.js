@@ -86,16 +86,10 @@ router.get("/availableGear/:id", rejectUnauthenticated, (req, res) => {
     LEFT JOIN "images" ON "items".id = "images".item_id
     LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
     LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
-    WHERE "user_id" = $1
-    GROUP BY "items".id
-    EXCEPT
-    SELECT "items".*, ARRAY_AGG(url) image FROM "items"
-    LEFT JOIN "images" ON "items".id = "images".item_id
-    LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
-    LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
-    WHERE "items".id = "swap_item_join".item_id AND "swap_item_join".swap_id = $2
-    GROUP BY "items".id
-    ORDER BY "title" ASC;
+    WHERE "items".user_id = $1 AND NOT EXISTS
+    ( SELECT * FROM "swap_item_join" 
+    WHERE "swap_item_join".swap_id = $2 AND "swap_item_join".item_id = "items".id)
+    GROUP BY "items".id;
     `;
   pool
     .query(queryText, [userId, swapId])
