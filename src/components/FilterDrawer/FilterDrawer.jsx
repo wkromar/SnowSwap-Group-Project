@@ -53,7 +53,7 @@ function FilterDrawer({ filter, setFilter }) {
     const [sizeSearch, setSizeSearch] = useState('');
 
     const [searchObj, setSearchObj] = useState({})
-    
+
 
     const whatToFilterFor = (event) => {
 
@@ -62,17 +62,17 @@ function FilterDrawer({ filter, setFilter }) {
     }
 
 
-// Updates the object that will be used to filter the items displayed
+    // Updates the object that will be used to filter the items displayed
     const updateSearchObj = (key, value) => {
-            setSearchObj({...searchObj, [key] : value})
-        }
+        setSearchObj({ ...searchObj, [key]: value })
+    }
 
-// These functions will call the update function and set the select values.
+    // These functions will call the update function and set the select values.
     const catSelected = (cat) => {
 
         console.log('cat selected');
         setCategory(cat);
-        setSearchObj({'category' : cat});
+        setSearchObj({ 'category_name': cat });
         setConditionSearch('')
         setGender('')
     }
@@ -135,19 +135,19 @@ function FilterDrawer({ filter, setFilter }) {
 
 
 
-    
-// When apply is clicked it sends over the object to be filtered against.
+
+    // When apply is clicked it sends over the object to be filtered against.
     const applyFilter = () => {
         console.log('apply clicked');
         console.log('searchObj:', searchObj);
 
-        dispatch({type: 'SET_FILTER_OBJECT', payload: searchObj})
+        dispatch({ type: 'SET_FILTER_OBJECT', payload: searchObj })
     }
 
-    
 
-    
-    
+
+
+
 
 
 
@@ -221,11 +221,11 @@ function FilterDrawer({ filter, setFilter }) {
                             onChange={(event) => { genderSelected(event.target.value) }}
                         >
                             <option value="">Select Gender</option>
-                            <option value="men">Men</option>
-                            <option value="woman">Women</option>
+                            <option value="Mens">Men</option>
+                            <option value="Womens">Women</option>
                         </select>
                     </div>
-                    
+
                     {/* conditionally renders if snowboard is selected */}
                     <div>
                         {category === "snowboard" ?
@@ -233,7 +233,7 @@ function FilterDrawer({ filter, setFilter }) {
                                 <label>Board Style: </label>
                                 <select name="snowboardStyle" id=""
                                     value={snowboardStyleSearch}
-                                    onChange={(event) => { snowboardStyleSelected( event.target.value) }}
+                                    onChange={(event) => { snowboardStyleSelected(event.target.value) }}
                                 >
                                     <option>Select Style</option>
                                     {snowboardStyle.map((style) => {

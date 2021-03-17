@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import "../SwapItems/SwapItems.css";
 import DetailsView from "../DetailsView/DetailsView";
 import AddGearToSwap from "../AddGearToSwap/AddGearToSwap";
+import FilterDrawer from '../FilterDrawer/FilterDrawer'
 
 const customStyles = {
   content: {
@@ -22,7 +23,9 @@ export default function SwapItems() {
   const dispatch = useDispatch();
 
   const filterObject = useSelector((state) => state?.filterObject)
-  
+
+  // condition, gender, category_name, flex, lacing_system, profile, shape, size, style, 
+
   const selectedSwap = useSelector((state) => state?.selectedSwap);
 
   const user = useSelector((state) => state?.user);
@@ -31,14 +34,12 @@ export default function SwapItems() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
-  const [filter, setFilter] = useState('')
-  
-  // condition, gender, category_name, flex, lacing_system, profile, shape, size, style, 
-  
+
+
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
   }, []);
-  
+
   const handleAddGearToSwap = () => {
     dispatch({ type: "OPEN_ADD_VIEW" });
   };
@@ -57,23 +58,39 @@ export default function SwapItems() {
   };
 
   const removeGear = (id) => {
-    dispatch({ type: "REMOVE_FROM_SWAP", payload: {swap_item_id: id, swap_id: selectedSwap.id} });
+    dispatch({ type: "REMOVE_FROM_SWAP", payload: { swap_item_id: id, swap_id: selectedSwap.id } });
   };
 
-  console.log('swapItems - filterObject:', filterObject);
 
-  // let filteredSwapItems = swapItems.filter(item => {
-  //   if (reduxItem.cat) {
-  //   item.cat === reduxItem.cat
-  //   }
-  // });
-  
+
+  console.log('swapItems - filterObject:', filterObject);
+  console.log(Object.keys(filterObject));
+
+  // const filterObject = useSelector((state) => state?.filterObject)
+
+  let filteredSwapItems = swapItems.filter(item => {
+    
+    for (let key in filterObject) {
+      if (item[key] !== filterObject[key]) {
+        console.log(`it's a match`);
+        return false;
+      }
+    } 
+    return true;
+    
+  });
+
+
+
+
   console.log("swapItems:", swapItems);
 
   useEffect(() => {
     const swapDetails = localStorage.getItem("swap-object");
     dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
   }, []);
+
+
 
   return (
     <>
@@ -82,47 +99,71 @@ export default function SwapItems() {
           Add Gear To This Swap
         </button>
         <button>
-          <FilterDrawer 
-          filter={filter}
-          setFilter={setFilter}
-          />
+          <FilterDrawer />
         </button>
       </div>
 
       <p className="title">{selectedSwap.name}</p>
 
       <div className="container">
-        {swapItems &&
-          swapItems?.map((piece) => (
-            
-            // piece.category_name.toString().toLowerCase().includes(filter) &&
-            <div className="item">
-              <img
-                onClick={() => gearClicked(piece)}
-                className="image"
-                src={piece.image[0]}
-              />
-              <div onClick={() => favoriteItem(piece)}>
-                {piece.favorites_id ? (
-                  <img className="favorite-icon" src="images/favorite.svg" />
-                ) : (
-                  <img className="favorite-icon" src="images/unfavorite.svg" />
-                )}
-              </div>
-              <p className="name">
-                {" "}
-                {piece.title} | ${piece.price}{" "}
-              </p>
-              {user.id == piece.user_id && (
-                <button
-                  onClick={() => removeGear(piece.swap_item_id)}
-                  className="remove-button"
-                >
-                  Remove
-                </button>
+        {filteredSwapItems ? 
+        filteredSwapItems?.map((piece) => (
+
+          <div className="item">
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
+            <div onClick={() => favoriteItem(piece)}>
+              {piece.favorites_id ? (
+                <img className="favorite-icon" src="images/favorite.svg" />
+              ) : (
+                <img className="favorite-icon" src="images/unfavorite.svg" />
               )}
             </div>
-          ))}
+            <p className="name">
+              {" "}
+              {piece.title} | ${piece.price}{" "}
+            </p>
+            {user.id == piece.user_id && (
+              <button
+                onClick={() => removeGear(piece.swap_item_id)}
+                className="remove-button"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        )) : swapItems?.map((piece) => (
+
+          <div className="item">
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
+            <div onClick={() => favoriteItem(piece)}>
+              {piece.favorites_id ? (
+                <img className="favorite-icon" src="images/favorite.svg" />
+              ) : (
+                <img className="favorite-icon" src="images/unfavorite.svg" />
+              )}
+            </div>
+            <p className="name">
+              {" "}
+              {piece.title} | ${piece.price}{" "}
+            </p>
+            {user.id == piece.user_id && (
+              <button
+                onClick={() => removeGear(piece.swap_item_id)}
+                className="remove-button"
+              >
+                Remove
+              </button>
+            )}
+          </div>
+        ))}
       </div>
       <Modal
         ariaHideApp={false}
