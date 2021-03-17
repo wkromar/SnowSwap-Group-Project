@@ -38,6 +38,24 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     });
 });
 
+//enter a private swap once using a code
+router.post("/enterPrivate", rejectUnauthenticated, (req, res) => {
+  const privateEntry = req.body;
+  console.log("entering swap", privateEntry);
+  const queryText = `INSERT INTO "swap_users" ("user_id", "swap_id")
+  VALUES ($1, $2);`;
+  pool
+    .query(queryText, [privateEntry.id, privateEntry.swapId])
+    .then((response) => {
+      console.log(response);
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log("error in swaps POST", error);
+      res.sendStatus(500);
+    });
+});
+
 //insert into SWAPS database
 router.post("/", rejectUnauthenticated, (req, res) => {
   const swap = req.body;
@@ -57,7 +75,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       swap.access_code,
       swap.swap_name,
       swap.swap_img,
-      req.user.id
+      req.user.id,
     ])
     .then((response) => {
       console.log(response);
@@ -91,9 +109,8 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 //join swap item join
 // using a get to grab all data from multiple tables
 router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
-
   const swapID = req.params.id;
-  console.log('swapID', swapID);
+  console.log("swapID", swapID);
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name",
@@ -112,7 +129,6 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [swapID])
     .then((result) => {
-
       res.send(result.rows);
     })
     .catch((error) => {
@@ -151,7 +167,6 @@ router.put("/edit/:id", rejectUnauthenticated, (req, res) => {
     WHERE "id" = $1;
   `;
 
-
   pool
     .query(queryText, [
       swapToEdit,
@@ -163,8 +178,7 @@ router.put("/edit/:id", rejectUnauthenticated, (req, res) => {
       req.body.access_code,
       req.body.swap_img,
       req.user.id,
-      req.body.swap_name
-
+      req.body.swap_name,
     ])
     .then((response) => {
       res.sendStatus(200);
@@ -174,7 +188,7 @@ router.put("/edit/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
-router.delete('/removeFromSwap/:id', rejectUnauthenticated, (req, res) => {
+router.delete("/removeFromSwap/:id", rejectUnauthenticated, (req, res) => {
   const id = req.params.id;
 
   const queryText = `
@@ -182,7 +196,8 @@ router.delete('/removeFromSwap/:id', rejectUnauthenticated, (req, res) => {
     WHERE "id" = $1
   `;
 
-  pool.query(queryText, [id])
+  pool
+    .query(queryText, [id])
     .then((result) => {
       res.sendStatus(200);
     })
