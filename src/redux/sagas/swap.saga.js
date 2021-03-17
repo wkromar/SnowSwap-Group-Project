@@ -2,15 +2,16 @@ import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
 
 function* fetchOwnedSwaps() {
-    try {
-        const response = yield axios.get('/api/swaps/ownedswaps');
-        yield put({ type: 'SET_OWNED_SWAPS', payload: response.data });
-    } catch (err) {
-        console.log(err);
-    }
+  try {
+    const response = yield axios.get("/api/swaps/ownedswaps");
+    yield put({ type: "SET_OWNED_SWAPS", payload: response.data });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* fetchSwapItems(action) {
+
 
     try {
         // yield console.log('action!!!', action.payload.id);
@@ -23,26 +24,27 @@ function* fetchSwapItems(action) {
 }
 
 function* fetchAllSwaps() {
-    try {
-        const response = yield axios.get('/api/swaps');
-        yield put({ type: 'SET_ALL_SWAPS', payload: response.data });
-        const joinedResponse = yield axios.get('/api/swaps/swapsJoined');
-        yield put({ type: 'SET_JOINED_SWAPS', payload: joinedResponse.data });
-    } catch (err) {
-        console.log(err);
-    }
+  try {
+    const response = yield axios.get("/api/swaps");
+    yield put({ type: "SET_ALL_SWAPS", payload: response.data });
+    const joinedResponse = yield axios.get("/api/swaps/swapsJoined");
+    yield put({ type: "SET_JOINED_SWAPS", payload: joinedResponse.data });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* createSwap(action) {
-    try {
-        yield axios.post('/api/swaps/', action.payload);
-        yield put({ type: 'FETCH_ALL_SWAPS' });
-    } catch (err) {
-        console.log(err);
-    }
+  try {
+    yield axios.post("/api/swaps/", action.payload);
+    yield put({ type: "FETCH_ALL_SWAPS" });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* addSelectedToSwap(action) {
+
     try {
         console.log('!!!!!', action.payload.gearToAdd)
         yield axios.post('api/swaps/addToSwap', action.payload);
@@ -53,15 +55,16 @@ function* addSelectedToSwap(action) {
 }
 
 function* editSwap(action) {
-    try {
-        yield axios.put(`/api/swaps/edit/${action.payload.id}`, action.payload);
-        yield put({ type: 'FETCH_ALL_SWAPS' });
-    } catch (err) {
-        console.log(err);
-    }
+  try {
+    yield axios.put(`/api/swaps/edit/${action.payload.id}`, action.payload);
+    yield put({ type: "FETCH_ALL_SWAPS" });
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 function* removeFromSwap(action) {
+
     try {
         console.log(`action.payload.swap_id`, action.payload.swap_id);
         yield axios.delete(`/api/swaps/removeFromSwap/${action.payload.swap_item_id}`);
@@ -92,3 +95,4 @@ export default function* swapSaga() {
     yield takeLatest('REMOVE_FROM_SWAP', removeFromSwap);
     yield takeLatest('FETCH_SELECTED_SWAP', fetchSelectedSwap);
 }
+

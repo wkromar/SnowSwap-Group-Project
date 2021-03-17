@@ -57,11 +57,12 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("GETting items");
 
   const queryText = `
-      SELECT items.*, ARRAY_AGG(url) image FROM "items" 
-      LEFT JOIN "images" ON "items".id = "images".item_id
-      WHERE "user_id" = $1
-      GROUP BY "items".id
-      ORDER BY "cat_id" ASC;
+    SELECT items.*, "categories"."name" AS "category_name", ARRAY_AGG(url) image FROM "items" 
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "categories" ON "items".cat_id = "categories".id
+    WHERE "user_id" = $1
+    GROUP BY "items".id, "categories"."name"
+    ORDER BY "cat_id" ASC;
     `;
   pool
     .query(queryText, [userId])

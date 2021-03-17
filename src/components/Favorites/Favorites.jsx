@@ -5,6 +5,7 @@ import Modal from "react-modal";
 import "../Favorites/Favorites.css";
 import DetailsView from "../DetailsView/DetailsView";
 import Swal from "sweetalert2";
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
 
 const customStyles = {
   content: {
@@ -53,13 +54,41 @@ export default function Favorites() {
    
   }
 
+const filterObject = useSelector((state) => state?.filterObject);
+  
+let filteredFavorites = favorites.filter(item => {
+    
+  for (let key in filterObject) {
+    if (item[key] !== filterObject[key]) {
+      console.log(`it's a match`);
+      return false;
+    }
+  } 
+  return true;
+  
+});  
+
   return (
     <>
       <div className="container">
       <p className="title"> Favorites </p>
+      <FilterDrawer />
       </div>
       <div className="container">
-        {favorites.map((piece) => (
+        {filteredFavorites ? 
+        filteredFavorites.map((piece) => (
+          <div className="item">
+            <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
+            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/favorite.svg" />
+            <p className="name">
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
+            </p>
+          </div>
+        )) : 
+        favorites.map((piece) => (
           <div className="item">
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
             <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/favorite.svg" />

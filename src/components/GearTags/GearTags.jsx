@@ -30,10 +30,10 @@ const gender = ["", "Male", "Female"];
 const condition = [
   "",
   "Boneyard",
-  "Heavily used",
-  "Moderately used",
-  "Lightly used",
-  "Like new",
+  "Heavily Used",
+  "Moderately Used",
+  "Lightly Used",
+  "Like New",
   "New",
 ];
 const lacing_system = ["", "Traditional", "Quick-pull", "BOA"];

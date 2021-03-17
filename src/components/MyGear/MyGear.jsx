@@ -1,11 +1,14 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import FilterDrawer from '../FilterDrawer/FilterDrawer'
 import "../MyGear/MyGear.css";
 
 export default function MyGear() {
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const filterObject = useSelector((state) => state?.filterObject);
 
   useEffect(() => {
     dispatch({ type: "FETCH_GEAR" });
@@ -18,12 +21,26 @@ export default function MyGear() {
     console.log("Clicked Add Gear");
     history.push("/addGear");
   };
-  
+
   // "SELECTED_PIECE";
   const gearClicked = (piece) => {
     dispatch({ type: "EDIT_GEAR", payload: piece });
     history.push(`/editGear`);
   };
+
+
+
+  let filteredGear = gear.filter(item => {
+
+    for (let key in filterObject) {
+      if (item[key] !== filterObject[key]) {
+        console.log(`it's a match`);
+        return false;
+      }
+    }
+    return true;
+
+  });
 
   return (
     <>
@@ -31,10 +48,28 @@ export default function MyGear() {
         <button className="add-gear-button" onClick={handleAddGear}>
           Add Gear
         </button>
+        <FilterDrawer />
       </div>
+      
       <p className="title"> Inventory </p>
       <div className="container">
-        {gear.map((piece) => (
+        {filteredGear ?
+        filteredGear.map((piece) => (
+          <div className="item">
+            <img
+              onClick={() => gearClicked(piece)}
+              className="image"
+              src={piece.image[0]}
+            />
+            <p className="name">
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
+            </p>
+          </div>
+        )) : 
+        gear.map((piece) => (
           <div className="item">
             <img
               onClick={() => gearClicked(piece)}
