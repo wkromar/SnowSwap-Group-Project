@@ -97,8 +97,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //push existing items into swap
 
 router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
-  const item = req.body;
-  console.log("adding item to swap", item);
+  const swapItem = req.body;
+  console.log("adding item to swap", swapItem);
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
@@ -117,6 +117,7 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
 // using a get to grab all data from multiple tables
 router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   const swapID = req.params.id;
+
   console.log(`req.params`, req.params);
   console.log("swapID", swapID);
 

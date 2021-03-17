@@ -1,0 +1,12 @@
+/* .filterSelect{
+    color: teal;
+} */
+
+.filterContainer{
+    margin-left: 5px;
+}
+
+.filterBtn{
+    display: flex;
+    float: right;
+}
