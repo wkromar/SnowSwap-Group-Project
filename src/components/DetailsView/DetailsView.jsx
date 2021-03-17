@@ -18,15 +18,13 @@ const customStyles = {
 
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
-
   const modalStatus = useSelector((state) => state.modal);
-
+  const user = useSelector((state) => state?.user);
+  const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item`;
   const dispatch = useDispatch();
   // const itemOfInterest = detailsView.id;
   const [imageCounter, setImageCounter] = useState(0);
-
-  const [contactSeller, setContactSeller] = useState(true);
-
+  console.log(user);
   const handleNextPicture = (direction) => {
     console.log(direction);
     console.log(gearDetails.image.length - 1);
@@ -42,11 +40,6 @@ export default function DetailsView() {
     } else if (direction === "back" && imageCounter === 0) {
       setImageCounter(gearDetails.image.length - 1);
     }
-  };
-
-  const handleContactSeller = () => {
-    console.log("Clicked Contact Seller");
-    setContactSeller(!contactSeller);
   };
 
   console.log("imageCounter:", imageCounter);
@@ -69,60 +62,53 @@ export default function DetailsView() {
         <p className="seller">Seller: {gearDetails.username}</p>
         <p className="price">Price: ${gearDetails.price}</p>
       </div>
-      <button
-        onClick={() => handleContactSeller()}
-        className="contact-seller-button"
-      >
-        Details View
-      </button>
-      {contactSeller ? (
-        <div>
-          <button
-            onClick={() => handleContactSeller()}
-            className="contact-seller-button"
-          >
-            Contact Seller
-          </button>
-          <div className="description-tags">
-            <h4>Description</h4>
-            <p>{gearDetails.description}</p>
-            <div className="container">
-              {gearDetails?.category_name && (
-                <div className="chip">{gearDetails?.display_name}</div>
-              )}
-              {gearDetails?.gender && (
-                <div className="chip">{gearDetails?.gender}</div>
-              )}
-              {gearDetails?.brand && (
-                <div className="chip">{gearDetails?.brand}</div>
-              )}
-              {gearDetails?.condition && (
-                <div className="chip">{gearDetails?.condition}</div>
-              )}
-              {gearDetails?.shape && (
-                <div className="chip">{gearDetails?.shape}</div>
-              )}
-              {gearDetails?.size && (
-                <div className="chip">{gearDetails?.size}</div>
-              )}
-              {gearDetails?.lacing_system && (
-                <div className="chip">{gearDetails?.lacing_system}</div>
-              )}
-              {gearDetails?.profile && (
-                <div className="chip">{gearDetails?.profile}</div>
-              )}
-              {gearDetails?.flex && (
-                <div className="chip">{gearDetails?.flex}</div>
-              )}
-            </div>
+
+      <div>
+        <div className="description-tags">
+          <h4>Description</h4>
+          <p>{gearDetails.description}</p>
+          <div className="container">
+            {gearDetails?.category_name && (
+              <div className="chip">{gearDetails?.display_name}</div>
+            )}
+            {gearDetails?.gender && (
+              <div className="chip">{gearDetails?.gender}</div>
+            )}
+            {gearDetails?.brand && (
+              <div className="chip">{gearDetails?.brand}</div>
+            )}
+            {gearDetails?.condition && (
+              <div className="chip">{gearDetails?.condition}</div>
+            )}
+            {gearDetails?.shape && (
+              <div className="chip">{gearDetails?.shape}</div>
+            )}
+            {gearDetails?.size && (
+              <div className="chip">{gearDetails?.size}</div>
+            )}
+            {gearDetails?.lacing_system && (
+              <div className="chip">{gearDetails?.lacing_system}</div>
+            )}
+            {gearDetails?.profile && (
+              <div className="chip">{gearDetails?.profile}</div>
+            )}
+            {gearDetails?.flex && (
+              <div className="chip">{gearDetails?.flex}</div>
+            )}
           </div>
         </div>
-      ) : (
-        <div>
-          <p>Contact Seller</p>
-          <a href="mailto:${gearDetails.email}">{gearDetails.email}</a>
-        </div>
-      )}
+      </div>
+      <h4>Seller Details</h4>
+      <div>
+        <p>Preferred Payment</p>
+        <p>{user.preferred_payment}</p>
+        <p>Username: {user.payment_username}</p>
+      </div>
+      <div>
+        <p>Contact Seller</p>
+        <a href={userEmail}>{gearDetails.email}</a>
+      </div>
+
       <button
         className="close-button"
         onClick={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
