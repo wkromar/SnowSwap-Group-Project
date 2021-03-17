@@ -32,10 +32,30 @@ VALUES ('ski'),('ski_binding'),('ski_boots'),('snowboard'),('snowboard_boots'),
 ALTER TABLE "categories"
 ADD COLUMN "display_name" VARCHAR (50);
 
-INSERT INTO "categories" ("display_name")
-VALUES ('Ski'), ('Ski Binding'), ('Ski Boots'), 
-('Snowboard'), ('Snowboard Boots'), ('Snowboard Bindings'), 
-('Apparel'), ('Helmet');
+UPDATE "categories"
+SET "display_name" = 'Ski'
+WHERE "id" = 1;
+UPDATE "categories"
+SET "display_name" = 'Ski Binding'
+WHERE "id" = 2;
+UPDATE "categories"
+SET "display_name" = 'Ski Boots'
+WHERE "id" = 3;
+UPDATE "categories"
+SET "display_name" = 'Snowboard'
+WHERE "id" = 4;
+UPDATE "categories"
+SET "display_name" = 'Snowboard Boots'
+WHERE "id" = 5;
+UPDATE "categories"
+SET "display_name" = 'Snowboard Bindings'
+WHERE "id" = 6;
+UPDATE "categories"
+SET "display_name" = 'Apparel'
+WHERE "id" = 7;
+UPDATE "categories"
+SET "display_name" = 'Helmet'
+WHERE "id" = 8;
 
 
 CREATE TABLE "items" (
