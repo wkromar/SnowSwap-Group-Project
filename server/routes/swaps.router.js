@@ -46,7 +46,6 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     });
 });
 
-
 router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
   const id = req.params.id;
   const queryText = `
@@ -120,8 +119,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   const swapID = req.params.id;
 
   console.log(`req.params`, req.params);
-  console.log('swapID', swapID);
-
+  console.log("swapID", swapID);
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "categories"."display_name",
