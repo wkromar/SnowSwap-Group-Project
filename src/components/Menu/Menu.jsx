@@ -32,7 +32,7 @@ export default function Menu() {
           <Link to="/myGear" className="menuItem">
             My Gear
           </Link>
-          <Link to="/favorites" className="menuItem">
+          <Link to="/favorites/" className="menuItem">
             Favorites
           </Link>
           <LogOutButton />

@@ -17,7 +17,7 @@ const customStyles = {
   },
 };
 
-export default function DetailsView() {
+export default function DetailsView () {
   const gearDetails = useSelector((state) => state?.gearDetails);
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const modalStatus = useSelector((state) => state.modal);
@@ -76,7 +76,7 @@ export default function DetailsView() {
           <h4>Description</h4>
           <p>{gearDetails.description}</p>
           <div className="container">
-            {gearDetails?.category_name && (
+            {gearDetails?.display_name && (
               <div className="chip">{gearDetails?.display_name}</div>
             )}
             {gearDetails?.gender && (

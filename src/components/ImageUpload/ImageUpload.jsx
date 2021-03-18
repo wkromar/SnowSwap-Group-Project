@@ -1,6 +1,7 @@
 import React from 'react';
 import DropzoneS3Uploader from 'react-dropzone-s3-uploader';
 import DropZone from '../DropZone/DropZone';
+import Swal from "sweetalert2";
 
 export default function ImageUpload({ state, setState, keyName }) {
   const handleFinishedUpload = (info) => {
@@ -8,7 +9,16 @@ export default function ImageUpload({ state, setState, keyName }) {
     if (keyName === 'multiple' && state.img.length < 6) {
       setState({ ...state, img: [...state.img, info.fileUrl] });
     } else if (keyName === 'multiple' && state.img.length >= 6) {
-      alert('Delete some pics');
+      Swal.fire({
+        title: `Photo upload limit reached.`,
+        text: `Only 6 photos are allowed for each piece of gear.`,
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+      })
     } else {
       setState({ ...state, [keyName]: info.fileUrl });
     }

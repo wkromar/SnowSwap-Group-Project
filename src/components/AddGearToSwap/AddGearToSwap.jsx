@@ -3,13 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import '../AddGearToSwap/AddGearToSwap.css';
 
-export default function AddGearToSwap({ selectedSwap }) {
+export default function AddGearToSwap() {
   const dispatch = useDispatch();
 
   //grab id out of the url
   const { id } = useParams();
 
   const gear = useSelector((state) => state?.gear);
+  const selectedSwap = useSelector((state) => state?.selectedSwap);
   const gearToAdd = useSelector((state) => state?.gearToAdd);
   const swapItems = useSelector((state) => state?.swapItems);
   const [availableItems, setAvailableItems] = useState([]);
@@ -18,9 +19,9 @@ export default function AddGearToSwap({ selectedSwap }) {
     dispatch({ type: 'FETCH_GEAR_TO_ADD', payload: id });
   }, [swapItems]);
 
-  // useEffect(() => {
-  //   unaddedItems();
-  // }, [swapItems]);
+  useEffect(() => {
+    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id});
+  }, []);
 
   const addGear = (piece) => {
     dispatch({
@@ -29,21 +30,9 @@ export default function AddGearToSwap({ selectedSwap }) {
     });
   };
 
-  // const unaddedItems = () => {
-  //   let result = [];
-  //   for (const item of gear) {
-  //     for (const swapItem of swapItems) {
-  //       if(item.id === swapItem.item_id){
-  //         result.push(item)
-  //       }
-  //     }
-  //   }
-  //   setAvailableItems(result)
-  // }
-
   return (
     <>
-      <p className="title"> Add Items to Swap Here: </p>
+      <p className="title"> Add your items to: <br/> {selectedSwap[0].name} </p>
       <div className="container">
         {gear?.map((piece) => (
           <div className="item">

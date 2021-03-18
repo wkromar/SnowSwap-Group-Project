@@ -120,13 +120,15 @@ router.get("/favorites", rejectUnauthenticated, (req, res) => {
   console.log("GETting favorites for:", userId);
 
   const queryText = `
-  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "favorites"."id" AS "favorites_id", "user"."username", "user"."email", "user"."user_image" FROM "items"
+  SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "categories"."display_name" AS "display_name", 
+  "favorites"."id" AS "favorites_id", "user".* FROM "items" 
   JOIN "categories" ON "items".cat_id = "categories".id
   LEFT JOIN "images" ON "items".id = "images".item_id
+
   JOIN "favorites" ON "favorites".item_id = "items".id
   JOIN "user" ON "items".user_id = "user".id
   WHERE "favorites".user_id = $1
-  GROUP BY "items".id, "categories".name, "user"."username", "user"."email", "user"."user_image", "favorites"."id";`;
+  GROUP BY "items".id, "categories"."name", "categories"."display_name", "user".id, "favorites"."id";`;
 
   pool
     .query(queryText, [userId])
