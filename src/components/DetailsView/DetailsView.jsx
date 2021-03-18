@@ -120,20 +120,20 @@ export default function DetailsView() {
           </div>
         </div>
       </div>
-      {selectedSwap[0].swap_open && (
-        <>
-          <h4>Seller Details</h4>
-          <div>
-            <p>Preferred Payment</p>
-            <p>{user.preferred_payment}</p>
-            <p>Username: {user.payment_username}</p>
-          </div>
-          <div>
-            <p>Contact Seller</p>
-            <a href={userEmail}>{gearDetails.email}</a>
-          </div>
-        </>
-      )}
+      {gearDetails.swap_open &&
+      <>
+      <h4>Seller Details</h4>
+      <div>
+        <p>Preferred Payment</p>
+        <p>{user.preferred_payment}</p>
+        <p>Username: {user.payment_username}</p>
+      </div>
+      <div>
+        <p>Contact Seller</p>
+        <a href={userEmail}>{gearDetails.email}</a>
+      </div>
+      </>
+      }
       <button
         className="close-button"
         onClick={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
