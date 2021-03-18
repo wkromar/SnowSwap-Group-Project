@@ -107,11 +107,18 @@ function AddGear({ gear }) {
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        <ImageUpload
-          keyName={'multiple'}
-          state={gearToAdd}
-          setState={setGearToAdd}
-        />
+        <div>
+          <ImageUpload
+            keyName={'multiple'}
+            state={gearToAdd}
+            setState={setGearToAdd}
+          />
+          <div>
+            {gearToAdd?.img?.map((image, i) => {
+              return <img key={i} src={image} />;
+            })}
+          </div>
+        </div>
         <p>Categories</p>
         <select
           onChange={(event) => {
