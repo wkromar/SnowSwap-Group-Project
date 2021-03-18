@@ -1,3 +1,34 @@
-.previewImage {
-  display: none;
+.uploader-thumbnails-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-basis: content;
+}
+
+/* .uploader-container {
+} */
+
+.thumbnail-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.uploaded-photos {
+  width: 65px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  margin: 1px 1px;
+  overflow: hidden;
+}
+
+.uploaded-photos > img {
+  object-fit: cover;
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
 }
