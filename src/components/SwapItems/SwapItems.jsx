@@ -36,6 +36,7 @@ export default function SwapItems() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
+    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id});
   }, []);
 
   const handleAddGearToSwap = () => {
@@ -75,7 +76,7 @@ export default function SwapItems() {
     
   });
 
-  console.log("swapItems:", swapItems);
+  console.log("selectedSwap:", selectedSwap);
 
   useEffect(() => {
     // const swapDetails = localStorage.getItem("swap-object");
@@ -95,7 +96,8 @@ export default function SwapItems() {
         </button>
       </div>
 
-      <p className="title">{selectedSwap.name}</p>
+      <p className="title">{selectedSwap[0].name}</p>
+      <button>See Description</button>
 
       <div className="container">
         {filteredSwapItems ? 
@@ -164,7 +166,7 @@ export default function SwapItems() {
         styles={customStyles}
         contentLabel="Detail View"
       >
-        <DetailsView />
+        <DetailsView selectedSwap={selectedSwap}/>
       </Modal>
       <Modal
         ariaHideApp={false}
