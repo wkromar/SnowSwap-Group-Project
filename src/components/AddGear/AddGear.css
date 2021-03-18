@@ -13,6 +13,7 @@
   flex-wrap: wrap;
   flex-grow: 1;
   justify-content: flex-end;
+  outline-width: 1px;
 }
 
 .uploaded-photos {
@@ -24,6 +25,7 @@
   border: 1px solid black;
   margin: 1px 1px;
   overflow: hidden;
+  box-shadow: 8px 8px 2px 1px rgba(36, 36, 36, 0.2);
 }
 
 .uploaded-photos > img {
@@ -31,4 +33,5 @@
   flex-shrink: 0;
   width: 100%;
   height: 100%;
+  box-shadow: 8px 8px 2px 1px rgba(36, 36, 36, 0.2);
 }
