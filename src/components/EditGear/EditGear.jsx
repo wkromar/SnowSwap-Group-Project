@@ -223,6 +223,8 @@ function EditGear() {
       <div>
         <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
+        <button>Sold</button>
+        <button>Delete Item</button>
       </div>
     </form>
   );

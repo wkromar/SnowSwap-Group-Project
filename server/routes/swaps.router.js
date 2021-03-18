@@ -46,7 +46,6 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     });
 });
 
-
 router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
   const id = req.params.id;
   const queryText = `
@@ -98,8 +97,8 @@ router.post("/", rejectUnauthenticated, (req, res) => {
 //push existing items into swap
 
 router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
-  const swapItem = req.body;
-  console.log("adding item to swap", swapItem);
+  const item = req.body;
+  console.log("adding item to swap", item);
   const queryText = `INSERT INTO "swap_item_join" ("item_id", "swap_id")
   VALUES($1, $2)`;
   pool
@@ -120,8 +119,7 @@ router.get("/swapItems/:id", rejectUnauthenticated, (req, res) => {
   const swapID = req.params.id;
 
   console.log(`req.params`, req.params);
-  console.log('swapID', swapID);
-
+  console.log("swapID", swapID);
 
   const queryText = `
   SELECT items.*, ARRAY_AGG(url) image, "categories"."name" AS "category_name", "categories"."display_name",
