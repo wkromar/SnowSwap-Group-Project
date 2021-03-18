@@ -25,10 +25,10 @@ export default function ImageUpload({ state, setState, keyName }) {
   };
 
   const uploadOptions = {
-    server: 'http://localhost:5000',
+    server: process.env.REACT_APP_SERVER,
   };
 
-  const s3Url = 'https://snowswaps.s3.amazonaws.com';
+  const s3Url = process.env.REACT_APP_S3URL;
 
   return (
     <DropzoneS3Uploader
@@ -38,7 +38,7 @@ export default function ImageUpload({ state, setState, keyName }) {
       maxFiles={6}
       upload={uploadOptions}
     >
-      <DropZone />
+      {keyName === 'multiple' && <DropZone />}
     </DropzoneS3Uploader>
   );
 }

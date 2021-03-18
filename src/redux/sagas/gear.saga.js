@@ -1,5 +1,6 @@
 import { put, takeEvery, takeLatest } from "redux-saga/effects";
 import axios from "axios";
+import { AccordionSummary } from "@material-ui/core";
 
 function* fetchGear() {
   try {
@@ -12,7 +13,9 @@ function* fetchGear() {
 
 function* fetchGearToAdd(action) {
   try {
-    const response = yield axios.get(`/api/item/availableGear/${action.payload}`);
+    const response = yield axios.get(
+      `/api/item/availableGear/${action.payload}`
+    );
     yield put({ type: "SET_GEAR", payload: response.data });
   } catch (err) {
     console.log(`error in fetching gear ${err}`);
@@ -40,7 +43,7 @@ function* fetchFavorites() {
 
 function* unFavoriteItem(action) {
   try {
-    console.log('action.payload:', action.payload[0].favorites_id);
+    console.log("action.payload:", action.payload[0].favorites_id);
     const favoriteID = action.payload[0].favorites_id;
     console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
@@ -60,7 +63,7 @@ function* changeGear(action) {
 
 function* favoriteItem(action) {
   try {
-    console.log('action.payload in favoriteItem', action.payload[0]);
+    console.log("action.payload in favoriteItem", action.payload[0]);
     yield axios.post("/api/item/addToFav", action.payload[0]);
     yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload[1] });
   } catch (error) {
@@ -70,7 +73,7 @@ function* favoriteItem(action) {
 
 function* unfavoriteFromFavorites(action) {
   try {
-    console.log('action.payload:', action.payload.favorites_id);
+    console.log("action.payload:", action.payload.favorites_id);
     const favoriteID = action.payload.favorites_id;
     console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
@@ -80,7 +83,14 @@ function* unfavoriteFromFavorites(action) {
   }
 }
 
-
+function* deleteGear(action) {
+  try {
+    console.log("deleting item", action.payload);
+    yield axios.delete(`api/item/${action.payload}`);
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 function* gearSaga() {
   yield takeLatest("FETCH_GEAR", fetchGear);
@@ -91,6 +101,7 @@ function* gearSaga() {
   yield takeLatest("CHANGE_GEAR", changeGear);
   yield takeLatest("UNFAVORITE_FROM_FAVORITES", unfavoriteFromFavorites);
   yield takeLatest("FETCH_GEAR_TO_ADD", fetchGearToAdd);
+  yield takeLatest("DELETE_ITEM", deleteGear);
 }
 
 export default gearSaga;
