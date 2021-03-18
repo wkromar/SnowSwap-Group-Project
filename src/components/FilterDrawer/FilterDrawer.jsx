@@ -65,11 +65,18 @@ function FilterDrawer() {
     // These functions will call the update function and set the select values.
     const catSelected = (cat) => {
 
-        console.log('cat selected');
-        setCategory(cat);
-        setSearchObj({ 'category_name': cat });
-        // setConditionSearch('')
-        // setGender('')
+        if (cat === "") {
+            delete searchObj['category_name']
+            setConditionSearch(cat);
+            setSearchObj({ ...searchObj });
+            
+        } else {
+
+            console.log('cat selected');
+            setCategory(cat);
+            setSearchObj({ 'category_name': cat });
+        }
+
     }
 
     const conditionSelected = (con) => {
@@ -210,11 +217,11 @@ function FilterDrawer() {
                         >
                             <option value="">Select Category</option>
                             <option value="snowboard">Snowboard</option>
-                            <option value="snowboardBoots">Snowboard Boots</option>
-                            <option value="snowboardBindings">Snowboard Bindings</option>
+                            <option value="snowboard_boots">Snowboard Boots</option>
+                            <option value="snowboard_bindings">Snowboard Bindings</option>
                             <option value="ski">Ski</option>
-                            <option value="skiBoots">Ski Boots</option>
-                            <option value="skiBindings">Ski Bindings</option>
+                            <option value="ski_boots">Ski Boots</option>
+                            <option value="ski_bindings">Ski Bindings</option>
                             <option value="helmet">Helmet</option>
                             <option value="apparel">Apparel</option>
                         </select>
