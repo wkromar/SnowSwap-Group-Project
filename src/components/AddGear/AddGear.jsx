@@ -95,6 +95,15 @@ function AddGear({ gear }) {
     history.push('/myGear');
   };
 
+  const removeThumbnail = (image) => {
+    const newArray = gearToAdd.img.filter((photo) => {
+      if (photo !== image) {
+        return image;
+      }
+    });
+    setGearToAdd({ ...gearToAdd, img: newArray });
+  };
+
   //one form, multiple inputs. cancel brings you back to myGear
   // need inputs to actually be selects
   return (
@@ -119,11 +128,13 @@ function AddGear({ gear }) {
             {gearToAdd?.img?.map((image, i) => {
               return (
                 <div key={i} className="uploaded-photos">
-                  <img src={image} />
+                  <img src={image} onClick={() => removeThumbnail(image)} />
                 </div>
               );
             })}
+            Click image to remove.
           </div>
+          
         </div>
         <p>Categories</p>
         <select
