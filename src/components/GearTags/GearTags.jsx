@@ -26,7 +26,7 @@ const profile = [
   "Rocker",
   "Reverse Camber",
 ];
-const gender = ["", "Male", "Female"];
+const gender = ["", "Mens", "Womans", "Kids"];
 const condition = [
   "",
   "Boneyard",
