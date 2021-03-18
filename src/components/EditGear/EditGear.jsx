@@ -37,7 +37,12 @@ function EditGear() {
     console.log("returning to Gear");
     history.push("/myGear");
   };
-
+  // delete item
+  const deleteItem = (id) => {
+    let itemToDelete = id;
+    console.log(itemToDelete);
+    dispatch({ type: "DELETE_ITEM", payload: itemToDelete });
+  };
   //one form, multiple inputs. cancel brings you back to myGear
   return (
     <form onSubmit={handleSubmit}>
@@ -224,7 +229,7 @@ function EditGear() {
         <button type="submit">Save Changes</button>
         <button onClick={returnToGear}>Cancel</button>
         <button>Sold</button>
-        <button>Delete Item</button>
+        <button onClick={() => deleteItem(itemToEdit.id)}>Delete Item</button>
       </div>
     </form>
   );
