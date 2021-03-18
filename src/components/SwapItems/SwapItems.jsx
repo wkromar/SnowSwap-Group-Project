@@ -96,7 +96,7 @@ export default function SwapItems() {
         </button>
       </div>
 
-      <p className="title">{selectedSwap[0].name}</p>
+      <p className="title">{selectedSwap[0]?.name}</p>
       <button>See Description</button>
 
       <div className="container">
