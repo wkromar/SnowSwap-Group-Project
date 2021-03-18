@@ -28,7 +28,7 @@ export default function ImageUpload({ state, setState, keyName }) {
       maxFiles={6}
       upload={uploadOptions}
     >
-      <DropZone />
+      {keyName === 'multiple' && <DropZone />}
     </DropzoneS3Uploader>
   );
 }

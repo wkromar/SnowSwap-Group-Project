@@ -22,7 +22,10 @@ export default function SwapCodeModal() {
       <button onClick={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}>
         <img src="images/cancel.svg" alt="" />
       </button>
-      <h3>This swap is private and requires a passcode to view.</h3>
+      <h3>{selectedSwap?.name} is private and requires a passcode to access.</h3>
+      <br />
+      <p>Swap Description:</p>
+      <p>{selectedSwap?.swap_description}</p>
       <form onSubmit={handleSubmit}>
         <input
           onChange={(event) => setPasscode(event.target.value)}
