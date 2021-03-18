@@ -10,38 +10,52 @@ const {
 //take item from user and place it into the  ITEM database
 //fields not filled out will become null
 // ITEMS ACTIONS
-router.post("/", rejectUnauthenticated, (req, res) => {
-  const item = req.body;
-  const id = req.user.id;
-  console.log("sending item", item);
-  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
-  "flex", "style", "brand", "shape", "gender", "profile", "condition", 
-  "lacing_system", "description")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`;
-  pool
-    .query(queryText, [
-      id,
-      item.type,
-      item.title,
-      item.size,
-      item.price,
-      item.flex,
-      item.style,
-      item.brand,
-      item.shape,
-      item.gender,
-      item.profile,
-      item.condition,
-      item.lacing_system,
-      item.description,
-    ])
-    .then((response) => {
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
+router.post("/", rejectUnauthenticated, async (req, res) => {
+  try {
+    const item = req.body;
+    const id = req.user.id;
+    console.log("sending item", item);
+    const queryText = `
+      INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
+      "flex", "style", "brand", "shape", "gender", "profile", "condition", 
+      "lacing_system", "description")
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      RETURNING "id";
+  `;
+    const result = await pool
+      .query(queryText, [
+        id,
+        item.type,
+        item.title,
+        item.size,
+        item.price,
+        item.flex,
+        item.style,
+        item.brand,
+        item.shape,
+        item.gender,
+        item.profile,
+        item.condition,
+        item.lacing_system,
+        item.description,
+      ]);
+    const newId = await result.rows[0].id;
+    await console.log(newId);
+
+    const imgQueryText = `
+      INSERT INTO "images" ("item_id", "url")
+      VALUES ($1, $2)
+    `;
+    await req.body.img.forEach(img => {
+      pool.query(imgQueryText, [newId, img]);
     });
+
+    await res.sendStatus(200);
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  };
 });
 
 //return contents of ITEM's table where the user ID matches the
