@@ -1,27 +1,25 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import AllSwaps from "../AllSwaps/AllSwaps";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 export default function SwapCodeModal() {
   const selectedSwap = useSelector((state) => state?.selectedSwap);
-  const user = useSelector((state) => state?.user);
   const history = useHistory();
   const dispatch = useDispatch();
-  const modalStatus = useSelector((state) => state.modal);
-  const [passcode, setPasscode] = useState("");
-  const swapUserJoin = { id: user.id, swapId: selectedSwap.id };
+  const [passcode, setPasscode] = useState('');
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (passcode.toLowerCase() === selectedSwap.access_code) {
-      dispatch({ type: "PRIVATE_TO_PUBLIC", payload: swapUserJoin });
+      dispatch({ type: 'PRIVATE_TO_PUBLIC', payload: selectedSwap.id });
+      dispatch({ type: 'SWAP_CODE_CLOSE' });
+      history.push(`/swapItems/${selectedSwap.id}`);
     }
   };
 
   return (
     <div>
-      <button onClick={() => dispatch({ type: "SWAP_CODE_CLOSE" })}>
+      <button onClick={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}>
         <img src="images/cancel.svg" alt="" />
       </button>
       <h3>This swap is private and requires a passcode to view.</h3>
