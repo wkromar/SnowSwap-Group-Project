@@ -106,7 +106,7 @@ export default function DetailsView () {
           </div>
         </div>
       </div>
-      {selectedSwap[0].swap_open &&
+      {gearDetails.swap_open &&
       <>
       <h4>Seller Details</h4>
       <div>
