@@ -107,15 +107,21 @@ function AddGear({ gear }) {
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        <div>
-          <ImageUpload
-            keyName={'multiple'}
-            state={gearToAdd}
-            setState={setGearToAdd}
-          />
-          <div>
+        <div className="uploader-thumbnails-container">
+          <div className="uploader-container">
+            <ImageUpload
+              keyName={'multiple'}
+              state={gearToAdd}
+              setState={setGearToAdd}
+            />
+          </div>
+          <div className="thumbnail-container">
             {gearToAdd?.img?.map((image, i) => {
-              return <img key={i} src={image} />;
+              return (
+                <div key={i} className="uploaded-photos">
+                  <img src={image} />
+                </div>
+              );
             })}
           </div>
         </div>
