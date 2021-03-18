@@ -11,8 +11,6 @@ export default function CreateSwap() {
   const user = useSelector((state) => state?.user);
   const selectedSwap = useSelector((state) => state?.selectedSwap[0]);
 
-  console.log('metro boomin', selectedSwap);
-
   const defaultState = {
     is_private: 'true',
     start_date: '',
