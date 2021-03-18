@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import Modal from "react-modal";
 import "../DetailsView/DetailsView.css";
 import "../Favorites/Favorites.css";
@@ -17,7 +17,7 @@ const customStyles = {
   },
 };
 
-export default function DetailsView () {
+export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const modalStatus = useSelector((state) => state.modal);
@@ -27,8 +27,15 @@ export default function DetailsView () {
   const { id } = useParams();
   // const itemOfInterest = detailsView.id;
   useEffect(() => {
-    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id});
-  }, [])
+    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id });
+  }, []);
+  const favoriteItem = (piece) => {
+    if (piece.favorites_id) {
+      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, id] });
+    } else {
+      dispatch({ type: "FAVORITE_ITEM", payload: [piece, id] });
+    }
+  };
   const [imageCounter, setImageCounter] = useState(0);
   console.log(user);
   const handleNextPicture = (direction) => {
@@ -50,7 +57,7 @@ export default function DetailsView () {
 
   console.log("imageCounter:", imageCounter);
 
-  console.log(`selectedSwap`, selectedSwap)
+  console.log(`selectedSwap`, selectedSwap);
 
   return (
     <>
@@ -64,6 +71,13 @@ export default function DetailsView () {
         />
         <div onClick={() => handleNextPicture("next")} className="right-arrow">
           <img className="right-arrow-icon" src="images/right_arrow.svg" />
+        </div>
+        <div onClick={() => favoriteItem(gearDetails)}>
+          {gearDetails.favorites_id ? (
+            <img className="favorite-icon" src="images/favorite.svg" />
+          ) : (
+            <img className="favorite-icon" src="images/unfavorite.svg" />
+          )}
         </div>
       </div>
       <div className="seller-price">
