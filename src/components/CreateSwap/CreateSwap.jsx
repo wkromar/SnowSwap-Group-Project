@@ -56,7 +56,9 @@ export default function CreateSwap() {
   };
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+    if (slug === 'edit') {
+      dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+    }
   }, []);
 
   useEffect(() => {
