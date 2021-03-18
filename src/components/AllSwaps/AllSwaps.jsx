@@ -30,19 +30,15 @@ export default function AllSwaps() {
   }, []);
 
   const handleClick = (swap) => {
-    // dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
-    // localStorage.setItem('swap-object', JSON.stringify(swap));
     history.push(`/swapItems/${swap.id}`);
   };
 
   const handleClickAll = (swap) => {
     if (swap.is_private) {
       dispatch({ type: 'SWAP_CODE_OPEN' });
-      // dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
-      // localStorage.setItem('swap-object', JSON.stringify(swap));
+      dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+      
     } else {
-      // dispatch({ type: 'FETCH_SELECTED_SWAP', payload: swap });
-      // localStorage.setItem('swap-object', JSON.stringify(swap));
       history.push(`/swapItems/${swap.id}`);
     }
   };

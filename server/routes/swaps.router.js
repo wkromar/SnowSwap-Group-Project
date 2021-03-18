@@ -198,6 +198,21 @@ router.put("/edit/:id", rejectUnauthenticated, (req, res) => {
     });
 });
 
+router.post('/joinSwap/:id', rejectUnauthenticated, (req, res) => {
+  const queryText = `
+    INSERT INTO "swap_users" (user_id, swap_id)
+    VALUES ($1, $2)
+  `;
+  pool.query(queryText, [req.user.id, req.params.id])
+    .then((result) => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
 router.delete("/removeFromSwap/:id", rejectUnauthenticated, (req, res) => {
   const id = req.params.id;
 

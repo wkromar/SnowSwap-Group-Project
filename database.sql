@@ -70,7 +70,8 @@ CREATE TABLE "swaps" (
     "swap_img" TEXT,
     "pre_sale_duration" INT,
     "sale_duration" INT,
-    "access_code" TEXT
+    "access_code" TEXT,
+    "swap_description" TEXT
 );
 
 CREATE TABLE "swap_users" (
