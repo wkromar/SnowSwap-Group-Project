@@ -69,7 +69,7 @@ function FilterDrawer() {
             delete searchObj['category_name']
             setConditionSearch(cat);
             setSearchObj({ ...searchObj });
-            
+
         } else {
 
             console.log('cat selected');
@@ -251,6 +251,7 @@ function FilterDrawer() {
                             <option value="">Select Gender</option>
                             <option value="Mens">Men</option>
                             <option value="Womens">Women</option>
+                            <option value="Kids">Kids</option>
                         </select>
                     </div>
 
