@@ -28,7 +28,7 @@ export default function SwapItemAdmin() {
         </tr>
         {swapItems.map((item) => {
           return (
-            <tr>
+            <tr key={item.id}>
               <td>{item.title}</td>
               <td>{item.username}</td>
               <td>

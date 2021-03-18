@@ -21,6 +21,7 @@ export default function CreateSwap() {
     swap_img: '',
     pre_sale_duration: '',
     sale_duration: '',
+    swap_description: '',
   };
 
   const [swapInfo, setSwapInfo] = useState(defaultState);
@@ -56,7 +57,9 @@ export default function CreateSwap() {
   };
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+    if (slug === 'edit') {
+      dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+    }
   }, []);
 
   useEffect(() => {
@@ -71,8 +74,7 @@ export default function CreateSwap() {
         access_code: selectedSwap?.access_code,
         swap_name: selectedSwap?.name,
         swap_img: selectedSwap?.swap_img,
-        pre_sale_duration: selectedSwap?.pre_sale_duration,
-        sale_duration: selectedSwap?.sale_duration,
+        swap_description: selectedSwap?.swap_description,
       });
     } else {
       //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
@@ -119,6 +121,13 @@ export default function CreateSwap() {
               value={swapInfo.swap_name}
               type="text"
             />
+            <textarea
+              value={swapInfo.swap_description}
+              onChange={(event) => handleSwapInfo(event)}
+              name="swap_description"
+              cols="30"
+              rows="10"
+            ></textarea>
             <div>
               <input
                 id="public-button"
