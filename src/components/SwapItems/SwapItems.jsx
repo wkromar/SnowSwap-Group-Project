@@ -89,7 +89,7 @@ export default function SwapItems() {
     <>
       <div className="container">
         <button className="add-gear-button" onClick={handleAddGearToSwap}>
-          Add Gear To This Swap
+          Post an item
         </button>
         <button>
           <FilterDrawer />
@@ -166,7 +166,7 @@ export default function SwapItems() {
         styles={customStyles}
         contentLabel="Detail View"
       >
-        <DetailsView selectedSwap={selectedSwap}/>
+        <DetailsView/>
       </Modal>
       <Modal
         ariaHideApp={false}
@@ -175,7 +175,7 @@ export default function SwapItems() {
         styles={customStyles}
         contentLabel="Add View"
       >
-        <AddGearToSwap selectedSwap={selectedSwap} />
+        <AddGearToSwap/>
       </Modal>
     </>
   );
