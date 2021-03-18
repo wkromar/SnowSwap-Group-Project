@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { useParams } from 'react-router-dom';
 import Modal from "react-modal";
 import "../DetailsView/DetailsView.css";
 import "../Favorites/Favorites.css";
@@ -18,11 +19,16 @@ const customStyles = {
 
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
+  const selectedSwap = useSelector((state) => state?.selectedSwap);
   const modalStatus = useSelector((state) => state.modal);
   const user = useSelector((state) => state?.user);
-  const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item`;
+  const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item: ${gearDetails.title}`;
   const dispatch = useDispatch();
+  const { id } = useParams();
   // const itemOfInterest = detailsView.id;
+  useEffect(() => {
+    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id});
+  }, [])
   const [imageCounter, setImageCounter] = useState(0);
   console.log(user);
   const handleNextPicture = (direction) => {
@@ -43,6 +49,8 @@ export default function DetailsView() {
   };
 
   console.log("imageCounter:", imageCounter);
+
+  console.log(`selectedSwap`, selectedSwap)
 
   return (
     <>
@@ -98,6 +106,8 @@ export default function DetailsView() {
           </div>
         </div>
       </div>
+      {selectedSwap[0].swap_open &&
+      <>
       <h4>Seller Details</h4>
       <div>
         <p>Preferred Payment</p>
@@ -108,7 +118,8 @@ export default function DetailsView() {
         <p>Contact Seller</p>
         <a href={userEmail}>{gearDetails.email}</a>
       </div>
-
+      </>
+      }
       <button
         className="close-button"
         onClick={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
