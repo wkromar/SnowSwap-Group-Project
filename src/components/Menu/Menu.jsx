@@ -1,8 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import '../Menu/Menu.css';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import "../Menu/Menu.css";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,13 +26,13 @@ export default function Menu() {
           <Link to="/profile" className="menuItem">
             Profile
           </Link>
-          <Link to="/createEvent" className="menuItem">
+          <Link to="/createEvent/" className="menuItem">
             Create Swap
           </Link>
-          <Link to="myGear" className="menuItem">
+          <Link to="/myGear" className="menuItem">
             My Gear
           </Link>
-          <Link to="favorites" className="menuItem">
+          <Link to="/favorites" className="menuItem">
             Favorites
           </Link>
           <LogOutButton />

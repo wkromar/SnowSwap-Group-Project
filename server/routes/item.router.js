@@ -10,40 +10,52 @@ const {
 //take item from user and place it into the  ITEM database
 //fields not filled out will become null
 // ITEMS ACTIONS
-router.post("/", rejectUnauthenticated, (req, res) => {
-  const item = req.body;
-  const id = req.user.id;
-  console.log("sending item", item);
-  const queryText = `INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
-  "flex", "style", "brand", "shape", "gender", "profile", "condition", 
-  "lacing_system", "description","type")
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`;
-  pool
-    .query(queryText, [
-      id,
-      item.cat_id,
-      item.title,
-      item.size,
-      item.price,
-      item.flex,
-      item.style,
-      item.brand,
-      item.shape,
-      item.gender,
-      item.profile,
-      item.condition,
-      item.lacing_system,
-      item.description,
-      item.type,
-    ])
-    .then((response) => {
-      console.log(response);
-      res.sendStatus(200);
-    })
-    .catch((error) => {
-      console.log(error);
-      res.sendStatus(500);
+router.post("/", rejectUnauthenticated, async (req, res) => {
+  try {
+    const item = req.body;
+    const id = req.user.id;
+    console.log("sending item", item);
+    const queryText = `
+      INSERT INTO "items" ("user_id", "cat_id", "title", "size", "price", 
+      "flex", "style", "brand", "shape", "gender", "profile", "condition", 
+      "lacing_system", "description")
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      RETURNING "id";
+  `;
+    const result = await pool
+      .query(queryText, [
+        id,
+        item.type,
+        item.title,
+        item.size,
+        item.price,
+        item.flex,
+        item.style,
+        item.brand,
+        item.shape,
+        item.gender,
+        item.profile,
+        item.condition,
+        item.lacing_system,
+        item.description,
+      ]);
+    const newId = await result.rows[0].id;
+    await console.log(newId);
+
+    const imgQueryText = `
+      INSERT INTO "images" ("item_id", "url")
+      VALUES ($1, $2)
+    `;
+    await req.body.img.forEach(img => {
+      pool.query(imgQueryText, [newId, img]);
     });
+
+    await res.sendStatus(200);
+
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  };
 });
 
 //return contents of ITEM's table where the user ID matches the
@@ -57,16 +69,43 @@ router.get("/", rejectUnauthenticated, (req, res) => {
   console.log("GETting items");
 
   const queryText = `
-      SELECT items.*, ARRAY_AGG(url) image FROM "items" 
-      LEFT JOIN "images" ON "items".id = "images".item_id
-      WHERE "user_id" = $1
-      GROUP BY "items".id
-      ORDER BY "cat_id" ASC;
+    SELECT items.*, "categories"."name" AS "category_name", ARRAY_AGG(url) image FROM "items" 
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "categories" ON "items".cat_id = "categories".id
+    WHERE "user_id" = $1
+    GROUP BY "items".id, "categories"."name"
+    ORDER BY "cat_id" ASC;
     `;
   pool
     .query(queryText, [userId])
     .then((result) => {
-      console.log(result);
+
+      res.send(result.rows);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.sendStatus(500);
+    });
+});
+
+router.get("/availableGear/:id", rejectUnauthenticated, (req, res) => {
+  const userId = req.user.id;
+  const swapId = req.params.id;
+  console.log("GETting items");
+
+  const queryText = `
+    SELECT "items".*, ARRAY_AGG(url) image FROM "items"
+    LEFT JOIN "images" ON "items".id = "images".item_id
+    LEFT JOIN "swap_item_join" ON "items".id = "swap_item_join".item_id
+    LEFT JOIN "swaps" ON "swap_item_join".swap_id = "swaps".id
+    WHERE "items".user_id = $1 AND NOT EXISTS
+    ( SELECT * FROM "swap_item_join" 
+    WHERE "swap_item_join".swap_id = $2 AND "swap_item_join".item_id = "items".id)
+    GROUP BY "items".id;
+    `;
+  pool
+    .query(queryText, [userId, swapId])
+    .then((result) => {
 
       res.send(result.rows);
     })
@@ -92,7 +131,6 @@ router.get("/favorites", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [userId])
     .then((result) => {
-      console.log(result.rows);
       res.send(result.rows);
     })
     .catch((error) => {
@@ -159,7 +197,7 @@ router.delete("/:id", rejectUnauthenticated, (req, res) => {
 // Add item to Favorites
 router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   const userId = req.user.id;
-  const itemToFav = req.body;
+  const itemToFav = req.body.id;
   console.log("adding item to favorites", itemToFav);
 
   const queryText = `
@@ -168,9 +206,8 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
   `;
 
   pool
-    .query(queryText, [userId, itemToFav.id])
+    .query(queryText, [userId, itemToFav])
     .then((result) => {
-      console.log(result);
       res.sendStatus(201);
     })
     .catch((error) => {
@@ -181,8 +218,8 @@ router.post("/addToFav", rejectUnauthenticated, (req, res) => {
 
 // delete function to remove the items from only the favorites
 router.delete("/deleteFav/:id", rejectUnauthenticated, (req, res) => {
-  const favToDelete = req.params.id;
-  console.log(favToDelete);
+  const favToDelete = Number(req.params.id);
+  console.log('favToDelete', favToDelete);
   const queryText = `DELETE FROM "favorites" WHERE id = $1;`;
   pool
     .query(queryText, [favToDelete])

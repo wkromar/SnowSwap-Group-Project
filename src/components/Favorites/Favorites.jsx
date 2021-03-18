@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "../Favorites/Favorites.css";
 import DetailsView from "../DetailsView/DetailsView";
+import Swal from "sweetalert2";
+import FilterDrawer from '../FilterDrawer/FilterDrawer';
 
 const customStyles = {
   content: {
@@ -36,22 +38,65 @@ export default function Favorites() {
   };
 
   const unFavorite = (piece) => {
-    dispatch({type: "UNFAVORITE_ITEM", payload: piece});
+    Swal.fire({
+      title: `Remove ${piece.title} from favorites?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, remove it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire("Removed from favorites!", "", "success");
+        dispatch({type: "UNFAVORITE_FROM_FAVORITES", payload: piece});
+      }
+    });
+   
   }
+
+const filterObject = useSelector((state) => state?.filterObject);
+  
+let filteredFavorites = favorites.filter(item => {
+    
+  for (let key in filterObject) {
+    if (item[key] !== filterObject[key]) {
+      console.log(`it's a match`);
+      return false;
+    }
+  } 
+  return true;
+  
+});  
 
   return (
     <>
       <div className="container">
       <p className="title"> Favorites </p>
+      <FilterDrawer />
       </div>
       <div className="container">
-        {favorites.map((piece) => (
+        {filteredFavorites ? 
+        filteredFavorites.map((piece) => (
           <div className="item">
             <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
-            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/unfavorite.svg" />
+            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/favorite.svg" />
             <p className="name">
-              {" "}
-              {piece.title} | ${piece.price}{" "}
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
+            </p>
+          </div>
+        )) : 
+        favorites.map((piece) => (
+          <div className="item">
+            <img onClick={() => gearClicked(piece)} className="image" src={piece.image[0]} />
+            <img onClick={() => unFavorite(piece)} className="favorite-icon" src="images/favorite.svg" />
+            <p className="name">
+              {piece.title}
+            </p>
+            <p className="mygear-price">
+              ${piece.price}
             </p>
           </div>
         ))}

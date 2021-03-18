@@ -22,12 +22,15 @@ CREATE TABLE "user" (
 
 CREATE TABLE "categories" (
     "id" SERIAL PRIMARY KEY,
-    "name" TEXT NOT NULL
+    "name" TEXT NOT NULL,
+    "display_name" VARCHAR (50)
 );
 
-INSERT INTO "categories" ("name")
-VALUES ('ski'),('ski_binding'),('ski_boots'),('snowboard'),('snowboard_boots'),
-('snowboard_bindings'),('apparel'),('helmet');
+INSERT INTO "categories" ("name", "display_name")
+VALUES ('ski', 'Ski'),('ski_binding', 'Ski Binding'),
+('ski_boots', 'Ski Boots'),('snowboard', 'Snowboard'),('snowboard_boots', 'Snowboard Boots'),
+('snowboard_bindings', 'Snowboard Bindings'),('apparel', "Apparel"),('helmet', "Helmet");
+
 
 CREATE TABLE "items" (
     "id" SERIAL PRIMARY KEY,
@@ -65,7 +68,10 @@ CREATE TABLE "swaps" (
     "stop_date" DATE,
     "swap_open" BOOLEAN DEFAULT FALSE,
     "swap_img" TEXT,
-    "access_code" TEXT
+    "pre_sale_duration" INT,
+    "sale_duration" INT,
+    "access_code" TEXT,
+    "swap_description" TEXT
 );
 
 CREATE TABLE "swap_users" (
@@ -106,7 +112,7 @@ INSERT INTO "items"
      "condition",
      "lacing_system",
      "purchased",
-     "description",
+     "description"
      )
 VALUES  ('1', '1', 'K2 Skiis', '171cm', '80', '', 'Racing', 'K2', '', 'Womens', 'Rocker', 'Lightly Used', '', 'false', 'These skiis are incredible, super fast, but they need a wax!  Willing to negotiate price.'),
         ('1', '1', 'Dynastar Argyl Skis', '175cm', '120', '', 'Alpine', 'Dynastar', '', 'Mens', 'Camber', 'Lightly Used', '', 'false', 'Dynastar is a really great brand of skiis.  Very high quality. Dont try to low-ball me.  I know what these are worth'),
