@@ -1,10 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useHistory } from "react-router-dom";
-import ImageUpload from "../ImageUpload/ImageUpload";
-import "./EditGear.css";
-import GearTags from "../GearTags/GearTags";
+import { useSelector, useDispatch } from 'react-redux';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import ImageUpload from '../ImageUpload/ImageUpload';
+import './EditGear.css';
+import GearTags from '../GearTags/GearTags';
+import editItem from '../../redux/reducers/editItem.reducer';
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
@@ -20,11 +21,11 @@ function EditGear() {
   const [shape, setShape] = useState(false);
   const [lacing_system, setLacingSystem] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState('');
 
   useEffect(() => {
-    dispatch({ type: "FETCH_GEAR" });
-    dispatch({ type: "FETCH_CATEGORIES" });
+    dispatch({ type: 'FETCH_GEAR' });
+    dispatch({ type: 'FETCH_CATEGORIES' });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -36,24 +37,24 @@ function EditGear() {
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: "CHANGE_GEAR", payload: itemToEdit });
+    dispatch({ type: 'CHANGE_GEAR', payload: itemToEdit });
     console.log(gearToEdit);
-    history.push("/myGear");
+    history.push('/myGear');
   };
   //go back to gear
   const returnToGear = () => {
-    console.log("returning to Gear");
-    history.push("/myGear");
+    console.log('returning to Gear');
+    history.push('/myGear');
   };
   // delete item
   const deleteItem = (id) => {
     let itemToDelete = id;
     console.log(itemToDelete);
-    dispatch({ type: "DELETE_ITEM", payload: itemToDelete });
+    dispatch({ type: 'DELETE_ITEM', payload: itemToDelete });
   };
 
   const handleView = (id) => {
-    if (id === "4") {
+    if (id === '4') {
       // snowboard
       setSkiOrBoard(true);
       setShowFlex(true);
@@ -61,7 +62,7 @@ function EditGear() {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === "1") {
+    } else if (id === '1') {
       // ski
       setSkiOrBoard(false);
       setShowFlex(true);
@@ -69,28 +70,28 @@ function EditGear() {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === "3") {
+    } else if (id === '3') {
       // ski_boots
       setShowFlex(true);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === "5") {
+    } else if (id === '5') {
       // snowboard_boots;
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(true);
-    } else if (id === "2" || id === "6") {
+    } else if (id === '2' || id === '6') {
       // ski_binding, snowboard_bindings
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === "8" || id === "7") {
+    } else if (id === '8' || id === '7') {
       // apparel, helmet
       setShowFlex(false);
       setStyle(false);
@@ -98,6 +99,16 @@ function EditGear() {
       setProfile(false);
       setLacingSystem(false);
     }
+  };
+
+  const removeThumbnail = (img) => {
+    console.log(img, itemToEdit);
+    const newArray = itemToEdit?.image?.filter((url) => {
+      if (url !== img) {
+        return img;
+      }
+    });
+    setItemToEdit({ ...itemToEdit, image: newArray });
   };
   //one form, multiple inputs. cancel brings you back to myGear
   return (
@@ -110,10 +121,25 @@ function EditGear() {
           onChange={(event) => handleChange(event)}
           name="title"
         />
-        <ImageUpload
-          itemToEdit={itemToEdit.url}
-          setItemToEdit={setItemToEdit}
-        />
+        <div className="uploader-thumbnails-container">
+          <div className="uploader-container">
+            <ImageUpload
+              itemToEdit={itemToEdit.url}
+              setItemToEdit={setItemToEdit}
+              keyName={'multiple'}
+            />
+          </div>
+          <div className="thumbnail-container">
+            {itemToEdit?.image?.map((image, i) => {
+              return (
+                <div key={i} className="uploaded-photos">
+                  <img src={image} onClick={() => removeThumbnail(image)} />
+                </div>
+              );
+            })}
+            Click image to remove.
+          </div>
+        </div>
         <p>Categories</p>
         <select
           onChange={(event) => {
@@ -137,7 +163,7 @@ function EditGear() {
             );
           })}
         </select>
-        {category === "4" ? (
+        {category === '4' ? (
           <div>
             <p>Flex</p>
             <select
@@ -159,7 +185,7 @@ function EditGear() {
             </select>
           </div>
         ) : null}
-        {category === "4" || category === "1" ? (
+        {category === '4' || category === '1' ? (
           <div>
             <p>Style</p>
             <select
@@ -181,7 +207,7 @@ function EditGear() {
             </select>
           </div>
         ) : null}
-        {category === "4" ? (
+        {category === '4' ? (
           <div>
             <p>Shape</p>
             <select
@@ -221,7 +247,7 @@ function EditGear() {
             );
           })}
         </select>
-        {category === "4" ? (
+        {category === '4' ? (
           <div>
             <p>Condition</p>
             <select
@@ -243,7 +269,7 @@ function EditGear() {
             </select>
           </div>
         ) : null}
-        {category === "5" ? (
+        {category === '5' ? (
           <div>
             <p>Lacing System</p>
             <select
@@ -265,7 +291,7 @@ function EditGear() {
             </select>
           </div>
         ) : null}
-        {category === "4" || category === "1" ? (
+        {category === '4' || category === '1' ? (
           <div>
             <p>Profile</p>
             <select
