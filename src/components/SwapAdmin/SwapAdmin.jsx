@@ -12,12 +12,10 @@ export default function SwapAdmin() {
 
   useEffect(() => {
     dispatch({ type: 'FETCH_OWNED_SWAPS' });
-  }, []);
+  }, [ownedSwaps]);
 
   const handleClick = (swap) => {
-    // dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
-    // localStorage.setItem('swap-object', JSON.stringify(swap));
-    history.push(`/createEvent/edit/${swap.id}`)
+    history.push(`/createEvent/edit/${swap.id}`);
   };
 
   return (
@@ -30,7 +28,7 @@ export default function SwapAdmin() {
               <div>{swap.name}</div>
               <div>
                 {new Date(swap.stop_date) > new Date() ? (
-                    <button onClick={() => handleClick(swap)}>Edit Swap</button>
+                  <button onClick={() => handleClick(swap)}>Edit Swap</button>
                 ) : (
                   <p>Swap Has Ended</p>
                 )}
