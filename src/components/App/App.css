@@ -217,6 +217,7 @@ Form Treatment
   min-width: 260px;
   min-height: 320px;
   background-color: white;
+  padding: 1rem 0;
 }
 
 .login-form > h1 {
