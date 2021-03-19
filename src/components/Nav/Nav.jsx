@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import './Nav.css';
-import {useSelector} from 'react-redux';
-import Menu from "../Menu/Menu";
+import { useSelector } from 'react-redux';
+import Menu from '../Menu/Menu';
 
 function Nav() {
   const user = useSelector((store) => store.user);
@@ -20,14 +20,13 @@ function Nav() {
 
   return (
     <div className="nav">
-      <Link to="/home">
-        <h2 className="nav-title">SNOWSWAPS</h2>
+      <Link to="/user">
+        <h1 className="snow-swaps-header">SnowSwaps</h1>
       </Link>
       <div>
-          
         {user.id && (
           <>
-            <Menu/>
+            <Menu />
           </>
         )}
       </div>
