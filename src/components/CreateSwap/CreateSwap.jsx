@@ -88,6 +88,7 @@ export default function CreateSwap() {
   const fillData = (event) => {
     event.preventDefault();
     setSwapInfo({
+      ...swapInfo,
       is_private: true,
       start_date: format(new Date('2021-03-22'), dateFormat),
       sell_date: format(new Date('2021-03-29'), dateFormat),
@@ -109,7 +110,9 @@ export default function CreateSwap() {
         <div>
           <form onSubmit={handleSubmit}>
             Swap Cover Imag
-            <button className="no-style-button" onClick={fillData}>e</button>
+            <button className="no-style-button" onClick={fillData}>
+              e
+            </button>
             {swapInfo.swap_img ? (
               <div>
                 <img src={swapInfo.swap_img} />
