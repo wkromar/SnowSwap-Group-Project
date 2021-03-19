@@ -6,7 +6,6 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import AboutPage from '../AboutPage/AboutPage';
 import AddGear from '../AddGear/AddGear';
 import AllSwaps from '../AllSwaps/AllSwaps';
 import CreateSwap from '../CreateSwap/CreateSwap';
@@ -14,7 +13,6 @@ import EditGear from '../EditGear/EditGear.jsx';
 import Favorites from '../Favorites/Favorites.jsx';
 import Footer from '../Footer/Footer';
 import InfoPage from '../InfoPage/InfoPage';
-import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import MyGear from '../MyGear/MyGear';
 import Nav from '../Nav/Nav';
@@ -34,19 +32,11 @@ function App() {
   return (
     <Router>
       <div>
-        <Nav />
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
-          <Redirect exact from="/" to="/home" />
+          <Redirect exact from="/" to="/user" />
 
           {/* Visiting localhost:3000/about will show the about page. */}
-          <Route
-            // shows AboutPage at all times (logged in or not)
-            exact
-            path="/about"
-          >
-            <AboutPage />
-          </Route>
 
           {/* For protected routes, the view could show one of several things on the same route.
             Visiting localhost:3000/user will show the UserPage if the user is logged in.
@@ -57,6 +47,7 @@ function App() {
             exact
             path="/user"
           >
+            <Nav />
             <AllSwaps />
           </ProtectedRoute>
 
@@ -65,6 +56,7 @@ function App() {
             exact
             path="/info"
           >
+            <Nav />
             <InfoPage />
           </ProtectedRoute>
 
@@ -96,51 +88,49 @@ function App() {
           <ProtectedRoute
             // with authRedirect:
             // - if logged in, redirects to "/user"
-            // - else shows LandingPage at "/home"
-            exact
-            path="/home"
-            authRedirect="/user"
-          >
-            <LandingPage />
-          </ProtectedRoute>
-          <ProtectedRoute
-            // with authRedirect:
-            // - if logged in, redirects to "/user"
             // - else shows LoginPage at /login
             exact
             path="/addGear"
           >
+            <Nav />
             <AddGear />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/myGear">
+            <Nav />
             <MyGear />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/editGear">
+            <Nav />
             <EditGear />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/favorites">
+            <Nav />
             <Favorites />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/swapItems/:id">
+            <Nav />
             <SwapItems />
           </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
 
           <ProtectedRoute exact path="/profile">
+            <Nav />
             <Profile />
           </ProtectedRoute>
 
           <ProtectedRoute exact path="/createEvent">
+            <Nav />
             <CreateSwap />
           </ProtectedRoute>
 
           {/* edit route */}
           <ProtectedRoute exact path="/createEvent/:slug/:id">
+            <Nav />
             <CreateSwap />
           </ProtectedRoute>
 
