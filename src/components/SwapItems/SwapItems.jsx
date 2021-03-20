@@ -134,12 +134,12 @@ export default function SwapItems() {
                   <div onClick={() => favoriteItem(piece)}>
                     {piece.favorites_id ? (
                       <img
-                        className="favorite-icon"
+                        className="favorite-icon card-cancel"
                         src="images/favorite.svg"
                       />
                     ) : (
                       <img
-                        className="favorite-icon"
+                        className="favorite-icon card-cancel"
                         src="images/unfavorite.svg"
                       />
                     )}
@@ -152,7 +152,7 @@ export default function SwapItems() {
                       onClick={() => removeGear(piece.swap_item_id)}
                       className="no-style-button"
                     >
-                      <img src="images/cancel.svg" alt="" />
+                      <img className="card-cancel" src="images/cancel.svg" alt="" />
                     </button>
                   )}
                 </div>
@@ -167,7 +167,7 @@ export default function SwapItems() {
                 />
                 <div onClick={() => favoriteItem(piece)}>
                   {piece.favorites_id ? (
-                    <img className="favorite-icon" src="images/favorite.svg" />
+                    <img className="favorite-icon " src="images/favorite.svg" />
                   ) : (
                     <img
                       className="favorite-icon"
