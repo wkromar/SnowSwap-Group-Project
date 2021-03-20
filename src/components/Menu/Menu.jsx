@@ -26,6 +26,7 @@ export default function Menu() {
         className={`menu-container ${handleMenuClick()}`}
       >
         <div className="menuItems">
+          <div className="triangle"></div>
           <Link to="/profile" className="menuItem">
             Profile
           </Link>
