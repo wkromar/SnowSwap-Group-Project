@@ -317,9 +317,14 @@ Form Treatment
   margin: 5px;
 }
 
+.card-cancel {
+  height: 16px;
+  width: 16px;
+}
+
 .description-button-container {
   display: flex;
-  margin: 0 10px;
+  margin: 10px;
 }
 
 .description-button-container > img {
