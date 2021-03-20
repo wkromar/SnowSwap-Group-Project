@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SwapCodeModal from '../SwapCodeModal/SwapCodeModal';
-import './AllSwaps.css';
 
 const customStyles = {
   content: {
@@ -37,7 +36,6 @@ export default function AllSwaps() {
     if (swap.is_private) {
       dispatch({ type: 'SWAP_CODE_OPEN' });
       dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
-      
     } else {
       history.push(`/swapItems/${swap.id}`);
     }
@@ -45,14 +43,14 @@ export default function AllSwaps() {
 
   return (
     <div>
-      <div>My Swaps:</div>
+      <div className="swap-header">Joined Swaps</div>
       <div className="card-container">
         {joinedSwaps.map((swap) => {
           return (
             <div onClick={() => handleClick(swap)}>
               {new Date(swap.stop_date) > new Date() && (
-                <div className="swap-card">
-                  <img src={swap.swap_img} alt="" />
+                <div className="swap-card">                  
+                    <img src={swap.swap_img} alt="" />
                   <div className="title-lock">
                     <p>{swap.name}</p>
                   </div>
@@ -61,7 +59,7 @@ export default function AllSwaps() {
                       <p>
                         Days Remaing:{' '}
                         {Math.round(
-                          (new Date() - new Date(swap.stop_date)) /
+                          (new Date(swap.stop_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
                         ).toString()}
                       </p>
@@ -81,7 +79,7 @@ export default function AllSwaps() {
           );
         })}
       </div>
-      <div>All Swaps:</div>
+      <div className="swap-header">All Swaps</div>
       <div className="card-container">
         {allSwaps.map((swap) => {
           return (
@@ -95,7 +93,6 @@ export default function AllSwaps() {
                   </div>
                   <div className="days-until">
                     {swap.swap_open ? (
-
                       <p>
                         Days Remaing:{' '}
                         {Math.round(

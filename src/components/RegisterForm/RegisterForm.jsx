@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 function RegisterForm() {
+  const history = useHistory();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -20,81 +22,89 @@ function RegisterForm() {
         password: password,
         firstName: firstName,
         lastName: lastName,
-        email: email
+        email: email,
       },
     });
   }; // end registerUser
 
   return (
-    <form className="formPanel" onSubmit={registerUser}>
-      <h2>Register User</h2>
-      {errors.registrationMessage && (
-        <h3 className="alert" role="alert">
-          {errors.registrationMessage}
-        </h3>
-      )}
-      <div>
-        <label htmlFor="username">
-          Username:
+    <form onSubmit={registerUser}>
+      <div className="login-form">
+        <div className="login-snow-swap">SnowSwaps</div>
+        {errors.registrationMessage && (
+          <h3 className="alert" role="alert">
+            {errors.registrationMessage}
+          </h3>
+        )}
+        <div className="input-container">
+          <div className="input-tag">User Name</div>
           <input
+            className="styled-input"
             type="text"
             name="username"
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="password">
-          Password:
+        </div>
+        <div className="input-container">
+          <div className="input-tag">Password</div>
           <input
+            className="styled-input"
             type="password"
             name="password"
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="firstName">
-          First Name:
+        </div>
+        <div className="input-container">
+          <div className="input-tag">First Name</div>
           <input
+            className="styled-input"
             type="text"
             name="firstName"
             value={firstName}
             required
             onChange={(event) => setFirstName(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="lastName">
-          Last Name:
+        </div>
+        <div className="input-container">
+          <div className="input-tag">Last Name</div>
           <input
+            className="styled-input"
             type="text"
             name="lastName"
             value={lastName}
             required
             onChange={(event) => setLastName(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <label htmlFor="email">
-          Email:
+        </div>
+        <div className="input-container">
+          <div className="input-tag">Email</div>
           <input
+            className="styled-input"
             type="email"
             name="email"
             value={email}
             required
             onChange={(event) => setEmail(event.target.value)}
           />
-        </label>
-      </div>
-      <div>
-        <input className="btn" type="submit" name="submit" value="Register" />
+        </div>
+        <div className="login-btn-container">
+          <button className="ss-btn" type="submit" name="submit">
+            Register
+          </button>
+        </div>
+        <button
+          type="button"
+          className="btn btn_asLink"
+          onClick={() => {
+            history.push('/login');
+          }}
+        >
+          Login
+        </button>
       </div>
     </form>
   );

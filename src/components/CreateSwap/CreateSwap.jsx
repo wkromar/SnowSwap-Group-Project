@@ -62,8 +62,8 @@ export default function CreateSwap() {
     }
   }, []);
 
+  const dateFormat = 'yyyy-MM-dd';
   useEffect(() => {
-    const dateFormat = 'yyyy-MM-dd';
     if (slug === 'edit' && selectedSwap?.owner === user.id) {
       setSwapInfo({
         id: selectedSwap?.id,
@@ -85,6 +85,20 @@ export default function CreateSwap() {
     }
   }, [selectedSwap]);
 
+  const fillData = (event) => {
+    event.preventDefault();
+    setSwapInfo({
+      ...swapInfo,
+      is_private: true,
+      start_date: format(new Date('2021-03-22'), dateFormat),
+      sell_date: format(new Date('2021-03-29'), dateFormat),
+      stop_date: format(new Date('2021-04-01'), dateFormat),
+      swap_name: 'Big Mountain',
+      swap_img: 'https://www.tactics.com/a/bdg5/r/snowboard-main.jpg',
+      swap_description: 'A big mountain, here is our gear.',
+    });
+  };
+
   return (
     <div>
       {authLevel < 1 ? (
@@ -95,7 +109,10 @@ export default function CreateSwap() {
       ) : (
         <div>
           <form onSubmit={handleSubmit}>
-            Swap Cover Image
+            Swap Cover Imag
+            <button className="no-style-button" onClick={fillData}>
+              e
+            </button>
             {swapInfo.swap_img ? (
               <div>
                 <img src={swapInfo.swap_img} />

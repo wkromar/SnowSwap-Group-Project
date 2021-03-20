@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+:root {
+  --main-blue: #7ebbf1;
+  --second-blue: #c8e0f4;
+  --black-text: #585858;
+}
+
 html,
 body,
 #react-root {
@@ -11,13 +17,61 @@ body,
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif;
   margin: 0px;
+  overflow-x: hidden;
+  background-color: #efefef;
 }
 
 img {
   display: inline-block;
   max-width: 100%;
+}
+
+.no-style-button {
+  border: none;
+  background: none;
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+p {
+  font-size: 16px;
+}
+
+.login-snow-swap {
+  display: flex;
+  justify-content: center;
+  font-size: 36px;
+  font-family: 'Lobster', cursive;
+  color: var(--main-blue);
+}
+
+.login-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.ss-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+  background-color: var(--main-blue);
+  min-width: 105px;
+  min-height: 24px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  border: none;
+  box-shadow: 0 0 0 2px white, 0px 0px 0px 4px var(--main-blue);
 }
 
 /* --------------------------------------------------------------------------------
@@ -67,13 +121,13 @@ Button
 
 /* This line makes the "Register" and "Login" buttons look like links */
 .btn_asLink {
+  font-size: 12px;
   padding: 0;
   border-width: 0;
-  border-bottom: 1px solid #444;
   border-radius: 0;
   background: none;
   font: inherit;
-  color: #444;
+  color: #0000ff;
 }
 
 .btn_asLink:hover {
@@ -101,7 +155,7 @@ Alert
 Form Treatment
 -------------------------------------------------------------------------------- */
 
-.formPanel {
+/* .formPanel {
   box-sizing: border-box;
   width: 400px;
   max-width: 100%;
@@ -110,12 +164,7 @@ Form Treatment
   background-color: #efefef;
   border-radius: 3px;
   box-shadow: 0 1px 2px rgb(0, 0, 0, 0.4);
-}
-
-input {
-  margin: 5px;
-  margin-bottom: 10px;
-}
+} */
 
 .li-with-button {
   display: flex;
@@ -124,4 +173,129 @@ input {
 
 .top-margin {
   margin: 2rem 0 0 0;
+}
+
+.input-container {
+  display: flex;
+  margin: 1rem;
+}
+
+.input-tag {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-blue);
+  color: white;
+  height: 31px;
+  border-radius: 10px 0 0 10px;
+  padding: 0 0.25rem;
+  min-width: 95.78px;
+}
+
+.styled-input {
+  border-radius: 0 10px 10px 0;
+  border-top: solid rgb(100, 100, 100) 1px;
+  border-right: solid rgb(100, 100, 100) 1px;
+  border-bottom: solid rgb(100, 100, 100) 1px;
+  border-left: none;
+  height: 31px;
+  padding: 0 0 0 0.25rem;
+}
+
+.login-container {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  border-radius: 20px;
+  box-shadow: 2px 2px 10px;
+  min-width: 260px;
+  min-height: 320px;
+  background-color: white;
+  padding: 1rem 0;
+}
+
+.login-form > h1 {
+  justify-self: center;
+}
+
+.bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  will-change: opacity;
+  z-index: -1;
+}
+
+.card-container {
+  display: flex;
+  overflow-x: scroll;
+}
+
+.swap-card {
+  display: flex;
+  flex-direction: column;
+  height: 231px;
+  width: 180px;
+  position: relative;
+  margin: 1.5rem 0.5rem;
+  box-shadow: 2px 2px 6px 0 var(--black-text);
+  background-color: white;
+}
+
+.swap-card > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0.5rem;
+}
+
+.title-lock {
+  color: var(--black-text);
+  display: flex;
+  position: absolute;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.days-until {
+  color: var(--black-text);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0.25rem 0.5rem;
+}
+
+.swap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  background-color: var(--second-blue);
+  font-size: 24px;
+  font-weight: bolder;
+  color: var(--black-text);
+  height: 48px;
+}
+
+.add-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--black-text);
+  font-size: 16px;
 }

@@ -24,7 +24,9 @@
   
   .title {
       font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-      margin: 5px 0px 5px 30px;
+      display:flex;
+      justify-content: center;
+      margin: 0;
   }
   
   .name {

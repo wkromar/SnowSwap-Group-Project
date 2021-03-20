@@ -29,7 +29,7 @@ CREATE TABLE "categories" (
 INSERT INTO "categories" ("name", "display_name")
 VALUES ('ski', 'Ski'),('ski_binding', 'Ski Binding'),
 ('ski_boots', 'Ski Boots'),('snowboard', 'Snowboard'),('snowboard_boots', 'Snowboard Boots'),
-('snowboard_bindings', 'Snowboard Bindings'),('apparel', "Apparel"),('helmet', "Helmet");
+('snowboard_bindings', 'Snowboard Bindings'),('apparel', 'Apparel'),('helmet', 'Helmet');
 
 
 CREATE TABLE "items" (
@@ -68,10 +68,7 @@ CREATE TABLE "swaps" (
     "stop_date" DATE,
     "swap_open" BOOLEAN DEFAULT FALSE,
     "swap_img" TEXT,
-    "pre_sale_duration" INT,
-    "sale_duration" INT,
-    "access_code" TEXT,
-    "swap_description" TEXT
+    "access_code" TEXT
 );
 
 CREATE TABLE "swap_users" (

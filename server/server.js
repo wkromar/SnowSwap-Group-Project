@@ -42,7 +42,8 @@ app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
   ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
 }));
 
-cron.schedule('0 0 * * * *', async () => {
+cron.schedule('0 * * * * *', async () => {
+  console.log('it when off')
   const getQueryText = `
     SELECT * FROM "swaps"
   `;

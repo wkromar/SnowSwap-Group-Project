@@ -105,12 +105,19 @@ function AddGear({ gear }) {
     setGearToAdd({ ...gearToAdd, img: newArray });
   };
 
+  const fillForm = () => {
+    setGearToAdd({
+      
+    })
+  }
+
   //one form, multiple inputs. cancel brings you back to myGear
   // need inputs to actually be selects
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <p>Title</p>
+        Titl<button onClick={fillForm} className="no-style-button">e</button>
+        <br/>
         <input
           type="text"
           value={gearToAdd?.title}

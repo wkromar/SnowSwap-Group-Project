@@ -3,11 +3,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 0;
+  padding: 0.75rem 0;
   background-color: #7ebbf1;
   overflow: hidden;
-  /* z-index: 2; */
-  /* position: sticky; */
+  z-index: 2;
   width: 100%;
 }
 
@@ -15,12 +14,10 @@
   text-decoration: none;
 }
 
-.nav-title {
-  font-size: 24px;
-  font-weight: 700;
-  color: #f2f2f2;
-  padding-left: 10px;
-  margin: 0;
+.snow-swaps-header {
+  font-family: 'Lobster', cursive;
+  color: white;
+  margin: 0 10px;
 }
 
 .navLink {
