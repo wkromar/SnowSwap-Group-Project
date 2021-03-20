@@ -400,9 +400,12 @@ function FilterDrawer() {
     <div className="filterContainer">
       {['top'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <IconButton onClick={toggleDrawer(anchor, true)}>
-            <MoreHoriz />
-          </IconButton>
+          <button
+            className="no-style-button icon-button"
+            onClick={toggleDrawer(anchor, true)}
+          >
+            <img src="images/filter.svg" alt="" />
+          </button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
