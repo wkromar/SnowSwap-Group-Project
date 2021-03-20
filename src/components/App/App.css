@@ -250,9 +250,7 @@ Form Treatment
   height: 231px;
   width: 180px;
   position: relative;
-  margin: 2rem 0.5rem;
-  border-radius: 5px;
-  outline-width: 1px;
+  margin: 1.5rem 0.5rem;
   box-shadow: 2px 2px 6px 0 var(--black-text);
   background-color: white;
 }
@@ -271,7 +269,7 @@ Form Treatment
   position: absolute;
   justify-content: space-between;
   width: 100%;
-  padding: 0 0.5rem;
+  padding: 0.5rem;
 }
 
 .days-until {
@@ -279,13 +277,25 @@ Form Treatment
   position: absolute;
   bottom: 0;
   left: 0;
-  padding: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 .swap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 10px;
   background-color: var(--second-blue);
   font-size: 24px;
   font-weight: bolder;
   color: var(--black-text);
+  height: 48px;
+}
+
+.add-filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--black-text);
+  font-size: 16px;
 }
