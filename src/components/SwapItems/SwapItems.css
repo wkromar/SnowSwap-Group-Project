@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    flex-wrap: wrap;
   }
   
   .item {
@@ -22,12 +23,8 @@
       align-items: flex-start;
   }
   
-  .title {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  }
-  
   .name {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     
       font-size: 14px;
   }
   
@@ -37,7 +34,7 @@
   }
   
   .name {
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+     
       margin-left: 5px;
   }
   
