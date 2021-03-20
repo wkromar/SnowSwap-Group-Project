@@ -33,6 +33,8 @@ export default function SwapItems() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
+  const [descriptionShow, setDescriptionShow] = useState(false);
+
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
     dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
@@ -76,6 +78,10 @@ export default function SwapItems() {
     return true;
   });
 
+  const showHideDescription = () => {
+    setDescriptionShow(!descriptionShow);
+  };
+
   console.log('selectedSwap:', selectedSwap);
 
   useEffect(() => {
@@ -90,44 +96,66 @@ export default function SwapItems() {
         {selectedSwap[0]?.name}
         <div className="add-filter">
           <button className="no-style-button" onClick={handleAddGearToSwap}>
-            <img src="images/plus.svg" alt="A plus symbol in a circle"/>
+            <img src="images/plus.svg" alt="A plus symbol in a circle" />
           </button>
           <FilterDrawer />
         </div>
       </div>
-      <button>See Description</button>
+      <div className="description-button-container">
+        <button onClick={showHideDescription} className="no-style-button">
+          Swap Description
+        </button>
+        <img
+          className={`arrow-${descriptionShow ? 'down' : 'right'}`}
+          onClick={showHideDescription}
+          src="images/arrow.svg"
+          alt=""
+        />
+      </div>
+      <div
+        className={`swap-description-container${
+          descriptionShow ? '-show' : '-hide'
+        }`}
+      >
+        <p>{selectedSwap[0]?.swap_description}</p>
+      </div>
 
       <div className="container">
         {filteredSwapItems
           ? filteredSwapItems?.map((piece) => (
-              <div className="item">
+              <div className="swap-card item-card">
                 <img
                   onClick={() => gearClicked(piece)}
                   className="image"
                   src={piece.image[0]}
                 />
-                <div onClick={() => favoriteItem(piece)}>
-                  {piece.favorites_id ? (
-                    <img className="favorite-icon" src="images/favorite.svg" />
-                  ) : (
-                    <img
-                      className="favorite-icon"
-                      src="images/unfavorite.svg"
-                    />
+                <div className="title-lock">
+                  ${piece.price}
+                  <div onClick={() => favoriteItem(piece)}>
+                    {piece.favorites_id ? (
+                      <img
+                        className="favorite-icon"
+                        src="images/favorite.svg"
+                      />
+                    ) : (
+                      <img
+                        className="favorite-icon"
+                        src="images/unfavorite.svg"
+                      />
+                    )}
+                  </div>
+                </div>
+                <div className="days-until">
+                  <p className="name">{piece.title}</p>
+                  {user.id == piece.user_id && (
+                    <button
+                      onClick={() => removeGear(piece.swap_item_id)}
+                      className="no-style-button"
+                    >
+                      <img src="images/cancel.svg" alt="" />
+                    </button>
                   )}
                 </div>
-                <p className="name">
-                  {' '}
-                  {piece.title} | ${piece.price}{' '}
-                </p>
-                {user.id == piece.user_id && (
-                  <button
-                    onClick={() => removeGear(piece.swap_item_id)}
-                    className="remove-button"
-                  >
-                    Remove
-                  </button>
-                )}
               </div>
             ))
           : swapItems?.map((piece) => (

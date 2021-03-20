@@ -79,7 +79,8 @@ Container
 -------------------------------------------------------------------------------- */
 
 .container {
-  padding: 20px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------------
@@ -275,9 +276,17 @@ Form Treatment
 .days-until {
   color: var(--black-text);
   position: absolute;
+  width: 100%;
   bottom: 0;
   left: 0;
   padding: 0.25rem 0.5rem;
+}
+
+.days-until > button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0 5px;
 }
 
 .swap-header {
@@ -298,4 +307,46 @@ Form Treatment
   justify-content: space-between;
   color: var(--black-text);
   font-size: 16px;
+}
+
+.icon-button {
+  margin: 0 3px 0 10px;
+}
+
+.item-card {
+  margin: 5px;
+}
+
+.description-button-container {
+  display: flex;
+  margin: 0 10px;
+}
+
+.description-button-container > img {
+  margin: 0 5px;
+}
+
+.arrow-right {
+  transform: rotate(0deg);
+  transition: transform 0.2s ease;
+}
+
+.arrow-down {
+  transform: rotate(90deg);
+  transition: transform 0.2s ease;
+}
+
+.swap-description-container-show {
+  transform: scaleY(1);
+  transform-origin: top;
+  transition: transform 0.2s ease;
+  margin: 0 10px;
+}
+
+.swap-description-container-hide {
+  height: 0px;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 0.1s ease;
+  margin: 0 10px;
 }
