@@ -43,6 +43,7 @@ app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
 }));
 
 cron.schedule('0 * * * * *', async () => {
+  console.log('it when off')
   const getQueryText = `
     SELECT * FROM "swaps"
   `;

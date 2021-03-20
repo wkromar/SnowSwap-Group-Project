@@ -1,6 +1,6 @@
 .menu-open > .menuItems {
-  top: 70px;
-  right: 0;
+  top: 69px;
+  right: 10px;
   position: absolute;
   transform-origin: top;
   transform: scaleY(100px);
@@ -17,8 +17,8 @@
 }
 
 .menu-closed > .menuItems {
-  top: 70px;
-  right: 0;
+  top: 69px;
+  right: 10px;
   position: absolute;
   transform: scaleY(0);
   transform-origin: top;
@@ -38,7 +38,7 @@
   background-color: transparent;
   background-color: white;
   border-radius: 0 0 10px 10px;
-  padding: 0.25rem;
+  padding: 1rem;
   box-shadow: 0 10px 10px rgb(97, 97, 97);
 }
 
