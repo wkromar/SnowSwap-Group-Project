@@ -38,14 +38,6 @@
       margin-left: 5px;
   }
   
-  .favorite-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin: 4px;
-
-  }
-  
   .favorited {
     fill: #E31B23;
 
