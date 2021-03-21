@@ -85,7 +85,6 @@ This code is also heavily commented. We recommend reading through the comments, 
 
 ## Authors 
 
-  - App/App
   - Chris Emerfoll
   - Collin Radichel
   - Justin Appelgren
