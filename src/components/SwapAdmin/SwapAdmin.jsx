@@ -7,28 +7,32 @@ export default function SwapAdmin() {
   const history = useHistory();
   const ownedSwaps = useSelector((state) => state?.ownedSwaps);
 
-  console.log('ownedSwaps', ownedSwaps);
-  console.log('Date.now', new Date());
-
   useEffect(() => {
     dispatch({ type: 'FETCH_OWNED_SWAPS' });
-  }, [ownedSwaps]);
+  }, []);
 
   const handleClick = (swap) => {
     history.push(`/createEvent/edit/${swap.id}`);
   };
 
   return (
-    <div className="top-margin">
-      <p>SWAP ADMIN:</p>
-      <ul>
+    <div className="swap-admin-container">
+      <p className="modal-header white-text">Swap Admin</p>
+      <ul className="swap-list">
         {ownedSwaps?.map((swap) => {
           return (
             <li className="li-with-button" key={swap.id}>
               <div>{swap.name}</div>
               <div>
                 {new Date(swap.stop_date) > new Date() ? (
-                  <button onClick={() => handleClick(swap)}>Edit Swap</button>
+                  <button
+                    className="no-style-button"
+                    onClick={() => handleClick(swap)}
+                  >
+                    <div className="blue-circle">
+                      <img src="images/pencil.svg" alt="" />
+                    </div>
+                  </button>
                 ) : (
                   <p>Swap Has Ended</p>
                 )}
