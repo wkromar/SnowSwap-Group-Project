@@ -84,11 +84,14 @@ This code is also heavily commented. We recommend reading through the comments, 
 1. In the deploy section, select manual deploy
 
 ## Authors 
-  -Chris Emerfoll
-  -Collin Radichel
-  -Justin Appelgren
-  -Woody Kromar
+
+  - App/App
+  - Chris Emerfoll
+  - Collin Radichel
+  - Justin Appelgren
+  - Woody Kromar
   
 ## Acknoweldgments
-  -Prime Digital Academy for teaching us Full-Stack Development
-  -Dane Smith for helping troubleshoot problems
+
+  - Prime Digital Academy for teaching us Full-Stack Development
+  - Dane Smith for helping troubleshoot problems
