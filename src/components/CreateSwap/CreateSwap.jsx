@@ -12,7 +12,7 @@ export default function CreateSwap() {
   const selectedSwap = useSelector((state) => state?.selectedSwap[0]);
 
   const defaultState = {
-    is_private: 'true',
+    is_private: true,
     start_date: '',
     sell_date: '',
     stop_date: '',
@@ -85,38 +85,27 @@ export default function CreateSwap() {
     }
   }, [selectedSwap]);
 
-  const fillData = (event) => {
-    event.preventDefault();
-    setSwapInfo({
-      ...swapInfo,
-      is_private: true,
-      start_date: format(new Date('2021-03-22'), dateFormat),
-      sell_date: format(new Date('2021-03-29'), dateFormat),
-      stop_date: format(new Date('2021-04-01'), dateFormat),
-      swap_name: 'Big Mountain',
-      swap_img: 'https://www.tactics.com/a/bdg5/r/snowboard-main.jpg',
-      swap_description: 'A big mountain, here is our gear.',
-    });
-  };
-
   return (
     <div>
+      <div className="swap-header">{slug ? 'Edit' : 'Create'} Swap</div>
       {authLevel < 1 ? (
         <div>
           <p>You do not have authorization to create your own swap.</p>
-          <button className="ss-btn" onClick={handleRequestAccess}>Request Access</button>
+          <button className="ss-btn" onClick={handleRequestAccess}>
+            Request Access
+          </button>
         </div>
       ) : (
         <div>
-          <form onSubmit={handleSubmit}>
-            Swap Cover Imag
-            <button className="no-style-button" onClick={fillData}>
-              e
-            </button>
+          <form className="swap-creation-container" onSubmit={handleSubmit}>
+            Swap Cover Image
             {swapInfo.swap_img ? (
               <div>
-                <img src={swapInfo.swap_img} />
+                <div className="swap-uploader-preview">
+                  <img src={swapInfo.swap_img} />
+                </div>
                 <button
+                  className="ss-btn"
                   type="button"
                   onClick={() => setSwapInfo({ ...swapInfo, swap_img: '' })}
                 >
@@ -130,43 +119,62 @@ export default function CreateSwap() {
                 setState={setSwapInfo}
               />
             )}
-            <br />
-            <label htmlFor="">Swap Name</label>
-            <input
-              name="swap_name"
-              onChange={(event) => handleSwapInfo(event)}
-              value={swapInfo.swap_name}
-              type="text"
-            />
-            <textarea
-              value={swapInfo.swap_description}
-              onChange={(event) => handleSwapInfo(event)}
-              name="swap_description"
-              cols="30"
-              rows="10"
-            ></textarea>
-            <div>
+            <div className="profile-input-container">
+              <div className="input-tag">Swap Name</div>
               <input
-                id="public-button"
-                type="radio"
-                name="is_private"
-                value={'false'}
-                checked={swapInfo.is_private === 'false'}
+                name="swap_name"
                 onChange={(event) => handleSwapInfo(event)}
+                value={swapInfo.swap_name}
+                type="text"
+                className="styled-input"
               />
-              <label htmlFor="public-button">Public</label>
-              <input
-                id="private-button"
-                type="radio"
-                name="is_private"
-                value={'true'}
-                checked={swapInfo.is_private === 'true'}
-                onChange={(event) => handleSwapInfo(event)}
-              />
-              <label htmlFor="private-button">Private</label>
             </div>
-            <label>
-              Start Date
+            <div className="textarea-container">
+              <div className="modal-header white-text center">
+                Swap Description
+              </div>
+              <textarea
+                value={swapInfo.swap_description}
+                onChange={(event) => handleSwapInfo(event)}
+                name="swap_description"
+                cols="30"
+                rows="10"
+              />
+            </div>
+            <div>
+              <span className="private-public">
+                <p className="">Public</p>
+                <div
+                  className={`switch-body switch${
+                    swapInfo.is_private ? 'private' : 'public'
+                  }-body`}
+                  onClick={() =>
+                    setSwapInfo({
+                      ...swapInfo,
+                      is_private: !swapInfo.is_private,
+                    })
+                  }
+                >
+                  <div
+                    className={`switch-circle ${
+                      swapInfo.is_private ? 'private' : 'public'
+                    }`}
+                  ></div>
+                </div>
+                <p>Private</p>
+              </span>
+            </div>
+            <div className="profile-input-container">
+              <div className="input-tag">Pre-Sale Start</div>
+              <input
+                onChange={(event) => handleSwapInfo(event)}
+                value={swapInfo.start_date}
+                name="start_date"
+                max={swapInfo.stop_date}
+                required
+                type="date"
+                className="styled-input"
+              />
               <div className="tool-tip">
                 <img src="images/tooltip.svg" alt="" />
                 <span className="tool-tip-text">
@@ -175,26 +183,9 @@ export default function CreateSwap() {
                   swap. No buying will occur during this stage
                 </span>
               </div>
-              <input
-                onChange={(event) => handleSwapInfo(event)}
-                value={swapInfo.start_date}
-                name="start_date"
-                max={swapInfo.stop_date}
-                required
-                type="date"
-              />
-            </label>
-            <br />
-            <label>
-              Start Sale Date
-              <div className="tool-tip">
-                <img src="images/tooltip.svg" alt="" />
-                <span className="tool-tip-text">
-                  Start Sale Date is the day the swap enters it's sale stage.
-                  During this time items can still be added, users are able to
-                  purchase items during this time.
-                </span>
-              </div>
+            </div>
+            <div className="profile-input-container">
+              <div className="input-tag">Sale Start</div>
               <input
                 onChange={(event) => handleSwapInfo(event)}
                 value={swapInfo.sell_date}
@@ -203,11 +194,28 @@ export default function CreateSwap() {
                 max={swapInfo.stop_date}
                 required
                 type="date"
+                className="styled-input"
               />
-            </label>
-            <br />
-            <label>
-              Stop Date
+              <div className="tool-tip">
+                <img src="images/tooltip.svg" alt="" />
+                <span className="tool-tip-text">
+                  Start Sale Date is the day the swap enters it's sale stage.
+                  During this time items can still be added, users are able to
+                  purchase items during this time.
+                </span>
+              </div>
+            </div>
+            <div className="profile-input-container">
+              <div className="input-tag">Stop Date</div>
+              <input
+                onChange={(event) => handleSwapInfo(event)}
+                value={swapInfo.stop_date}
+                name="stop_date"
+                min={swapInfo.sell_date}
+                required
+                type="date"
+                className="styled-input"
+              />
               <div className="tool-tip">
                 <img src="images/tooltip.svg" alt="" />
                 <span className="tool-tip-text">
@@ -216,23 +224,17 @@ export default function CreateSwap() {
                   through Sunday select Monday as your end date.
                 </span>
               </div>
-              <input
-                onChange={(event) => handleSwapInfo(event)}
-                value={swapInfo.stop_date}
-                name="stop_date"
-                min={swapInfo.sell_date}
-                required
-                type="date"
-              />
-            </label>
+            </div>
             <p>Your swap access code:</p>
             <h3>{swapInfo.access_code}</h3>
-            <button type="submit">
-              {slug === 'edit' ? 'Commit Changes' : 'Create Swap'}
-            </button>
-            <button onClick={handleCancel} type="button">
-              Cancel
-            </button>
+            <div className="button-container">
+              <button className="ss-btn" onClick={handleCancel} type="button">
+                Cancel
+              </button>
+              <button className="ss-btn" type="submit">
+                {slug === 'edit' ? 'Save' : 'Create Swap'}
+              </button>
+            </div>
           </form>
           {slug === 'edit' ? <SwapItemAdmin /> : <></>}
         </div>

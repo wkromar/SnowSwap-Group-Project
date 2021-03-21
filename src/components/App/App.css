@@ -184,11 +184,13 @@ Form Treatment
 .input-container {
   display: flex;
   margin: 1rem;
+  align-items: center;
 }
 
 .profile-input-container {
   display: flex;
-  margin: .5rem;
+  margin: 0.5rem;
+  align-items: center;
 }
 
 .input-tag {
@@ -567,6 +569,77 @@ a {
   color: var(--black-text);
 }
 
+.swap-creation-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  margin: 10px;
+  border-radius: 10px;
+}
+
 .button-container {
   display: flex;
+}
+
+.swap-uploader-preview {
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+.swap-uploader-preview > img {
+  width: 100%;
+  height: auto;
+  position: absolute;
+}
+
+textarea {
+  resize: none;
+  border-radius: 0 0 10px 10px;
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  border-top: 0;
+}
+
+.textarea-container {
+  width: 80%;
+}
+
+.switch-body {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 40px;
+  height: 16px;
+  background-color: #c2c2c2;
+  border-radius: 15px;
+  position: relative;
+}
+
+.switch-circle {
+  border: white;
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin: 5px;
+  transition: 0.2s ease-in-out;
+  position: absolute;
+}
+
+.switchprivate-body > .switch-circle {
+  transform: translateX(18px);
+  transition: transform 0.2s ease;
+}
+
+.switchprivate-body {
+  background-color: var(--main-blue);
+}
+
+.private-public {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 200px;
 }
