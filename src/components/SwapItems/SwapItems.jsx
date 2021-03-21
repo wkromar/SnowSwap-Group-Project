@@ -122,7 +122,7 @@ export default function SwapItems() {
       <div className="container">
         {filteredSwapItems
           ? filteredSwapItems?.map((piece) => (
-              <div className="swap-card item-card">
+              <div key={piece.id} className="swap-card item-card">
                 <img
                   onClick={() => gearClicked(piece)}
                   className="image"
@@ -208,7 +208,7 @@ export default function SwapItems() {
         isOpen={modalStatus.addGearView}
         onRequestClose={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
         styles={customStyles}
-        className="add-gear-modal"
+        className="details-modal"
         contentLabel="Add View"
       >
         <AddGearToSwap />

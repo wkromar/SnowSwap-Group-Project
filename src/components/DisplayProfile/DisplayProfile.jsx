@@ -3,46 +3,49 @@ import './DisplayProfile.css';
 
 export default function DisplayProfile({ user, setEditMode, editMode }) {
   return (
-    <div className="profile-container">
-      <div className="profile-info-container">
-        <div className="left-side">
-          {user?.user_image ? (
+    <>
+      <div className="swap-header center">
+        {user?.first_name} {user?.last_name}'s Profile
+      </div>
+      <div className="profile-container">
+        {user?.user_image ? (
+          <div className="round-frame">
+            <img className="profile-img" src={user?.user_image} />
+          </div>
+        ) : (
+          <div>Add a profile picture</div>
+        )}
+        <div className="profile-info-container">
+          <div className="left-side">
+            <div>Email: {user.email}</div>
             <div>
-              <img src={user?.user_image} />
+              {user?.preferred_payment ? (
+                <div>
+                  <div>Preferred Payment Method: {user?.preferred_payment}</div>
+                  {user?.preferred_payment != 'Cash' ? (
+                    <div>
+                      <div>
+                        {user?.preferred_payment} Username:{' '}
+                        {user?.payment_username}
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ) : (
+                'Select a preferred payment method by editing your profile'
+              )}
             </div>
-          ) : (
-            <div>Add a profile picture</div>
-          )}
-          <div>
-            {user?.preferred_payment ? (
-              <div>
-                <label>Preferred Payment Method:</label>
-                <div>{user?.preferred_payment}</div>
-                {user?.preferred_payment != 'Cash' ? (
-                  <div>
-                    <label>{user?.preferred_payment} Username:</label>
-                    <div>{user?.payment_username}</div>
-                  </div>
-                ) : (
-                  <></>
-                )}
-              </div>
-            ) : (
-              'Select a preferred payment method by editing your profile'
-            )}
           </div>
         </div>
-        <div className="right-side">
-          <label>First Name:</label>
-          <div>{user.first_name}</div>
-          <label>Last Name:</label>
-          <div>{user.last_name}</div>
-          <label>Email:</label>
-          <div>{user.email}</div>
+
+        <div>
+          <button className="ss-btn" onClick={() => setEditMode(!editMode)}>
+            Edit
+          </button>
         </div>
       </div>
-
-      <button onClick={() => setEditMode(!editMode)}>Edit</button>
-    </div>
+    </>
   );
 }

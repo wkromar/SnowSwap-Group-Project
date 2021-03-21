@@ -55,6 +55,7 @@ function* editSwap(action) {
     try {
         yield axios.put(`/api/swaps/edit/${action.payload.id}`, action.payload);
         yield put({ type: "FETCH_ALL_SWAPS" });
+        yield put({ type: 'FETCH_OWNED_SWAPS' });
     } catch (err) {
         console.log(err);
     }

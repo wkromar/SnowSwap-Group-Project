@@ -117,6 +117,7 @@ export default function Favorites() {
         isOpen={modalStatus.detailView}
         onRequestClose={() => dispatch({ type: 'CLOSE_DETAIL_VIEW' })}
         styles={customStyles}
+        className="details-modal"
         contentLabel="Detail View"
       >
         <DetailsView />
