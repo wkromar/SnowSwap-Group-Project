@@ -28,16 +28,28 @@ export default function Menu() {
         <div className="menuItems">
           <div className="triangle"></div>
           <Link to="/profile" className="menuItem">
-            Profile
+            <div className="img-link-container">
+              <img src="images/profile.svg" alt="" />
+              Profile
+            </div>
           </Link>
           <Link to="/createEvent/" className="menuItem">
-            Create Swap
+            <div className="img-link-container">
+              <img src="images/swap.svg" alt="" />
+              Create Swap
+            </div>
           </Link>
           <Link to="/myGear" className="menuItem">
-            My Gear
+            <div className="img-link-container">
+              <img src="images/mygear.svg" alt="" />
+              My Gear
+            </div>
           </Link>
           <Link to="/favorites/" className="menuItem">
-            Favorites
+            <div className="img-link-container">
+              <img src="images/favorite-blue.svg" alt="" />
+              Favorites
+            </div>
           </Link>
           <LogOutButton />
         </div>

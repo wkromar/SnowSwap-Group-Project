@@ -186,6 +186,11 @@ Form Treatment
   margin: 1rem;
 }
 
+.profile-input-container {
+  display: flex;
+  margin: .5rem;
+}
+
 .input-tag {
   display: flex;
   justify-content: center;
@@ -466,7 +471,7 @@ Form Treatment
   height: 100px;
   overflow: hidden;
   box-shadow: 0 0 0 2px white, 0 0 0 6px var(--main-blue);
-  margin: 1rem 0;
+  margin: 1rem;
 }
 
 .profile-img {
@@ -492,6 +497,12 @@ Form Treatment
 
 .profile-info-container {
   display: flex;
+}
+
+.center {
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .left-side {
@@ -533,4 +544,29 @@ Form Treatment
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+
+.add-card {
+  margin: 5px;
+  width: 150px;
+}
+
+.add-button {
+  height: 16px;
+  width: 16px;
+}
+
+.img-link-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.25rem 0;
+}
+
+a {
+  color: var(--black-text);
+}
+
+.button-container {
+  display: flex;
 }

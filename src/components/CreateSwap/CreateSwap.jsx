@@ -104,7 +104,7 @@ export default function CreateSwap() {
       {authLevel < 1 ? (
         <div>
           <p>You do not have authorization to create your own swap.</p>
-          <button onClick={handleRequestAccess}>Request Access</button>
+          <button className="ss-btn" onClick={handleRequestAccess}>Request Access</button>
         </div>
       ) : (
         <div>
