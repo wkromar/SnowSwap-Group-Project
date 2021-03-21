@@ -310,7 +310,7 @@ Form Treatment
   font-size: 24px;
   font-weight: bolder;
   color: var(--black-text);
-  height: 48px;
+  min-height: 48px;
 }
 
 .add-filter {
@@ -642,4 +642,23 @@ textarea {
   align-items: center;
   justify-content: space-between;
   width: 200px;
+}
+
+.swap-item-table-container {
+  background-color: white;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+th {
+  text-align: start;
+  padding: 0 0.5rem;
+}
+
+td {
+  padding: 0 0.5rem;
+}
+
+.no-overflow {
+  overflow-x: hidden;
 }

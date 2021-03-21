@@ -86,7 +86,7 @@ export default function CreateSwap() {
   }, [selectedSwap]);
 
   return (
-    <div>
+    <div className="no-overflow">
       <div className="swap-header">{slug ? 'Edit' : 'Create'} Swap</div>
       {authLevel < 1 ? (
         <div>
