@@ -144,9 +144,8 @@ export default function DetailsView() {
           <>
             <h4>Seller Details</h4>
             <div>
-              <p>Preferred Payment</p>
-              <p>{user.preferred_payment}</p>
-              <p>Username: {user.payment_username}</p>
+              <p>Preferred Payment: {gearDetails.preferred_payment}</p>
+              <p>Username: {gearDetails.payment_username}</p>
             </div>
             <div>
               <p>Contact Seller</p>
