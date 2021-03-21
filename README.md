@@ -24,26 +24,12 @@ SnowSwaps is a full-stack web application that bridges the gap between buyers an
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
-
+  Each software has instructions on the dowload procedure in their website.
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
-## Create database and table
-
-Create a new database called `snowswaps`.
-
-All the requered info to set up the database can be found in the database.sql file.
-
-If you would like to name your database something else, you will need to change `snowswaps` to the name of your new database name in `server/modules/pool.js`
-
-## Prerequisites
-  The things you need and how to install them.
-   Node.js
-    `https://nodejs.org/en/`
-    Select the download that works best with your system.
     
-
 ## Development Setup Instructions
 
 - Run `npm install`
@@ -97,3 +83,12 @@ This code is also heavily commented. We recommend reading through the comments, 
 1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
 1. In the deploy section, select manual deploy
 
+## Authors 
+  -Chris Emerfoll
+  -Collin Radichel
+  -Justin Appelgren
+  -Woody Kromar
+  
+## Acknoweldgments
+  -Prime Digital Academy for teaching us Full-Stack Development
+  -Dane Smith for helping troubleshoot problems
