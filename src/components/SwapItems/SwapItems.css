@@ -29,8 +29,8 @@
   }
   
   .image {
-      height: 8.5rem;
-      width: 10rem;
+      max-height: 11rem;
+      width: auto;
   }
   
   .name {

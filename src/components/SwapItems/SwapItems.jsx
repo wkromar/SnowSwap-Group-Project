@@ -208,7 +208,7 @@ export default function SwapItems() {
         isOpen={modalStatus.addGearView}
         onRequestClose={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
         styles={customStyles}
-        className="add-gear-modal"
+        className="details-modal"
         contentLabel="Add View"
       >
         <AddGearToSwap />
