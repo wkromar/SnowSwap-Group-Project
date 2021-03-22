@@ -24,7 +24,7 @@ export default function SwapCodeModal() {
           className="no-style-button"
           onClick={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}
         >
-          <img src="images/cancel.svg" alt="" />
+          <img src="images/cancel-white.svg" alt="" />
         </button>
       </div>
       <div className="code-modal-container">
@@ -35,15 +35,19 @@ export default function SwapCodeModal() {
         <p>Swap Description:</p>
         <p>{selectedSwap?.swap_description}</p>
         <form onSubmit={handleSubmit}>
-          <input
-            onChange={(event) => setPasscode(event.target.value)}
-            value={passcode}
-            type="text"
-          />
-          <div>
-            <button type="submit">Join Swap</button>
+          <div className="input-container">
+            <div className="input-tag">Passcode</div>
+            <input
+              onChange={(event) => setPasscode(event.target.value)}
+              value={passcode}
+              type="text"
+              className="styled-input"
+            />
+          </div>
+          <div className="button-container">
+            <button className="ss-btn" type="submit">Join Swap</button>
             <a href={`mailto:${selectedSwap.email}`}>
-              <button type="button">Request Access</button>
+              <button className="ss-btn white-text" type="button">Request Code</button>
             </a>
           </div>
         </form>
