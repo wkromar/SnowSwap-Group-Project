@@ -18,27 +18,36 @@ export default function SwapCodeModal() {
   };
 
   return (
-    <div>
-      <button onClick={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}>
-        <img src="images/cancel.svg" alt="" />
-      </button>
-      <h3>{selectedSwap?.name} is private and requires a passcode to access.</h3>
-      <br />
-      <p>Swap Description:</p>
-      <p>{selectedSwap?.swap_description}</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          onChange={(event) => setPasscode(event.target.value)}
-          value={passcode}
-          type="text"
-        />
-        <div>
-          <button type="submit">Join Swap</button>
-          <a href={`mailto:${selectedSwap.email}`}>
-            <button type="button">Request Access</button>
-          </a>
-        </div>
-      </form>
-    </div>
+    <>
+      <div className="modal-header justify-end">
+        <button
+          className="no-style-button"
+          onClick={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}
+        >
+          <img src="images/cancel.svg" alt="" />
+        </button>
+      </div>
+      <div className="code-modal-container">
+        <h3>
+          {selectedSwap?.name} is private and requires a passcode to access.
+        </h3>
+        <br />
+        <p>Swap Description:</p>
+        <p>{selectedSwap?.swap_description}</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={(event) => setPasscode(event.target.value)}
+            value={passcode}
+            type="text"
+          />
+          <div>
+            <button type="submit">Join Swap</button>
+            <a href={`mailto:${selectedSwap.email}`}>
+              <button type="button">Request Access</button>
+            </a>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
