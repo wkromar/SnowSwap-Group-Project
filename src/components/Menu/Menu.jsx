@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import '../Menu/Menu.css';
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector((state) => state.user);
 
   const handleMenuClick = () => {
     if (isOpen) {
@@ -29,7 +31,9 @@ export default function Menu() {
           <div className="triangle"></div>
           <Link to="/profile" className="menuItem">
             <div className="img-link-container">
-              <img src="images/profile.svg" alt="" />
+              <div className="round-frame-small">
+                <img className="profile-img-small" src={user?.user_image} alt="" />
+              </div>
               Profile
             </div>
           </Link>
