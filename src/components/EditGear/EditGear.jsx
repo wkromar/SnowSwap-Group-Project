@@ -112,242 +112,273 @@ function EditGear() {
   };
   //one form, multiple inputs. cancel brings you back to myGear
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <p>Title</p>
-        <input
-          type="text"
-          value={itemToEdit?.title}
-          onChange={(event) => handleChange(event)}
-          name="title"
-        />
-        <div className="uploader-thumbnails-container">
-          <div className="uploader-container">
-            <ImageUpload
-              itemToEdit={itemToEdit.url}
-              setItemToEdit={setItemToEdit}
-              keyName={'multiple'}
+    <>
+      <div className="swap-header">Edit Gear</div>
+      <form className="add-gear-form" onSubmit={handleSubmit}>
+        <div className="profile-input-container">
+          <div className="input-tag">Title</div>
+          <input
+            type="text"
+            value={itemToEdit?.title}
+            onChange={(event) => handleChange(event)}
+            name="title"
+            className="styled-input"
+          />
+          </div>
+          <div className="uploader-thumbnails-container">
+            <div className="uploader-container">
+              <ImageUpload
+                itemToEdit={itemToEdit.url}
+                setItemToEdit={setItemToEdit}
+                keyName={'multiple'}
+              />
+            </div>
+            <div className="thumbnail-container">
+              {itemToEdit?.image?.map((image, i) => {
+                return (
+                  <div key={i} className="uploaded-photos">
+                    <img src={image} onClick={() => removeThumbnail(image)} />
+                  </div>
+                );
+              })}
+              <p className="smaller-text">Click image to remove.</p>
+            </div>
+          </div>
+          <div className="conditional-input-container ">
+          <div className="profile-input-container">
+            <div className="input-tag">Categories</div>
+            <select
+              onChange={(event) => {
+                setCategory(event.target.value);
+                handleView(event.target.value);
+                console.log(event.target.value);
+                handleChange(event);
+              }}
+              name="type"
+              value={itemToEdit?.type}
+              default=""
+              className="styled-input"
+            >
+              <option default="" value="" disabled>
+                Choose an item
+              </option>
+              {categories.map((category) => {
+                return (
+                  <option key={category.name} value={category.id}>
+                    {category.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {category === '4' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Flex</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="flex"
+                value={itemToEdit?.flex}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a Flex
+                </option>
+                {GearTags[0].map((flex) => {
+                  return (
+                    <option key={flex} value={flex}>
+                      {flex}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+          {category === '4' || category === '1' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Style</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="snowboardStyle"
+                value={itemToEdit?.style}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a Style
+                </option>
+                {GearTags[1].map((style) => {
+                  return (
+                    <option key={style} value={style}>
+                      {style}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+          {category === '4' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Shape</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="shape"
+                value={itemToEdit?.shape}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a Shape
+                </option>
+                {GearTags[3].map((shape) => {
+                  return (
+                    <option key={shape} value={shape}>
+                      {shape}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+          <div className="profile-input-container">
+            <div className="input-tag">Gender</div>
+            <select
+              onChange={(event) => handleChange(event)}
+              name="gender"
+              value={itemToEdit?.gender}
+              default=""
+              className="styled-input"
+            >
+              <option default="" value="" disabled>
+                Choose a Gender
+              </option>
+              {GearTags[5].map((gender) => {
+                return (
+                  <option key={gender} value={gender}>
+                    {gender}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          {category === '4' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Condition</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="condition"
+                value={itemToEdit?.condition}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a Condition
+                </option>
+                {GearTags[6].map((condition) => {
+                  return (
+                    <option key={condition} value={condition}>
+                      {condition}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+          {category === '5' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Lacing System</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="lacing_system"
+                value={itemToEdit?.lacing_system}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a System
+                </option>
+                {GearTags[7].map((lacing_system) => {
+                  return (
+                    <option key={lacing_system} value={lacing_system}>
+                      {lacing_system}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+          {category === '4' || category === '1' ? (
+            <div className="profile-input-container">
+            <div className="input-tag">Profile</div>
+              <select
+                onChange={(event) => handleChange(event)}
+                name="profile"
+                value={itemToEdit?.profile}
+                default=""
+                className="styled-input"
+              >
+                <option default="" value="" disabled>
+                  Choose a Profile
+                </option>
+                {GearTags[4].map((profile) => {
+                  return (
+                    <option key={profile} value={profile}>
+                      {profile}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          ) : null}
+   <div className="profile-input-container">
+            <div className="input-tag">Size</div>
+            <input
+              type="decimal"
+              value={itemToEdit?.size}
+              onChange={(event) => handleChange(event)}
+              name="size"
+              className="styled-input"
             />
           </div>
-          <div className="thumbnail-container">
-            {itemToEdit?.image?.map((image, i) => {
-              return (
-                <div key={i} className="uploaded-photos">
-                  <img src={image} onClick={() => removeThumbnail(image)} />
-                </div>
-              );
-            })}
-            Click image to remove.
+          <div className="profile-input-container">
+            <div className="input-tag">Price</div>
+            <input
+              type="decimal"
+              value={itemToEdit?.price}
+              onChange={(event) => handleChange(event)}
+              name="price"
+              className="styled-input"
+            />
+          </div>
+          <div className="profile-input-container">
+            <div className="input-tag">Brand</div>
+            <input
+              type="text"
+              value={itemToEdit?.brand}
+              onChange={(event) => handleChange(event)}
+              name="brand"
+              className="styled-input"
+            />
+          </div>
+          <div className="textarea-container">
+            <div className="modal-header white-text center">Description</div>
+            <textarea
+              type="text"
+              value={itemToEdit?.description}
+              onChange={(event) => handleChange(event)}
+              name="description"
+              cols="30"
+              rows="10"
+            />
           </div>
         </div>
-        <p>Categories</p>
-        <select
-          onChange={(event) => {
-            setCategory(event.target.value);
-            handleView(event.target.value);
-            console.log(event.target.value);
-            handleChange(event);
-          }}
-          name="type"
-          value={itemToEdit?.type}
-          default=""
-        >
-          <option default="" value="" disabled>
-            Choose an item
-          </option>
-          {categories.map((category) => {
-            return (
-              <option key={category.name} value={category.id}>
-                {category.name}
-              </option>
-            );
-          })}
-        </select>
-        {category === '4' ? (
-          <div>
-            <p>Flex</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="flex"
-              value={itemToEdit?.flex}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a Flex
-              </option>
-              {GearTags[0].map((flex) => {
-                return (
-                  <option key={flex} value={flex}>
-                    {flex}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        {category === '4' || category === '1' ? (
-          <div>
-            <p>Style</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="snowboardStyle"
-              value={itemToEdit?.style}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a Style
-              </option>
-              {GearTags[1].map((style) => {
-                return (
-                  <option key={style} value={style}>
-                    {style}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        {category === '4' ? (
-          <div>
-            <p>Shape</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="shape"
-              value={itemToEdit?.shape}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a Shape
-              </option>
-              {GearTags[3].map((shape) => {
-                return (
-                  <option key={shape} value={shape}>
-                    {shape}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        <p>Gender</p>
-        <select
-          onChange={(event) => handleChange(event)}
-          name="gender"
-          value={itemToEdit?.gender}
-          default=""
-        >
-          <option default="" value="" disabled>
-            Choose a Gender
-          </option>
-          {GearTags[5].map((gender) => {
-            return (
-              <option key={gender} value={gender}>
-                {gender}
-              </option>
-            );
-          })}
-        </select>
-        {category === '4' ? (
-          <div>
-            <p>Condition</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="condition"
-              value={itemToEdit?.condition}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a Condition
-              </option>
-              {GearTags[6].map((condition) => {
-                return (
-                  <option key={condition} value={condition}>
-                    {condition}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        {category === '5' ? (
-          <div>
-            <p>Lacing System</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="lacing_system"
-              value={itemToEdit?.lacing_system}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a System
-              </option>
-              {GearTags[7].map((lacing_system) => {
-                return (
-                  <option key={lacing_system} value={lacing_system}>
-                    {lacing_system}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        {category === '4' || category === '1' ? (
-          <div>
-            <p>Profile</p>
-            <select
-              onChange={(event) => handleChange(event)}
-              name="profile"
-              value={itemToEdit?.profile}
-              default=""
-            >
-              <option default="" value="" disabled>
-                Choose a Profile
-              </option>
-              {GearTags[4].map((profile) => {
-                return (
-                  <option key={profile} value={profile}>
-                    {profile}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        ) : null}
-        <p>Size</p>
-        <input
-          type="decimal"
-          value={itemToEdit?.size}
-          onChange={(event) => handleChange(event)}
-          name="size"
-        />
-        <p>Price</p>
-        <input
-          type="decimal"
-          value={itemToEdit?.price}
-          onChange={(event) => handleChange(event)}
-          name="price"
-        />
-        <p>Brand</p>
-        <input
-          type="text"
-          value={itemToEdit?.brand}
-          onChange={(event) => handleChange(event)}
-          name="brand"
-        />
-        <p>Description</p>
-        <input
-          type="text"
-          value={itemToEdit?.description}
-          onChange={(event) => handleChange(event)}
-          name="description"
-        />
-      </div>
-      <div>
-        <button type="submit">Save Changes</button>
-        <button onClick={returnToGear}>Cancel</button>
-        <button onClick={() => deleteItem(itemToEdit.id)}>Delete Item</button>
-      </div>
-    </form>
+        <div className="button-container">
+          <button className="ss-btn" type="submit">Save</button>
+          <button className="ss-btn" onClick={returnToGear}>Cancel</button>
+          <button className="ss-btn" onClick={() => deleteItem(itemToEdit.id)}>Delete Item</button>
+        </div>
+      </form>
+    </>
   );
 }
 export default EditGear;

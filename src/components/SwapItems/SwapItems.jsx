@@ -17,6 +17,7 @@ const customStyles = {
     transform: 'translate(-50%, -50%)',
     position: 'relative',
   },
+  overlay: { zIndex: 1000 },
 };
 
 export default function SwapItems() {
@@ -85,8 +86,6 @@ export default function SwapItems() {
   console.log('selectedSwap:', selectedSwap);
 
   useEffect(() => {
-    // const swapDetails = localStorage.getItem("swap-object");
-    // dispatch({ type: "FETCH_SWAP_ITEMS", payload: JSON.parse(swapDetails) });
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
 
@@ -123,7 +122,7 @@ export default function SwapItems() {
       <div className="container">
         {filteredSwapItems
           ? filteredSwapItems?.map((piece) => (
-              <div className="swap-card item-card">
+              <div key={piece.id} className="swap-card item-card">
                 <img
                   onClick={() => gearClicked(piece)}
                   className="image"
@@ -152,7 +151,11 @@ export default function SwapItems() {
                       onClick={() => removeGear(piece.swap_item_id)}
                       className="no-style-button"
                     >
-                      <img className="card-cancel" src="images/cancel.svg" alt="" />
+                      <img
+                        className="card-cancel"
+                        src="images/cancel.svg"
+                        alt=""
+                      />
                     </button>
                   )}
                 </div>
@@ -195,6 +198,7 @@ export default function SwapItems() {
         isOpen={modalStatus.detailView}
         onRequestClose={() => dispatch({ type: 'CLOSE_DETAIL_VIEW' })}
         styles={customStyles}
+        className="details-modal"
         contentLabel="Detail View"
       >
         <DetailsView />
@@ -204,6 +208,7 @@ export default function SwapItems() {
         isOpen={modalStatus.addGearView}
         onRequestClose={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
         styles={customStyles}
+        className="details-modal"
         contentLabel="Add View"
       >
         <AddGearToSwap />

@@ -18,7 +18,8 @@ export default function SwapItemAdmin() {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
   return (
-    <div>
+    <div className="swap-item-table-container">
+      <div className="modal-header white-text" >Items In Swap</div>
       <br />
       <table>
         <tr>
@@ -32,7 +33,7 @@ export default function SwapItemAdmin() {
               <td>{item.title}</td>
               <td>{item.username}</td>
               <td>
-                <button onClick={() => handleRemove(item)}>Remove</button>
+                <button className="ss-btn" onClick={() => handleRemove(item)}>Remove</button>
               </td>
             </tr>
           );

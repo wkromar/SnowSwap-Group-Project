@@ -49,8 +49,8 @@ export default function AllSwaps() {
           return (
             <div onClick={() => handleClick(swap)}>
               {new Date(swap.stop_date) > new Date() && (
-                <div className="swap-card">                  
-                    <img src={swap.swap_img} alt="" />
+                <div className="swap-card">
+                  <img src={swap.swap_img} alt="" />
                   <div className="title-lock">
                     <p>{swap.name}</p>
                   </div>
@@ -96,7 +96,7 @@ export default function AllSwaps() {
                       <p>
                         Days Remaing:{' '}
                         {Math.round(
-                          (new Date() - new Date(swap.stop_date)) /
+                          (new Date(swap.stop_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
                         ).toString()}
                       </p>
@@ -120,8 +120,9 @@ export default function AllSwaps() {
         ariaHideApp={false}
         isOpen={modalStatus.swapCodeView}
         onRequestClose={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}
-        styles={customStyles}
+        // styles={customStyles}
         contentLabel="Detail View"
+        className="access-modal"
       >
         <SwapCodeModal />
       </Modal>

@@ -20,7 +20,7 @@ export default function AddGearToSwap() {
   }, [swapItems]);
 
   useEffect(() => {
-    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id});
+    dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
   }, []);
 
   const addGear = (piece) => {
@@ -32,16 +32,30 @@ export default function AddGearToSwap() {
 
   return (
     <>
-      <p className="title"> Add your items to: <br/> {selectedSwap[0].name} </p>
+      <div className="header-title modal-header">
+        <p>Add your items to: {selectedSwap[0].name}</p>
+        <img
+          onClick={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
+          src="images/cancel-white.svg"
+          alt=""
+        />
+      </div>
       <div className="container">
         {gear?.map((piece) => (
-          <div className="item">
+          <div className="swap-card add-card">
+            <div className="title-lock">
+              ${piece.price}
+              <button
+                onClick={() => addGear(piece)}
+                className="no-style-button"
+              >
+                <img className="add-button" src="images/plus.svg" alt="" />
+              </button>
+            </div>
             <img className="image" src={piece.image[0]} />
-            <p className="name">{piece.title}</p>
-            <p className="mygear-price">${piece.price}</p>
-            <button onClick={() => addGear(piece)} className="add-button">
-              Add
-            </button>
+            <div className="days-until">
+              <p className="name">{piece.title}</p>
+            </div>
           </div>
         ))}
       </div>

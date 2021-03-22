@@ -5,7 +5,6 @@
   transform-origin: top;
   transform: scaleY(100px);
   transition: transform 0.2s ease;
-  z-index: 2;
 }
 
 .menu-container {
@@ -14,6 +13,7 @@
   background-color: white;
   overflow: hidden;
   display: relative;
+  
 }
 
 .menu-closed > .menuItems {
@@ -23,7 +23,7 @@
   transform: scaleY(0);
   transform-origin: top;
   transition: transform 0.2s ease;
-  z-index: 2;
+  
 }
 
 .hamburger {
@@ -39,6 +39,7 @@
   background-color: white;
   border-radius: 10px;
   padding: 1rem;
+  width: 170px;
   box-shadow: 0 10px 10px rgb(97, 97, 97);
 }
 

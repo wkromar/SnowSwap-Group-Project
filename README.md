@@ -1,24 +1,35 @@
 
 # SnowSwaps
+Snow sports are a common winter activity in the Midwest area and all of them require the use of expensive gear to make the experience enjoyable. 
+This cost will increase especially if the user is younger, requiring new equipment purchases every year to keep up with their growth. 
+This cost can be too much for some and without a way to effectively sell or trade the old gear, 
+it has created a robust market full of users spread across different platforms. 
+Introducing Snowswap, a full-stack web application meant to assist the user with selling their old winter gear and finding used gear to meet their needs. 
+This app is designed to be a hub for snow gear sales and trades helping users cut the cost of equipment and cleaning out their garage.
+
+The app works by arranging a meeting of buyers and sellers called a “swap”. The creator of the swap creates an environment displaying a 
+time and a place where other users can trade their gear. There is a beginning period where users add their gear but cannot meet and a “meeting” 
+period where users gather at the designated place and time to conduct their business.
+
+This style of commerce can be very beneficial for users such as a highschool Alpine instructor who is looking to trade out old racing team gear 
+and potentially find used skis to replenish the team’s loaning stock.
+
+Or for a parent, looking for specified boarder-cross gear for a growing child. 
+
+Or someone interested in the sport but doesn’t want to jump in before testing the waters.
+Anyone who partakes in snow sports will benefit from this app.
 
 SnowSwaps is a full-stack web application that bridges the gap between buyers and sellers of used snow sport equipment.  Users can request permission from SnowSwaps to gain the ability to create virtual “swaps” where users can browse items listed in the swap.  Buyers can contact sellers to negotiate price and a location to meet. Swaps can be public, or they can be private requiring a passcode to interact with the swap.
 
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
-
+  Each software has instructions on the dowload procedure in their website.
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
 
-## Create database and table
-
-Create a new database called `snowswaps`.
-
-All the requered info to set up the database can be found in the database.sql file.
-
-If you would like to name your database something else, you will need to change `snowswaps` to the name of your new database name in `server/modules/pool.js`
-
+    
 ## Development Setup Instructions
 
 - Run `npm install`
@@ -40,14 +51,6 @@ Before pushing to Heroku, run `npm run build` in terminal. This will create a bu
 - Start postgres if not running already by using `brew services start postgresql`
 - Run `npm start`
 - Navigate to `localhost:5000`
-
-## Lay of the Land
-
-There are a few videos linked below that show a walkthrough the client and sever setup to help acclimatize to the boilerplate. Please take some time to watch the videos in order to get a better understanding of what the boilerplate is like.
-
-- [Initial Set](https://vimeo.com/453297271)
-- [Server Walkthrough](https://vimeo.com/453297212)
-- [Client Walkthrough](https://vimeo.com/453297124)
 
 Directory Structure:
 
@@ -80,6 +83,14 @@ This code is also heavily commented. We recommend reading through the comments, 
 1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
 1. In the deploy section, select manual deploy
 
-## Update Documentation
+## Authors 
 
-Customize this ReadMe and the code comments in this project to read less like a starter repo and more like a project. Here is an example: https://gist.github.com/PurpleBooth/109311bb0361f32d87a2
+  - Chris Emerfoll
+  - Collin Radichel
+  - Justin Appelgren
+  - Woody Kromar
+  
+## Acknoweldgments
+
+  - Prime Digital Academy for teaching us Full-Stack Development
+  - Dane Smith for helping troubleshoot problems

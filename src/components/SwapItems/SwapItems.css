@@ -29,21 +29,13 @@
   }
   
   .image {
-      height: 8.5rem;
-      width: 10rem;
+      max-height: 11rem;
+      width: auto;
   }
   
   .name {
      
       margin-left: 5px;
-  }
-  
-  .favorite-icon {
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin: 4px;
-
   }
   
   .favorited {
