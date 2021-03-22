@@ -33,11 +33,17 @@ Before you get started, make sure you have the following software installed on y
 ## Development Setup Instructions
 
 - Run `npm install`
-- Create a `.env` file at the root of the project and paste this line into the file:
+- Create a `.env` file at the root of the project and paste these lines into the file:
   ```
   SERVER_SESSION_SECRET=superDuperSecret
+  REACT_APP_S3URL=s3BucketURL
+  REACT_APP_SERVER=http://localhost:5000
   ```
   While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
+  
+  REACT_APP_S3URL is referencing your s3 bucket, which you will need an account for. Create your account and use the link you recieve to replace `s3BucketURL`.
+  
+REACT_APP_SERVER is referencing whatever URL you are wanting to display the app on. Change it to your desired location.
 - Start postgres if not running already by using `brew services start postgresql`
 - Run `npm run server`
 - Run `npm run client`
