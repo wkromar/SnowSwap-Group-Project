@@ -97,10 +97,10 @@ Run the following commands from within your project folder.
 ## Authors 
 
   [- Chris Emerfoll](https://github.com/Emerfoll)
-  - Collin Radichel
-  - Justin Appelgren
-  - Woody Kromar
-  
+  - [Collin Radichel](https://github.com/collin-radichel)
+  - [Justin Appelgren](https://github.com/jappelgren)
+  - [Woody Kromar](https://github.com/wkromar)
+ 
 ## Acknoweldgments
 
   - Prime Digital Academy for teaching us Full-Stack Development
