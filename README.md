@@ -1,26 +1,15 @@
 
 # SnowSwaps
-Snow sports are a common winter activity in the Midwest area and all of them require the use of expensive gear to make the experience enjoyable. 
-This cost will increase especially if the user is younger, requiring new equipment purchases every year to keep up with their growth. 
-This cost can be too much for some and without a way to effectively sell or trade the old gear, 
-it has created a robust market full of users spread across different platforms. 
-Introducing Snowswap, a full-stack web application meant to assist the user with selling their old winter gear and finding used gear to meet their needs. 
-This app is designed to be a hub for snow gear sales and trades helping users cut the cost of equipment and cleaning out their garage.
+_Duration: 2 Week Sprint_
+_Style: 2 Week Sprint_
 
-The app works by arranging a meeting of buyers and sellers called a “swap”. The creator of the swap creates an environment displaying a 
-time and a place where other users can trade their gear. There is a beginning period where users add their gear but cannot meet and a “meeting” 
-period where users gather at the designated place and time to conduct their business.
+SnowSwaps is a mobile-friendly online marketplace for members of snow-loving communities to buy, sell, or browse used snow-sport equipment. SnowSwaps bridges the gap between buyers and sellers of used snow sport equipment on a single platform. Members of the App can request permission from SnowSwaps to gain the ability to create virtual “swaps” where users can browse items listed in the swap. Swaps can be public, or they can be private requiring a passcode to interact with the swap. Buyers can contact sellers to negotiate price and a location to meet. 
 
-This style of commerce can be very beneficial for users such as a highschool Alpine instructor who is looking to trade out old racing team gear 
-and potentially find used skis to replenish the team’s loaning stock.
-
-Or for a parent, looking for specified boarder-cross gear for a growing child. 
-
-Or someone interested in the sport but doesn’t want to jump in before testing the waters.
-Anyone who partakes in snow sports will benefit from this app.
-
-SnowSwaps is a full-stack web application that bridges the gap between buyers and sellers of used snow sport equipment.  Users can request permission from SnowSwaps to gain the ability to create virtual “swaps” where users can browse items listed in the swap.  Buyers can contact sellers to negotiate price and a location to meet. Swaps can be public, or they can be private requiring a passcode to interact with the swap.
-
+# Members
+  [@Woody](https://github.com/wkromar)
+  [@Collin](https://github.com/collin-radichel)
+  [@Chris](https://github.com/jappelgren)
+  [@Justin](https://github.com/Emerfoll)
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
@@ -28,6 +17,12 @@ Before you get started, make sure you have the following software installed on y
 - [Node.js](https://nodejs.org/en/)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Nodemon](https://nodemon.io/)
+- On Mac [Homebrew](https://brew.sh/)
+- On Windows [PG Admin 4](https://www.pgadmin.org/download/pgadmin-4-windows/)
+
+## Built With 
+
+Javascript, React, Redux, Node, Express, Material UI, and Passport, NodeMailer, Heroku, 
 
     
 ## Development Setup Instructions
@@ -41,7 +36,8 @@ Before you get started, make sure you have the following software installed on y
   ```
   While you're in your new `.env` file, take the time to replace `superDuperSecret` with some long random string like `25POUbVtx6RKVNWszd9ERB9Bb6` to keep your application secure. Here's a site that can help you: [https://passwordsgenerator.net/](https://passwordsgenerator.net/). If you don't do this step, create a secret with less than eight characters, or leave it as `superDuperSecret`, you will get a warning.
   
-  REACT_APP_S3URL is referencing your s3 bucket, which you will need an account for. Create your account and use the link you recieve to replace `s3BucketURL`.
+  REACT_APP_S3URL is referencing your s3 bucket, which you will need an account for. Create your account and use the link you recieve to replace `s3BucketURL`
+  [AWS S3 Bucket](https://aws.amazon.com/free).
   
 REACT_APP_SERVER is referencing whatever URL you are wanting to display the app on. Change it to your desired location.
 - Start postgres if not running already by using `brew services start postgresql`
@@ -81,13 +77,22 @@ This code is also heavily commented. We recommend reading through the comments, 
 
 ## Deployment
 
-1. Create a new Heroku project
-1. Link the Heroku project to the project GitHub Repo
-1. Create an Heroku Postgres database
-1. Connect to the Heroku Postgres database from Postico
-1. Create the necessary tables
-1. Add an environment variable for `SERVER_SESSION_SECRET` with a nice random string for security
-1. In the deploy section, select manual deploy
+### Heroku Prerequisite
+
+1. Sign up for an account on [Heroku.com](https://www.heroku.com/)
+2. Install Heroku CLI by typing `brew tap heroku/brew && brew install heroku` in Terminal
+
+- [Additional installation notes and troubleshooting](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+
+> Note: Your project also needs to have a git repository.
+
+Run the following commands from within your project folder.
+
+1. Authenticate by typing `heroku login` in Terminal
+2. In terminal, navigate to your project folder and type `heroku create`
+3. Type `git remote -v` to ensure it added successfully
+4. In terminal, type `git push heroku main`
+5. You will need to add a MONGO_URI to your config env on heroku.
 
 ## Authors 
 
@@ -100,3 +105,13 @@ This code is also heavily commented. We recommend reading through the comments, 
 
   - Prime Digital Academy for teaching us Full-Stack Development
   - Dane Smith for helping troubleshoot problems
+  - Zach Lulavy for concept and leadership
+
+## Screenshots
+![Login](screenshots/login.png)
+![Landing Page](screenshots/landing-page.pmg)
+![Create Swap](screenshots/create-swap.png)
+![Admin Profile](screenshots/admin-profile.png)
+![Private Swap](screenshots/private-swap.png)
+![Swap Items](screenshots/swap-items.png)
+![Item Details](screenshots/item-details.png)
