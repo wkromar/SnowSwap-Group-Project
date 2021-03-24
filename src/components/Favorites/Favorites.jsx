@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import Modal from 'react-modal';
-import '../Favorites/Favorites.css';
-import DetailsView from '../DetailsView/DetailsView';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import DetailsView from '../DetailsView/DetailsView';
+import '../Favorites/Favorites.css';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 
 const customStyles = {

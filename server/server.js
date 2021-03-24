@@ -42,6 +42,8 @@ app.use('/s3', require('react-dropzone-s3-uploader/s3router')({
   ACL: 'public-read',                                 // this is the default - set to `public-read` to let anyone view uploads
 }));
 
+//node-cron checks every minute on the minute if a swap needs to be opened, set to sale mode or closed base
+//on the date.  All changes take place at midnight or a minute after the dates are changed in edit/create swaps.
 cron.schedule('0 * * * * *', async () => {
   const getQueryText = `
     SELECT * FROM "swaps"
@@ -62,8 +64,10 @@ cron.schedule('0 * * * * *', async () => {
   const getResult = await pool.query(getQueryText);
   await getResult.rows.forEach(async (swap) => {
     if (new Date(swap.sell_date) <= new Date() && new Date(swap.stop_date) > new Date()) {
+      //if the sell_date is less than or equal to today and stop date is greater than today, start the swap sale portion
       await pool.query(putStartQueryText, [swap.id]);
     } else if (new Date(swap.stop_date) <= new Date()) {
+      //if stop_date is less than or equal to today stop the swap.
       await pool.query(putStopQueryText, [swap.id]);
     }
   });

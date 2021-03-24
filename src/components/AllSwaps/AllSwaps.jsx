@@ -4,17 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SwapCodeModal from '../SwapCodeModal/SwapCodeModal';
 
-const customStyles = {
-  content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    position: 'relative',
-  },
-};
 
 export default function AllSwaps() {
   const dispatch = useDispatch();
@@ -27,10 +16,14 @@ export default function AllSwaps() {
     dispatch({ type: 'FETCH_ALL_SWAPS' });
   }, []);
 
+  //handleClick runs on click of swaps under the joined area
   const handleClick = (swap) => {
     history.push(`/swapItems/${swap.id}`);
   };
 
+  //handleClickAll runs when swaps a user hasn't joined are clicked.
+  //The if statement determines if a user has clicked on a private swap that they haven't yet joined.
+  //If the user doesn't have access to the swap a modal asking for the access code will open.
   const handleClickAll = (swap) => {
     if (swap.is_private) {
       dispatch({ type: 'SWAP_CODE_OPEN' });
@@ -46,7 +39,7 @@ export default function AllSwaps() {
       <div className="card-container">
         {joinedSwaps.map((swap) => {
           return (
-            <div onClick={() => handleClick(swap)}>
+            <div key={swap.id} onClick={() => handleClick(swap)}>
               {new Date(swap.stop_date) > new Date() && (
                 <div className="swap-card">
                   <img src={swap.swap_img} alt="" />
@@ -82,7 +75,7 @@ export default function AllSwaps() {
       <div className="card-container">
         {allSwaps.map((swap) => {
           return (
-            <div onClick={() => handleClickAll(swap)}>
+            <div key={swap.id} onClick={() => handleClickAll(swap)}>
               {new Date(swap.stop_date) > new Date() && (
                 <div className="swap-card">
                   <img src={swap.swap_img} alt="" />
