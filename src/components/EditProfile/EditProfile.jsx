@@ -6,8 +6,6 @@ export default function EditProfile({ user, setEditMode, editMode }) {
   const [userProfileEdit, setUserProfileEdit] = useState(user);
   const dispatch = useDispatch();
 
-  console.log(userProfileEdit);
-
   const handleChange = (event) => {
     setUserProfileEdit({
       ...userProfileEdit,

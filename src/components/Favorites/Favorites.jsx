@@ -30,8 +30,6 @@ export default function Favorites() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
-  console.log(gearDetails);
-
   const gearClicked = (piece) => {
     dispatch({ type: 'SELECTED_PIECE', payload: piece });
     dispatch({ type: 'OPEN_DETAIL_VIEW' });
@@ -58,7 +56,6 @@ export default function Favorites() {
   let filteredFavorites = favorites.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }

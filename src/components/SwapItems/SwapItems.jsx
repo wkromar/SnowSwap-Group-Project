@@ -65,14 +65,11 @@ export default function SwapItems() {
     });
   };
 
-  console.log('swapItems - filterObject:', filterObject);
-
   // const filterObject = useSelector((state) => state?.filterObject);
 
   let filteredSwapItems = swapItems.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }
@@ -83,7 +80,6 @@ export default function SwapItems() {
     setDescriptionShow(!descriptionShow);
   };
 
-  console.log('selectedSwap:', selectedSwap);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });

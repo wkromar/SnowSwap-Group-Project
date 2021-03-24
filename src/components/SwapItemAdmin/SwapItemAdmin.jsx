@@ -6,8 +6,6 @@ export default function SwapItemAdmin() {
   const dispatch = useDispatch();
   const swapItems = useSelector((state) => state.swapItems);
 
-  console.log(`swapItems`, swapItems);
-
   const handleRemove = (item) => {
     dispatch({ type: 'REMOVE_FROM_SWAP', payload: item });
   };
