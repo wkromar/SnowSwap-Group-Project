@@ -6,10 +6,10 @@ _Style: 2 Week Sprint_
 SnowSwaps is a mobile-friendly online marketplace for members of snow-loving communities to buy, sell, or browse used snow-sport equipment. SnowSwaps bridges the gap between buyers and sellers of used snow sport equipment on a single platform. Members of the App can request permission from SnowSwaps to gain the ability to create virtual “swaps” where users can browse items listed in the swap. Swaps can be public, or they can be private requiring a passcode to interact with the swap. Buyers can contact sellers to negotiate price and a location to meet. 
 
 # Members
-  - [Woody Kromar](https://github.com/wkromar)
+  - [Chris Emerfoll](https://github.com/Emerfoll)
   - [Collin Radichel](https://github.com/collin-radichel)
   - [Justin Appelgren](https://github.com/jappelgren)
-  - [Chris Emerfoll](https://github.com/Emerfoll)
+  - [Woody Kromar](https://github.com/wkromar)
   
 ## Prerequisites
 
