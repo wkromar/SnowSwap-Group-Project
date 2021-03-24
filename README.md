@@ -8,8 +8,8 @@ SnowSwaps is a mobile-friendly online marketplace for members of snow-loving com
 # Members
   [@Woody](https://github.com/wkromar)
   [@Collin](https://github.com/collin-radichel)
-  [@Chris](https://github.com/jappelgren)
-  [@Justin](https://github.com/Emerfoll)
+  [@Justin](https://github.com/jappelgren)
+  [@Chris](https://github.com/Emerfoll)
 ## Prerequisites
 
 Before you get started, make sure you have the following software installed on your computer:
