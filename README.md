@@ -109,7 +109,7 @@ Run the following commands from within your project folder.
 
 ## Screenshots
 ![Login](Screenshots/login.png)
-![Landing Page](Screenshots/landing-page.pmg)
+![Landing Page](Screenshots/landing-page.png)
 ![Create Swap](Screenshots/create-swap.png)
 ![Admin Profile](Screenshots/admin-profile.png)
 ![Private Swap](Screenshots/private-swap.png)
