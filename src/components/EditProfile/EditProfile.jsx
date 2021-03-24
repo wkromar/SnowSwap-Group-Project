@@ -6,8 +6,6 @@ export default function EditProfile({ user, setEditMode, editMode }) {
   const [userProfileEdit, setUserProfileEdit] = useState(user);
   const dispatch = useDispatch();
 
-  console.log(userProfileEdit);
-
   const handleChange = (event) => {
     setUserProfileEdit({
       ...userProfileEdit,
@@ -18,7 +16,6 @@ export default function EditProfile({ user, setEditMode, editMode }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: 'EDIT_USER', payload: userProfileEdit });
-    // setEditMode(!editMode);
   };
 
   const paymentMethods = ['Cash', 'Cash App', 'Venmo', 'PayPal'];

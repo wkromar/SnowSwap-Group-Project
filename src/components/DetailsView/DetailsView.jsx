@@ -1,10 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import '../DetailsView/DetailsView.css';
 import '../Favorites/Favorites.css';
-import { nominalTypeHack } from 'prop-types';
 
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
@@ -31,11 +30,9 @@ export default function DetailsView() {
   };
 
   const [imageCounter, setImageCounter] = useState(0);
-  console.log(user);
 
   const handleNextPicture = (direction) => {
-    console.log(direction);
-    console.log(gearDetails.image.length - 1);
+
     if (direction === 'next' && imageCounter < gearDetails.image.length - 1) {
       setImageCounter(imageCounter + 1);
     } else if (
@@ -50,9 +47,7 @@ export default function DetailsView() {
     }
   };
 
-  console.log('imageCounter:', imageCounter);
 
-  console.log(`selectedSwap`, selectedSwap);
 
   return (
     <>

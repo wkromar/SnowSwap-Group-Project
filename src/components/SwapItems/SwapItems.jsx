@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import '../SwapItems/SwapItems.css';
-import DetailsView from '../DetailsView/DetailsView';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import AddGearToSwap from '../AddGearToSwap/AddGearToSwap';
+import DetailsView from '../DetailsView/DetailsView';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
+import '../SwapItems/SwapItems.css';
 
 const customStyles = {
   content: {
@@ -65,14 +65,11 @@ export default function SwapItems() {
     });
   };
 
-  console.log('swapItems - filterObject:', filterObject);
-
   // const filterObject = useSelector((state) => state?.filterObject);
 
   let filteredSwapItems = swapItems.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }
@@ -83,7 +80,6 @@ export default function SwapItems() {
     setDescriptionShow(!descriptionShow);
   };
 
-  console.log('selectedSwap:', selectedSwap);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });

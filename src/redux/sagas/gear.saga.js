@@ -24,7 +24,6 @@ function* fetchGearToAdd(action) {
 
 function* addGear(action) {
   try {
-    console.log(action.payload);
     yield axios.post("/api/item", action.payload);
     yield put({ type: "FETCH_GEAR" });
   } catch (error) {
@@ -43,9 +42,7 @@ function* fetchFavorites() {
 
 function* unFavoriteItem(action) {
   try {
-    console.log("action.payload:", action.payload[0].favorites_id);
     const favoriteID = action.payload[0].favorites_id;
-    console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
     yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload[1] });
   } catch (err) {
@@ -63,7 +60,6 @@ function* changeGear(action) {
 
 function* favoriteItem(action) {
   try {
-    console.log("action.payload in favoriteItem", action.payload[0]);
     yield axios.post("/api/item/addToFav", action.payload[0]);
     yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload[1] });
   } catch (error) {
@@ -73,9 +69,7 @@ function* favoriteItem(action) {
 
 function* unfavoriteFromFavorites(action) {
   try {
-    console.log("action.payload:", action.payload.favorites_id);
     const favoriteID = action.payload.favorites_id;
-    console.log("removing favorite with id:", favoriteID);
     yield axios.delete(`/api/item/deleteFav/${favoriteID}`);
     yield put({ type: "FETCH_FAVORITES" });
   } catch (err) {

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import '../MyGear/MyGear.css';
@@ -18,7 +18,6 @@ export default function MyGear() {
   const gearDetails = useSelector((state) => state?.gearDetails);
 
   const handleAddGear = () => {
-    console.log('Clicked Add Gear');
     history.push('/addGear');
   };
 
@@ -31,7 +30,6 @@ export default function MyGear() {
   let filteredGear = gear.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }

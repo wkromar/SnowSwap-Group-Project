@@ -1,10 +1,9 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 import Modal from 'react-modal';
-import '../Favorites/Favorites.css';
-import DetailsView from '../DetailsView/DetailsView';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
+import DetailsView from '../DetailsView/DetailsView';
+import '../Favorites/Favorites.css';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 
 const customStyles = {
@@ -29,8 +28,6 @@ export default function Favorites() {
   const favorites = useSelector((state) => state?.favorites);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
-
-  console.log(gearDetails);
 
   const gearClicked = (piece) => {
     dispatch({ type: 'SELECTED_PIECE', payload: piece });
@@ -58,7 +55,6 @@ export default function Favorites() {
   let filteredFavorites = favorites.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }

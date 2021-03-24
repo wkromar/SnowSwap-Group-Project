@@ -1,8 +1,6 @@
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
-import { IconButton } from '@material-ui/core';
-import { MoreHoriz } from '@material-ui/icons';
 import List from '@material-ui/core/List';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -47,7 +45,7 @@ function FilterDrawer() {
   const [searchObj, setSearchObj] = useState({});
 
   const whatToFilterFor = (event) => {
-    console.log(event);
+    
   };
 
   // Updates the object that will be used to filter the items displayed
@@ -62,7 +60,6 @@ function FilterDrawer() {
       setConditionSearch(cat);
       setSearchObj({ ...searchObj });
     } else {
-      console.log('cat selected');
       setCategory(cat);
       setSearchObj({ category_name: cat });
     }
@@ -74,7 +71,6 @@ function FilterDrawer() {
       setConditionSearch(con);
       setSearchObj({ ...searchObj });
     } else {
-      console.log('con selected');
       setConditionSearch(con);
       updateSearchObj('condition', con);
     }
@@ -86,58 +82,48 @@ function FilterDrawer() {
       setGender(gen);
       setSearchObj({ ...searchObj });
     } else {
-      console.log('gen selected');
       setGender(gen);
       updateSearchObj('gender', gen);
     }
   };
 
   const snowboardStyleSelected = (board) => {
-    console.log('board style selected');
     setSnowboardStyleSearch(board);
     updateSearchObj('style', board);
   };
 
   const skiStyleSelected = (ski) => {
-    console.log('ski style selected');
     setSkiStyleSearch(ski);
     updateSearchObj('style', ski);
   };
 
   const profileSelected = (profile) => {
-    console.log('profile selected');
     setProfileSearch(profile);
     updateSearchObj('profile', profile);
   };
 
   const lacingSystemSelected = (ski) => {
-    console.log('lacing system selected');
     setLacingSystemSearch(ski);
     updateSearchObj('lacing_system', ski);
   };
 
   const flexSelected = (flex) => {
-    console.log('flex selected');
     setFlexSearch(flex);
     updateSearchObj('flex', flex);
   };
 
   const sizeSelected = (size) => {
-    console.log('size selected');
     setSizeSearch(size);
     updateSearchObj('size', size);
   };
 
   // When apply is clicked it sends over the object to be filtered against.
   const applyFilter = () => {
-    console.log('apply clicked');
-    console.log('searchObj:', searchObj);
 
     dispatch({ type: 'SET_FILTER_OBJECT', payload: searchObj });
   };
 
   const clearFilter = () => {
-    console.log('Clear filter');
     setSearchObj({});
     dispatch({ type: 'SET_FILTER_OBJECT', payload: {} });
 

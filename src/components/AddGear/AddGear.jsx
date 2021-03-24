@@ -1,17 +1,14 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import GearTags from '../GearTags/GearTags';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import './AddGear.css';
-import GearTags from '../GearTags/GearTags';
 
 function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState({ img: [] });
   const user = useSelector((store) => store.user);
   const categories = useSelector((store) => store.categories);
-  console.log(categories);
-  console.log(category);
   const dispatch = useDispatch();
   const history = useHistory();
   // conditional rendering depending on the category
@@ -23,7 +20,7 @@ function AddGear({ gear }) {
   const [profile, setProfile] = useState(false);
   const [category, setCategory] = useState('');
 
-  console.log(`gearToAdd`, gearToAdd);
+  
   // if fields are null, leave them blank
   useEffect(() => {
     dispatch({ type: 'FETCH_GEAR' });
@@ -87,12 +84,10 @@ function AddGear({ gear }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: 'ADD_GEAR', payload: gearToAdd });
-    console.log(gearToAdd);
     history.push('/myGear');
   };
   //go back to gear
   const returnToGear = () => {
-    console.log('returning to Gear');
     history.push('/myGear');
   };
 
@@ -151,7 +146,6 @@ function AddGear({ gear }) {
               onChange={(event) => {
                 setCategory(event.target.value);
                 handleView(event.target.value);
-                console.log(event.target.value);
                 handleChange(event);
               }}
               name="type"
