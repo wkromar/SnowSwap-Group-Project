@@ -4,7 +4,7 @@ import {
   HashRouter as Router,
   Redirect,
   Route,
-  Switch,
+  Switch
 } from 'react-router-dom';
 import AddGear from '../AddGear/AddGear';
 import AllSwaps from '../AllSwaps/AllSwaps';
@@ -12,7 +12,6 @@ import CreateSwap from '../CreateSwap/CreateSwap';
 import EditGear from '../EditGear/EditGear.jsx';
 import Favorites from '../Favorites/Favorites.jsx';
 import Footer from '../Footer/Footer';
-import InfoPage from '../InfoPage/InfoPage';
 import LoginPage from '../LoginPage/LoginPage';
 import MyGear from '../MyGear/MyGear';
 import Nav from '../Nav/Nav';
@@ -51,14 +50,6 @@ function App() {
             <AllSwaps />
           </ProtectedRoute>
 
-          <ProtectedRoute
-            // logged in shows InfoPage else shows LoginPage
-            exact
-            path="/info"
-          >
-            <Nav />
-            <InfoPage />
-          </ProtectedRoute>
 
           {/* When a value is supplied for the authRedirect prop the user will
             be redirected to the path supplied when logged in, otherwise they will

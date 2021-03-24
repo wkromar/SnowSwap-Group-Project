@@ -46,7 +46,7 @@ export default function AllSwaps() {
       <div className="card-container">
         {joinedSwaps.map((swap) => {
           return (
-            <div onClick={() => handleClick(swap)}>
+            <div key={swap.id} onClick={() => handleClick(swap)}>
               {new Date(swap.stop_date) > new Date() && (
                 <div className="swap-card">
                   <img src={swap.swap_img} alt="" />
@@ -82,7 +82,7 @@ export default function AllSwaps() {
       <div className="card-container">
         {allSwaps.map((swap) => {
           return (
-            <div onClick={() => handleClickAll(swap)}>
+            <div key={swap.id} onClick={() => handleClickAll(swap)}>
               {new Date(swap.stop_date) > new Date() && (
                 <div className="swap-card">
                   <img src={swap.swap_img} alt="" />
