@@ -1,10 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import '../DetailsView/DetailsView.css';
 import '../Favorites/Favorites.css';
-import { nominalTypeHack } from 'prop-types';
 
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);

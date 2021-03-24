@@ -24,6 +24,7 @@ export default function Profile() {
           setEditMode={setEditMode}
         />
       )}
+      {/* The auth level of the user determines how much or little admin features are shown on their profile page. */}
       {user?.auth_level >= 1 && <SwapAdmin />}
       {user?.auth_level === 2 && <UpgradeUser />}
     </div>

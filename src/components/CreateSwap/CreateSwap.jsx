@@ -26,6 +26,8 @@ export default function CreateSwap() {
 
   const [swapInfo, setSwapInfo] = useState(defaultState);
 
+  //slug is either 'edit' or doesn't exist.  Id is the id of the swap to be edited. 
+  //These are onlky used when editing a swap, not when creating one.
   const { slug, id } = useParams();
 
   const history = useHistory();
@@ -36,10 +38,13 @@ export default function CreateSwap() {
     setSwapInfo({ ...swapInfo, [event.target.name]: event.target.value });
   };
 
+  //clicking the request access button will send an email to the owner of SnowSwaps asking for an upgrade to their account
+  //allowing a user to create their own swaps.
   const handleRequestAccess = () => {
     dispatch({ type: 'REQUEST_UPGRADE' });
   };
 
+  //handleSubmit checks if a user is editing a swap or creating a new one and dispatches accordingly.
   const handleSubmit = (event) => {
     event.preventDefault();
     if (slug === 'edit') {
@@ -62,7 +67,9 @@ export default function CreateSwap() {
   }, []);
 
   const dateFormat = 'yyyy-MM-dd';
+
   useEffect(() => {
+    //if editing a swap the default state of setSwapInfo is set to the information for that selected swap.
     if (slug === 'edit' && selectedSwap?.owner === user.id) {
       setSwapInfo({
         id: selectedSwap?.id,
@@ -76,9 +83,10 @@ export default function CreateSwap() {
         swap_description: selectedSwap?.swap_description,
       });
     } else {
-      //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
+      //Otherwise the only thing we are setting is the random sting that will be used for swap access if a swap is private.
       setSwapInfo({
         ...swapInfo,
+        //creates a random number which is converted to base36 and then the leading 0 and decimal are removed.
         access_code: Math.random().toString(36).slice(2),
       });
     }

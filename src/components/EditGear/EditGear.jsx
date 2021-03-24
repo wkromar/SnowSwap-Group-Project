@@ -1,11 +1,9 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import GearTags from '../GearTags/GearTags';
 import ImageUpload from '../ImageUpload/ImageUpload';
 import './EditGear.css';
-import GearTags from '../GearTags/GearTags';
-import editItem from '../../redux/reducers/editItem.reducer';
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);

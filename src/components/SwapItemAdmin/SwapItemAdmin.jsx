@@ -15,6 +15,7 @@ export default function SwapItemAdmin() {
   useEffect(() => {
     dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
   }, []);
+  
   return (
     <div className="swap-item-table-container">
       <div className="modal-header white-text" >Items In Swap</div>
