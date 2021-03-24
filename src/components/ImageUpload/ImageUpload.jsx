@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 
 export default function ImageUpload({ state, setState, keyName }) {
   const handleFinishedUpload = (info) => {
-    console.log('File uploaded with filename', info.filename);
     if (keyName === 'multiple' && state.img.length < 6) {
       setState({ ...state, img: [...state.img, info.fileUrl] });
     } else if (keyName === 'multiple' && state.img.length >= 6) {

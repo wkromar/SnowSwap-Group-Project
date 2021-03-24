@@ -13,7 +13,7 @@ function EditGear() {
   const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
-  console.log(categories);
+  
   // conditional rendering depending on the category
   const [skiOrBoard, setSkiOrBoard] = useState(false);
   const [showFlex, setShowFlex] = useState(false);
@@ -38,18 +38,18 @@ function EditGear() {
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch({ type: 'CHANGE_GEAR', payload: itemToEdit });
-    console.log(gearToEdit);
+    
     history.push('/myGear');
   };
   //go back to gear
   const returnToGear = () => {
-    console.log('returning to Gear');
+    
     history.push('/myGear');
   };
   // delete item
   const deleteItem = (id) => {
     let itemToDelete = id;
-    console.log(itemToDelete);
+    
     dispatch({ type: 'DELETE_ITEM', payload: itemToDelete });
   };
 
@@ -102,7 +102,7 @@ function EditGear() {
   };
 
   const removeThumbnail = (img) => {
-    console.log(img, itemToEdit);
+  
     const newArray = itemToEdit?.image?.filter((url) => {
       if (url !== img) {
         return img;
@@ -151,7 +151,6 @@ function EditGear() {
               onChange={(event) => {
                 setCategory(event.target.value);
                 handleView(event.target.value);
-                console.log(event.target.value);
                 handleChange(event);
               }}
               name="type"

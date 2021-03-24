@@ -18,7 +18,6 @@ export default function MyGear() {
   const gearDetails = useSelector((state) => state?.gearDetails);
 
   const handleAddGear = () => {
-    console.log('Clicked Add Gear');
     history.push('/addGear');
   };
 
@@ -31,7 +30,6 @@ export default function MyGear() {
   let filteredGear = gear.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
-        console.log(`it's a match`);
         return false;
       }
     }

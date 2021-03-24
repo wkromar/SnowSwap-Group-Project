@@ -38,7 +38,6 @@ router.get("/ownedswaps", rejectUnauthenticated, (req, res) => {
     .query(queryText, [req.user.id])
     .then((result) => {
       res.send(result.rows);
-      // console.log(result);
     })
     .catch((error) => {
       console.log(error);
@@ -55,7 +54,6 @@ router.get("/selectedswap/:id", rejectUnauthenticated, (req, res) => {
     .query(queryText, [id])
     .then((result) => {
       res.send(result.rows);
-      // console.log(result);
     })
     .catch((error) => {
       console.log(error);
@@ -86,7 +84,7 @@ router.post("/", rejectUnauthenticated, (req, res) => {
       swap.swap_description,
     ])
     .then((response) => {
-      console.log(response);
+      
       res.sendStatus(200);
     })
     .catch((error) => {
@@ -105,7 +103,6 @@ router.post("/addToSwap", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [item.piece_id, item.id])
     .then((response) => {
-      console.log(response);
       res.sendStatus(200);
     })
     .catch((error) => {
@@ -158,7 +155,6 @@ router.get("/swapsJoined", rejectUnauthenticated, (req, res) => {
   pool
     .query(queryText, [req.user.id])
     .then((result) => {
-      console.log(result);
 
       res.send(result.rows);
     })

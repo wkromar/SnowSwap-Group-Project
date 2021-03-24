@@ -31,11 +31,9 @@ export default function DetailsView() {
   };
 
   const [imageCounter, setImageCounter] = useState(0);
-  console.log(user);
 
   const handleNextPicture = (direction) => {
-    console.log(direction);
-    console.log(gearDetails.image.length - 1);
+
     if (direction === 'next' && imageCounter < gearDetails.image.length - 1) {
       setImageCounter(imageCounter + 1);
     } else if (
@@ -50,9 +48,7 @@ export default function DetailsView() {
     }
   };
 
-  console.log('imageCounter:', imageCounter);
 
-  console.log(`selectedSwap`, selectedSwap);
 
   return (
     <>

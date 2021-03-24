@@ -12,9 +12,7 @@ function* fetchOwnedSwaps() {
 
 function* fetchSwapItems(action) {
     try {
-        // yield console.log('action!!!', action.payload.id);
         const response = yield axios.get(`/api/swaps/swapItems/${action.payload}`);
-        console.log("!!!!!!!!!!", response);
         yield put({ type: "SET_SWAP_ITEMS", payload: response.data });
     } catch (err) {
         console.log(err);
@@ -43,7 +41,6 @@ function* createSwap(action) {
 
 function* addSelectedToSwap(action) {
     try {
-        console.log("!!!!!", action.payload.gearToAdd);
         yield axios.post("api/swaps/addToSwap", action.payload);
         yield put({ type: "FETCH_SWAP_ITEMS", payload: action.payload.id });
     } catch (err) {
@@ -63,7 +60,6 @@ function* editSwap(action) {
 
 function* removeFromSwap(action) {
     try {
-        console.log(`action.payload.swap_id`, action.payload.swap_id);
         yield axios.delete(
             `/api/swaps/removeFromSwap/${action.payload.swap_item_id}`
         );
@@ -75,11 +71,9 @@ function* removeFromSwap(action) {
 
 function* fetchSelectedSwap(action) {
     try {
-        // yield console.log('action!!!', action.payload.id);
         const response = yield axios.get(
             `/api/swaps/selectedswap/${action.payload}`
         );
-        console.log("response", response);
         yield put({ type: "SET_SELECTED_SWAP", payload: response.data });
     } catch (err) {
         console.log(err);

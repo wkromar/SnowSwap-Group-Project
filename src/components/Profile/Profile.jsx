@@ -8,7 +8,6 @@ import UpgradeUser from '../UpgradeUser/UpgradeUser';
 export default function Profile() {
   const user = useSelector((state) => state.user);
   const [editMode, setEditMode] = useState(false);
-  console.log('user', user);
 
   return (
     <div>

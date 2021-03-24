@@ -22,7 +22,6 @@ export default function AllSwaps() {
   const joinedSwaps = useSelector((state) => state.joinedSwaps);
   const modalStatus = useSelector((state) => state.modal);
   const history = useHistory();
-  console.log(allSwaps);
 
   useEffect(() => {
     dispatch({ type: 'FETCH_ALL_SWAPS' });

@@ -66,7 +66,6 @@ router.put('/updateUserProfile', (req, res) => {
       userImage
     ])
     .then((result) => {
-      console.log(result);
 
       res.sendStatus(200);
     })
@@ -104,7 +103,6 @@ router.put('/upgradeUser', rejectUnauthenticated, (req, res, next) => {
 
       pool.query(queryText, [userToUpgrade])
         .then((result) => {
-          console.log(result);
           res.sendStatus(200);
         })
         .catch((error) => {
