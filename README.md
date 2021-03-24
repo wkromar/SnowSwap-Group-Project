@@ -96,7 +96,7 @@ Run the following commands from within your project folder.
 
 ## Authors 
 
-  - Chris Emerfoll
+  [- Chris Emerfoll](https://github.com/Emerfoll)
   - Collin Radichel
   - Justin Appelgren
   - Woody Kromar
