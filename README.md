@@ -108,10 +108,17 @@ Run the following commands from within your project folder.
   - Zach Lulavy for concept and leadership
 
 ## Screenshots
+#Login
 ![Login](Screenshots/login.png)
+#Landing Page
 ![Landing Page](Screenshots/landing-page.png)
+#Create Swap
 ![Create Swap](Screenshots/create-swap.png)
+#Admin Profile
 ![Admin Profile](Screenshots/admin-profile.png)
+#Private
 ![Private Swap](Screenshots/private-swap.png)
+#Swap Items
 ![Swap Items](Screenshots/swap-items.png)
+#Item Details
 ![Item Details](Screenshots/item-details.png)
