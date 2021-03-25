@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import GearTags from '../GearTags/GearTags';
-import ImageUpload from '../ImageUpload/ImageUpload';
-import './AddGear.css';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import GearTags from "../GearTags/GearTags";
+import ImageUpload from "../ImageUpload/ImageUpload";
+import "./AddGear.css";
 
 function AddGear({ gear }) {
   const [gearToAdd, setGearToAdd] = useState({ img: [] });
@@ -18,13 +18,12 @@ function AddGear({ gear }) {
   const [shape, setShape] = useState(false);
   const [lacing_system, setLacingSystem] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
 
-  
   // if fields are null, leave them blank
   useEffect(() => {
-    dispatch({ type: 'FETCH_GEAR' });
-    dispatch({ type: 'FETCH_CATEGORIES' });
+    dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -33,8 +32,10 @@ function AddGear({ gear }) {
       [event.target.name]: event.target.value,
     });
   };
+  // dropdown render profiles. Only Select dropdowns
+  // render depending on the category chosen
   const handleView = (id) => {
-    if (id === '4') {
+    if (id === "4") {
       // snowboard
       setSkiOrBoard(true);
       setShowFlex(true);
@@ -42,7 +43,7 @@ function AddGear({ gear }) {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === '1') {
+    } else if (id === "1") {
       // ski
       setSkiOrBoard(false);
       setShowFlex(true);
@@ -50,28 +51,28 @@ function AddGear({ gear }) {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === '3') {
+    } else if (id === "3") {
       // ski_boots
       setShowFlex(true);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === '5') {
+    } else if (id === "5") {
       // snowboard_boots;
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(true);
-    } else if (id === '2' || id === '6') {
+    } else if (id === "2" || id === "6") {
       // ski_binding, snowboard_bindings
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === '8' || id === '7') {
+    } else if (id === "8" || id === "7") {
       // apparel, helmet
       setShowFlex(false);
       setStyle(false);
@@ -83,12 +84,12 @@ function AddGear({ gear }) {
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: 'ADD_GEAR', payload: gearToAdd });
-    history.push('/myGear');
+    dispatch({ type: "ADD_GEAR", payload: gearToAdd });
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
-    history.push('/myGear');
+    history.push("/myGear");
   };
 
   const removeThumbnail = (image) => {
@@ -105,7 +106,6 @@ function AddGear({ gear }) {
   };
 
   //one form, multiple inputs. cancel brings you back to myGear
-  // need inputs to actually be selects
   return (
     <>
       <div className="swap-header">Add Gear</div>
@@ -123,7 +123,7 @@ function AddGear({ gear }) {
         <div className="uploader-thumbnails-container">
           <div className="uploader-container">
             <ImageUpload
-              keyName={'multiple'}
+              keyName={"multiple"}
               state={gearToAdd}
               setState={setGearToAdd}
             />
@@ -165,7 +165,7 @@ function AddGear({ gear }) {
               })}
             </select>
           </div>
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
               <div className="input-tag">Flex</div>
               <select
@@ -188,7 +188,7 @@ function AddGear({ gear }) {
               </select>
             </div>
           ) : null}
-          {category === '4' || category === '1' ? (
+          {category === "4" || category === "1" ? (
             <div className="profile-input-container">
               <div className="input-tag">Style</div>
               <select
@@ -211,7 +211,7 @@ function AddGear({ gear }) {
               </select>
             </div>
           ) : null}
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
               <div className="input-tag">Shape</div>
               <select
@@ -255,7 +255,7 @@ function AddGear({ gear }) {
               })}
             </select>
           </div>
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
               <div className="input-tag">Condition</div>
               <select
@@ -278,7 +278,7 @@ function AddGear({ gear }) {
               </select>
             </div>
           ) : null}
-          {category === '5' ? (
+          {category === "5" ? (
             <div className="profile-input-container">
               <div className="input-tag">Lacing System</div>
               <select
@@ -301,7 +301,7 @@ function AddGear({ gear }) {
               </select>
             </div>
           ) : null}
-          {category === '4' || category === '1' ? (
+          {category === "4" || category === "1" ? (
             <div className="profile-input-container">
               <div className="input-tag">Profile</div>
               <select
