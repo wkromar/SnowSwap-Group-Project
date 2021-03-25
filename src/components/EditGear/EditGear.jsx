@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import GearTags from '../GearTags/GearTags';
-import ImageUpload from '../ImageUpload/ImageUpload';
-import './EditGear.css';
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import GearTags from "../GearTags/GearTags";
+import ImageUpload from "../ImageUpload/ImageUpload";
+import "./EditGear.css";
 
 function EditGear() {
   const gearToEdit = useSelector((state) => state.editItem);
@@ -11,7 +11,7 @@ function EditGear() {
   const categories = useSelector((store) => store.categories);
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   // conditional rendering depending on the category
   const [skiOrBoard, setSkiOrBoard] = useState(false);
   const [showFlex, setShowFlex] = useState(false);
@@ -19,11 +19,11 @@ function EditGear() {
   const [shape, setShape] = useState(false);
   const [lacing_system, setLacingSystem] = useState(false);
   const [profile, setProfile] = useState(false);
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState("");
 
   useEffect(() => {
-    dispatch({ type: 'FETCH_GEAR' });
-    dispatch({ type: 'FETCH_CATEGORIES' });
+    dispatch({ type: "FETCH_GEAR" });
+    dispatch({ type: "FETCH_CATEGORIES" });
   }, []);
   // packs up the data for shipment
   const handleChange = (event) => {
@@ -35,24 +35,24 @@ function EditGear() {
   // sends items to database
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch({ type: 'CHANGE_GEAR', payload: itemToEdit });
-    
-    history.push('/myGear');
+    dispatch({ type: "CHANGE_GEAR", payload: itemToEdit });
+
+    history.push("/myGear");
   };
   //go back to gear
   const returnToGear = () => {
-    
-    history.push('/myGear');
+    history.push("/myGear");
   };
   // delete item
   const deleteItem = (id) => {
     let itemToDelete = id;
-    
-    dispatch({ type: 'DELETE_ITEM', payload: itemToDelete });
-  };
 
+    dispatch({ type: "DELETE_ITEM", payload: itemToDelete });
+  };
+  // dropdown render profiles. Only Select dropdowns
+  // render depending on the category chosen
   const handleView = (id) => {
-    if (id === '4') {
+    if (id === "4") {
       // snowboard
       setSkiOrBoard(true);
       setShowFlex(true);
@@ -60,7 +60,7 @@ function EditGear() {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === '1') {
+    } else if (id === "1") {
       // ski
       setSkiOrBoard(false);
       setShowFlex(true);
@@ -68,28 +68,28 @@ function EditGear() {
       setShape(true);
       setProfile(true);
       setLacingSystem(false);
-    } else if (id === '3') {
+    } else if (id === "3") {
       // ski_boots
       setShowFlex(true);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === '5') {
+    } else if (id === "5") {
       // snowboard_boots;
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(true);
-    } else if (id === '2' || id === '6') {
+    } else if (id === "2" || id === "6") {
       // ski_binding, snowboard_bindings
       setShowFlex(false);
       setStyle(false);
       setShape(false);
       setProfile(false);
       setLacingSystem(false);
-    } else if (id === '8' || id === '7') {
+    } else if (id === "8" || id === "7") {
       // apparel, helmet
       setShowFlex(false);
       setStyle(false);
@@ -100,7 +100,6 @@ function EditGear() {
   };
 
   const removeThumbnail = (img) => {
-  
     const newArray = itemToEdit?.image?.filter((url) => {
       if (url !== img) {
         return img;
@@ -122,27 +121,27 @@ function EditGear() {
             name="title"
             className="styled-input"
           />
+        </div>
+        <div className="uploader-thumbnails-container">
+          <div className="uploader-container">
+            <ImageUpload
+              itemToEdit={itemToEdit.url}
+              setItemToEdit={setItemToEdit}
+              keyName={"multiple"}
+            />
           </div>
-          <div className="uploader-thumbnails-container">
-            <div className="uploader-container">
-              <ImageUpload
-                itemToEdit={itemToEdit.url}
-                setItemToEdit={setItemToEdit}
-                keyName={'multiple'}
-              />
-            </div>
-            <div className="thumbnail-container">
-              {itemToEdit?.image?.map((image, i) => {
-                return (
-                  <div key={i} className="uploaded-photos">
-                    <img src={image} onClick={() => removeThumbnail(image)} />
-                  </div>
-                );
-              })}
-              <p className="smaller-text">Click image to remove.</p>
-            </div>
+          <div className="thumbnail-container">
+            {itemToEdit?.image?.map((image, i) => {
+              return (
+                <div key={i} className="uploaded-photos">
+                  <img src={image} onClick={() => removeThumbnail(image)} />
+                </div>
+              );
+            })}
+            <p className="smaller-text">Click image to remove.</p>
           </div>
-          <div className="conditional-input-container ">
+        </div>
+        <div className="conditional-input-container ">
           <div className="profile-input-container">
             <div className="input-tag">Categories</div>
             <select
@@ -168,9 +167,9 @@ function EditGear() {
               })}
             </select>
           </div>
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Flex</div>
+              <div className="input-tag">Flex</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="flex"
@@ -191,9 +190,9 @@ function EditGear() {
               </select>
             </div>
           ) : null}
-          {category === '4' || category === '1' ? (
+          {category === "4" || category === "1" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Style</div>
+              <div className="input-tag">Style</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="snowboardStyle"
@@ -214,9 +213,9 @@ function EditGear() {
               </select>
             </div>
           ) : null}
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Shape</div>
+              <div className="input-tag">Shape</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="shape"
@@ -258,9 +257,9 @@ function EditGear() {
               })}
             </select>
           </div>
-          {category === '4' ? (
+          {category === "4" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Condition</div>
+              <div className="input-tag">Condition</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="condition"
@@ -281,9 +280,9 @@ function EditGear() {
               </select>
             </div>
           ) : null}
-          {category === '5' ? (
+          {category === "5" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Lacing System</div>
+              <div className="input-tag">Lacing System</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="lacing_system"
@@ -304,9 +303,9 @@ function EditGear() {
               </select>
             </div>
           ) : null}
-          {category === '4' || category === '1' ? (
+          {category === "4" || category === "1" ? (
             <div className="profile-input-container">
-            <div className="input-tag">Profile</div>
+              <div className="input-tag">Profile</div>
               <select
                 onChange={(event) => handleChange(event)}
                 name="profile"
@@ -327,7 +326,7 @@ function EditGear() {
               </select>
             </div>
           ) : null}
-   <div className="profile-input-container">
+          <div className="profile-input-container">
             <div className="input-tag">Size</div>
             <input
               type="decimal"
@@ -370,9 +369,15 @@ function EditGear() {
           </div>
         </div>
         <div className="button-container">
-          <button className="ss-btn" type="submit">Save</button>
-          <button className="ss-btn" onClick={returnToGear}>Cancel</button>
-          <button className="ss-btn" onClick={() => deleteItem(itemToEdit.id)}>Delete Item</button>
+          <button className="ss-btn" type="submit">
+            Save
+          </button>
+          <button className="ss-btn" onClick={returnToGear}>
+            Cancel
+          </button>
+          <button className="ss-btn" onClick={() => deleteItem(itemToEdit.id)}>
+            Delete Item
+          </button>
         </div>
       </form>
     </>
