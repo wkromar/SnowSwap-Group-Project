@@ -45,7 +45,7 @@ function FilterDrawer() {
   const [searchObj, setSearchObj] = useState({});
 
   const whatToFilterFor = (event) => {
-    
+
   };
 
   // Updates the object that will be used to filter the items displayed
@@ -55,6 +55,7 @@ function FilterDrawer() {
 
   // These functions will call the update function and set the select values.
   const catSelected = (cat) => {
+    // This well remove the category_name from the object if '' is selected
     if (cat === '') {
       delete searchObj['category_name'];
       setConditionSearch(cat);
@@ -67,6 +68,7 @@ function FilterDrawer() {
 
   const conditionSelected = (con) => {
     if (con === '') {
+      // This well remove the condition from the object if '' is selected
       delete searchObj['condition'];
       setConditionSearch(con);
       setSearchObj({ ...searchObj });
@@ -78,6 +80,7 @@ function FilterDrawer() {
 
   const genderSelected = (gen) => {
     if (gen === '') {
+      // This well remove the gender from the object if '' is selected
       delete searchObj['gender'];
       setGender(gen);
       setSearchObj({ ...searchObj });
@@ -87,6 +90,7 @@ function FilterDrawer() {
     }
   };
 
+  // These do not need to be removed as they will only be shown depending on what cat is selected.
   const snowboardStyleSelected = (board) => {
     setSnowboardStyleSearch(board);
     updateSearchObj('style', board);
@@ -123,6 +127,7 @@ function FilterDrawer() {
     dispatch({ type: 'SET_FILTER_OBJECT', payload: searchObj });
   };
 
+  // clears all select lists and resets the searchObj
   const clearFilter = () => {
     setSearchObj({});
     dispatch({ type: 'SET_FILTER_OBJECT', payload: {} });
@@ -139,6 +144,7 @@ function FilterDrawer() {
     setSizeSearch('');
   };
 
+  
   const classes = useStyles();
   const [state, setState] = React.useState({
     top: false,
@@ -229,7 +235,7 @@ function FilterDrawer() {
             </select>
           </div>
 
-          {/* conditionally renders if snowboard is selected */}
+          {/* conditionally renders depending on the cat selected */}
           <div>
             {category === 'snowboard' ? (
               <div>
@@ -346,9 +352,9 @@ function FilterDrawer() {
             ) : null}
 
             {category === 'helmet' ||
-            category === 'apparel' ||
-            category === 'snowboardBoots' ||
-            category === 'skiBoots' ? (
+              category === 'apparel' ||
+              category === 'snowboardBoots' ||
+              category === 'skiBoots' ? (
               <div>
                 <label>Size: </label>
                 <select
