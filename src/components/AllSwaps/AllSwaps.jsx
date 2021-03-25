@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import SwapCodeModal from '../SwapCodeModal/SwapCodeModal';
 
-
+// component to render on landing page
+// displays all swaps on the app that you have not joined
 export default function AllSwaps() {
   const dispatch = useDispatch();
   const allSwaps = useSelector((state) => state.allSwaps);
@@ -12,6 +13,8 @@ export default function AllSwaps() {
   const modalStatus = useSelector((state) => state.modal);
   const history = useHistory();
 
+
+   // dispatch on page load to fetch data from allSwaps reducer
   useEffect(() => {
     dispatch({ type: 'FETCH_ALL_SWAPS' });
   }, []);

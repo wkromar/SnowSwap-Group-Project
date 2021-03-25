@@ -4,10 +4,14 @@ import { Link } from 'react-router-dom';
 import LogOutButton from '../LogOutButton/LogOutButton';
 import '../Menu/Menu.css';
 
+
+//component to render a menu icon (burger button) top right
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user);
 
+  // on click of burger button
+  // open and close the menu
   const handleMenuClick = () => {
     if (isOpen) {
       return 'menu-open';

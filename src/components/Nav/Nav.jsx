@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import Menu from '../Menu/Menu';
 import './Nav.css';
 
+
+// header component
 function Nav() {
   const user = useSelector((store) => store.user);
 

@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import '../DetailsView/DetailsView.css';
 import '../Favorites/Favorites.css';
 
+
+// component to render modal with details about one item
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
   const selectedSwap = useSelector((state) => state?.selectedSwap);
@@ -13,7 +15,6 @@ export default function DetailsView() {
   const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item: ${gearDetails.title}`;
   const dispatch = useDispatch();
   const { id } = useParams();
-  // const itemOfInterest = detailsView.id;
 
   useEffect(() => {
     dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
@@ -29,6 +30,8 @@ export default function DetailsView() {
     }
   };
 
+
+  // image carousel, state and function to run on click
   const [imageCounter, setImageCounter] = useState(0);
 
   const handleNextPicture = (direction) => {

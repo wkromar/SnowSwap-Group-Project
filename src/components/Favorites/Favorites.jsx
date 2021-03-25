@@ -18,9 +18,11 @@ const customStyles = {
   },
 };
 
+// component to render on page "Favorites"
 export default function Favorites() {
   const dispatch = useDispatch();
 
+  // dispatch on page load to fetch data from favorites reducer
   useEffect(() => {
     dispatch({ type: 'FETCH_FAVORITES' });
   }, []);
@@ -29,11 +31,17 @@ export default function Favorites() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
+  // on click of the image on a piece of gear
+  // dispatch to send selected piece to reducer
+  // second dispatch to open detail modal with data from selected piece
   const gearClicked = (piece) => {
     dispatch({ type: 'SELECTED_PIECE', payload: piece });
     dispatch({ type: 'OPEN_DETAIL_VIEW' });
   };
 
+
+  // function to run on click of heart icon
+  // on favorites page
   const unFavorite = (piece) => {
     Swal.fire({
       title: `Remove ${piece.title} from favorites?`,
@@ -44,7 +52,6 @@ export default function Favorites() {
       confirmButtonText: 'Yes, remove it',
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire('Removed from favorites!', '', 'success');
         dispatch({ type: 'UNFAVORITE_FROM_FAVORITES', payload: piece });
       }
     });

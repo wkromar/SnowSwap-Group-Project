@@ -4,12 +4,15 @@ import { useHistory } from 'react-router-dom';
 import FilterDrawer from '../FilterDrawer/FilterDrawer';
 import '../MyGear/MyGear.css';
 
+
+// component to render on page "My Gear"
 export default function MyGear() {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const filterObject = useSelector((state) => state?.filterObject);
 
+  // dispatch on page load to fetch data from gear reducer
   useEffect(() => {
     dispatch({ type: 'FETCH_GEAR' });
   }, []);
@@ -17,6 +20,7 @@ export default function MyGear() {
   const gear = useSelector((state) => state.gear);
   const gearDetails = useSelector((state) => state?.gearDetails);
 
+  // function to run on click of add (+) button
   const handleAddGear = () => {
     history.push('/addGear');
   };
@@ -27,6 +31,7 @@ export default function MyGear() {
     history.push(`/editGear`);
   };
 
+  // filter drawer
   let filteredGear = gear.filter((item) => {
     for (let key in filterObject) {
       if (item[key] !== filterObject[key]) {
