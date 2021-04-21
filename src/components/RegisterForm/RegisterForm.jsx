@@ -1,30 +1,34 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function RegisterForm() {
   const history = useHistory();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [retypePassword, setRetypePassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
   const errors = useSelector((store) => store.errors);
   const dispatch = useDispatch();
 
   const registerUser = (event) => {
     event.preventDefault();
-
-    dispatch({
-      type: 'REGISTER',
-      payload: {
-        username: username,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-      },
-    });
+    if (retypePassword !== password) {
+      console.log("Error, Password Does not Match");
+    } else if (retypePassword === password) {
+      dispatch({
+        type: "REGISTER",
+        payload: {
+          username: username,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+        },
+      });
+    }
   }; // end registerUser
 
   return (
@@ -57,6 +61,9 @@ function RegisterForm() {
             required
             onChange={(event) => setPassword(event.target.value)}
           />
+        </div>
+        <div className="input-container">
+          <div className="input-tag">Retype Password</div>
         </div>
         <div className="input-container">
           <div className="input-tag">First Name</div>
@@ -100,7 +107,7 @@ function RegisterForm() {
           type="button"
           className="btn btn_asLink"
           onClick={() => {
-            history.push('/login');
+            history.push("/login");
           }}
         >
           Login

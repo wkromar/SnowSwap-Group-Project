@@ -4,13 +4,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "../DetailsView/DetailsView.css";
 import "../Favorites/Favorites.css";
-
+import PublicSwapJoinModal from "../PublicSwapJoinModal/PublicSwapJoinModal";
 
 // component to render modal with details about one item
 export default function DetailsView() {
   const gearDetails = useSelector((state) => state?.gearDetails);
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const modalStatus = useSelector((state) => state.modal);
+  const joinedSwaps = useSelector((state) => state.joinedSwaps);
+  const stateOfModal = useSelector((state) => state?.stateOfModal);
+
   const user = useSelector((state) => state?.user);
   const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item: ${gearDetails.title}`;
   const dispatch = useDispatch();
@@ -29,7 +32,17 @@ export default function DetailsView() {
       dispatch({ type: "FAVORITE_ITEM", payload: [piece, id] });
     }
   };
-
+  // before a seller can be contacted, the user must join the swap.
+  const joinSwap = () => {
+    let publicOpen = !!joinedSwaps.find((swap) => swap.id === selectedSwap.id);
+    if (publicOpen === false) {
+      dispatch({ type: "OPEN_PUBLIC_JOIN" });
+      stateOfModal.contact === true;
+    } else if (publicOpen === true) {
+      dispatch({ type: "CLOSE_PUBLIC_JOIN" });
+      stateOfModal.contact === false;
+    }
+  };
 
   // image carousel, state and function to run on click
   const [imageCounter, setImageCounter] = useState(0);
@@ -144,7 +157,7 @@ export default function DetailsView() {
             </div>
             <div>
               <p>Contact Seller</p>
-              <a href={userEmail}>{gearDetails.email}</a>
+              <button onClick={joinSwap}>{gearDetails.email}</button>
             </div>
           </>
         )}
@@ -170,6 +183,16 @@ export default function DetailsView() {
           src="images/cancel.svg"
         />
         <img src={gearDetails?.image[imageCounter]} />
+      </Modal>
+      <Modal
+        ariaHideApp={false}
+        isOpen={modalStatus.publicJoinView}
+        onRequestClose={() => dispatch({ type: "CLOSE_PUBLIC_JOIN" })}
+        // styles={customStyles}
+        contentLabel="Public Join View"
+        className="access-modal"
+      >
+        <PublicSwapJoinModal />
       </Modal>
     </>
   );

@@ -3,7 +3,6 @@ import Modal from "react-modal";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import SwapCodeModal from "../SwapCodeModal/SwapCodeModal";
-import PublicSwapJoinModal from "../PublicSwapJoinModal/PublicSwapJoinModal";
 
 // component to render on landing page
 // displays all swaps on the app that you have not joined
@@ -120,16 +119,6 @@ export default function AllSwaps() {
         className="access-modal"
       >
         <SwapCodeModal />
-      </Modal>
-      <Modal
-        ariaHideApp={false}
-        isOpen={modalStatus.swapCodeView}
-        onRequestClose={() => dispatch({ type: "SWAP_CODE_CLOSE" })}
-        // styles={customStyles}
-        contentLabel="Detail View"
-        className="access-modal"
-      >
-        <PublicSwapJoinModal />
       </Modal>
     </div>
   );
