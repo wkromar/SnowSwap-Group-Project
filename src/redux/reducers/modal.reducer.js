@@ -3,7 +3,9 @@ const modalReducer = (
     detailView: false,
     enlargeView: false,
     addGearView: false,
-    publicJoinView: false,
+    ItemPublicJoinView: false,
+    ContactPublicJoinView: false,
+    AbleToContact: false,
   },
   action
 ) => {
@@ -24,18 +26,16 @@ const modalReducer = (
       return { ...state, addGearView: true };
     case "CLOSE_ADD_VIEW":
       return { ...state, addGearView: false };
-    case "OPEN_PUBLIC_JOIN":
-      return { ...state, publicJoinView: true };
-    case "CLOSE_PUBLIC_JOIN":
-      return { ...state, publicJoinView: false };
-    case "PUBLIC_JOIN_MODAL":
-      return {
-        ...state,
-        StateOfJoin: {
-          item: false,
-          contact: false,
-        },
-      };
+    case "OPEN_ITEM_JOIN":
+      return { ...state, ItemPublicJoinView: true };
+    case "CLOSE_ITEM_JOIN":
+      return { ...state, ItemPublicJoinView: false };
+    case "OPEN_CONTACT_JOIN":
+      return { ...state, ContactPublicJoinView: true };
+    case "CLOSE_CONTACT_JOIN":
+      return { ...state, ContactPublicJoinView: false };
+    case "ABLE_TO_CONTACT":
+      return { ...state, AbleToContact: true };
 
     default:
       return state;

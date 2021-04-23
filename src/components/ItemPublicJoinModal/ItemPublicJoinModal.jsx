@@ -1,28 +1,25 @@
+import { Modal } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function PublicSwapJoinModal() {
   const selectedSwap = useSelector((state) => state?.selectedSwap);
-  const stateOfModal = useSelector((state) => state?.stateOfModal);
+  const stateOfContact = useSelector((state) => state?.contactJoin);
+  const stateOfItem = useSelector((state) => state?.itemJoin);
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log(selectedSwap[0].id);
-  }, []);
 
-  const joinSwap = () => {
+  const itemJoinSwap = () => {
     // add this swap the the user's joined swaps, then close the modal
     dispatch({ type: "PRIVATE_TO_PUBLIC", payload: selectedSwap[0].id });
-    dispatch({ type: "CLOSE_PUBLIC_JOIN" });
-    //dispatch({ type: "OPEN_ADD_VIEW" });
-    if (stateOfModal.item === true) {
-      dispatch({ type: "OPEN ADD VIEW" });
-      dispatch({ type: "CLOSE PUBLIC JOIN" });
-    } else if (stateOfModal.contact === true) {
-      dispatch({ type: "CLOSE ADD VIEW" });
-      dispatch({ type: "OPEN PUBLIC JOIN" });
-    }
+    dispatch({ type: "CLOSE_ITEM_JOIN" });
+    dispatch({ type: "OPEN_ADD_VIEW" });
+    // if (stateOfContact === true) {
+    //   dispatch({ type: "OPEN_ADD_VIEW" });
+    // } else {
+    //   dispatch({ type: "CLOSE_ITEM_JOIN" });
+    // }
   };
 
   // a modal to prompt the user to join a public swap.
@@ -31,7 +28,7 @@ export default function PublicSwapJoinModal() {
       <div className="modal-header justify-end">
         <button
           className="no-style-button"
-          onClick={() => dispatch({ type: "CLOSE_PUBLIC_JOIN" })}
+          onClick={() => dispatch({ type: "CLOSE_ITEM_JOIN" })}
         >
           <img src="images/cancel-white.svg" alt="" />
         </button>
@@ -45,7 +42,7 @@ export default function PublicSwapJoinModal() {
         <p>Swap Description:</p>
         <p>{selectedSwap?.swap_description}</p>
         <div className="button-container">
-          <button className="ss-btn" type="button" onClick={joinSwap}>
+          <button className="ss-btn" type="button" onClick={itemJoinSwap}>
             Join Swap
           </button>
         </div>

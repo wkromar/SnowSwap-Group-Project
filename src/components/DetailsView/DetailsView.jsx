@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import "../DetailsView/DetailsView.css";
 import "../Favorites/Favorites.css";
-import PublicSwapJoinModal from "../PublicSwapJoinModal/PublicSwapJoinModal";
+import ContactPublicJoinModal from "../ContactPublicJoinModal/ContactPublicJoinModal";
 
 // component to render modal with details about one item
 export default function DetailsView() {
@@ -12,9 +12,8 @@ export default function DetailsView() {
   const selectedSwap = useSelector((state) => state?.selectedSwap);
   const modalStatus = useSelector((state) => state.modal);
   const joinedSwaps = useSelector((state) => state.joinedSwaps);
-  const stateOfModal = useSelector((state) => state?.stateOfModal);
-
   const user = useSelector((state) => state?.user);
+  const [canContact, setCanContact] = useState(false);
   const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item: ${gearDetails.title}`;
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -34,13 +33,14 @@ export default function DetailsView() {
   };
   // before a seller can be contacted, the user must join the swap.
   const joinSwap = () => {
-    let publicOpen = !!joinedSwaps.find((swap) => swap.id === selectedSwap.id);
+    let publicOpen = !!joinedSwaps.find(
+      (swap) => swap.id === selectedSwap[0].id
+    );
     if (publicOpen === false) {
-      dispatch({ type: "OPEN_PUBLIC_JOIN" });
-      stateOfModal.contact === true;
+      dispatch({ type: "OPEN_CONTACT_JOIN" });
+      setCanContact(true);
     } else if (publicOpen === true) {
-      dispatch({ type: "CLOSE_PUBLIC_JOIN" });
-      stateOfModal.contact === false;
+      setCanContact(true);
     }
   };
 
@@ -155,10 +155,17 @@ export default function DetailsView() {
               <p>Preferred Payment: {gearDetails.preferred_payment}</p>
               <p>Username: {gearDetails.payment_username}</p>
             </div>
-            <div>
-              <p>Contact Seller</p>
-              <button onClick={joinSwap}>{gearDetails.email}</button>
-            </div>
+            {canContact === true ? (
+              <div>
+                <p>Contact Seller</p>
+                <a href={userEmail}>{gearDetails.email}</a>
+              </div>
+            ) : (
+              <div>
+                <p>Contact Seller</p>
+                <button onClick={joinSwap}>{gearDetails.email}</button>
+              </div>
+            )}
           </>
         )}
         <div className="modal-button-container">
@@ -186,13 +193,13 @@ export default function DetailsView() {
       </Modal>
       <Modal
         ariaHideApp={false}
-        isOpen={modalStatus.publicJoinView}
+        isOpen={modalStatus.ContactPublicJoinView}
         onRequestClose={() => dispatch({ type: "CLOSE_PUBLIC_JOIN" })}
         // styles={customStyles}
         contentLabel="Public Join View"
         className="access-modal"
       >
-        <PublicSwapJoinModal />
+        <ContactPublicJoinModal />
       </Modal>
     </>
   );

@@ -6,7 +6,7 @@ import AddGearToSwap from "../AddGearToSwap/AddGearToSwap";
 import DetailsView from "../DetailsView/DetailsView";
 import FilterDrawer from "../FilterDrawer/FilterDrawer";
 import "../SwapItems/SwapItems.css";
-import PublicSwapJoinModal from "../PublicSwapJoinModal/PublicSwapJoinModal";
+import ItemPublicJoinModal from "../ItemPublicJoinModal/ItemPublicJoinModal";
 
 const customStyles = {
   content: {
@@ -35,7 +35,8 @@ export default function SwapItems() {
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
   const joinedSwaps = useSelector((state) => state.joinedSwaps);
-  const stateOfModal = useSelector((state) => state?.stateOfModal);
+  const stateOfItem = useSelector((state) => state?.stateOfItem);
+  const stateOfContact = useSelector((state) => state?.stateOfContact);
 
   const [descriptionShow, setDescriptionShow] = useState(false);
   useEffect(() => {
@@ -49,11 +50,9 @@ export default function SwapItems() {
       (swap) => swap.id === selectedSwap[0].id
     );
     if (publicOpen === false) {
-      dispatch({ type: "OPEN_PUBLIC_JOIN" });
-      stateOfModal.item = true;
+      dispatch({ type: "OPEN_ITEM_JOIN" });
     } else if (publicOpen === true) {
       dispatch({ type: "OPEN_ADD_VIEW" });
-      stateOfModal.item = false;
     }
   };
 
@@ -222,13 +221,13 @@ export default function SwapItems() {
       </Modal>
       <Modal
         ariaHideApp={false}
-        isOpen={modalStatus.publicJoinView}
+        isOpen={modalStatus.ItemPublicJoinView}
         onRequestClose={() => dispatch({ type: "CLOSE_PUBLIC_JOIN" })}
         // styles={customStyles}
-        contentLabel="Public Join View"
+        contentLabel="Item Public Join View"
         className="access-modal"
       >
-        <PublicSwapJoinModal />
+        <ItemPublicJoinModal />
       </Modal>
     </>
   );
