@@ -14,6 +14,7 @@ export default function DetailsView() {
   const joinedSwaps = useSelector((state) => state.joinedSwaps);
   const user = useSelector((state) => state?.user);
   const [canContact, setCanContact] = useState(false);
+  const [emailBody, setEmailBody] = useState("");
   const userEmail = `mailto:${gearDetails.email}?subject=Requesting more information on your Snowswaps Item: ${gearDetails.title}`;
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -158,12 +159,42 @@ export default function DetailsView() {
             {canContact === true ? (
               <div>
                 <p>Contact Seller</p>
-                <a href={userEmail}>{gearDetails.email}</a>
+                <form action={userEmail} method="get">
+                  <div>
+                    <label for="name">
+                      Name:
+                      <input type="text" name="name" id="name" />
+                    </label>
+                  </div>
+                  <div>
+                    <label for="subject">
+                      Subject:
+                      <input type="text" name="subject" id="subject" />
+                    </label>
+                  </div>
+                  <div>
+                    <label>Body:</label>
+                    <br />
+                    <textarea name="body" rows="12" cols="35">
+                      Inquire about the item.
+                    </textarea>
+                  </div>
+
+                  <div>
+                    <button type="submit" name="submit">
+                      Submit
+                    </button>
+                    <button type="reset" name="reset" value="Clear Form">
+                      Clear Form
+                    </button>
+                  </div>
+                </form>
               </div>
             ) : (
               <div>
-                <p>Contact Seller</p>
-                <button onClick={joinSwap}>{gearDetails.email}</button>
+                <button className="chip" onClick={joinSwap}>
+                  Contact Seller
+                </button>
               </div>
             )}
           </>

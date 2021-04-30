@@ -17,7 +17,7 @@ body,
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   margin: 0px;
   overflow-x: hidden;
   background-color: #efefef;
@@ -54,7 +54,7 @@ p {
   display: flex;
   justify-content: center;
   font-size: 36px;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
   color: var(--main-blue);
 }
 
@@ -183,6 +183,9 @@ Form Treatment
 
 .input-container {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   margin: 1rem;
   align-items: center;
 }
@@ -206,11 +209,11 @@ Form Treatment
 }
 
 .styled-input {
-  border-radius: 0 10px 10px 0;
+  border-radius: 10px 10px 10px 10px;
   border-top: solid rgb(100, 100, 100) 1px;
   border-right: solid rgb(100, 100, 100) 1px;
   border-bottom: solid rgb(100, 100, 100) 1px;
-  border-left: none;
+  border-left: solid rgb(100, 100, 100) 1px;
   height: 31px;
   padding: 0 0 0 0.25rem;
 }
@@ -632,7 +635,7 @@ a {
 textarea {
   resize: none;
   border-radius: 0 0 10px 10px;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   width: 100%;
   border-top: 0;
 }
@@ -719,7 +722,6 @@ td {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  
 }
 
 .smaller-text {

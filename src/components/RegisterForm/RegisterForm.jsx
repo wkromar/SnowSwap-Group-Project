@@ -18,6 +18,7 @@ function RegisterForm() {
     event.preventDefault();
     if (retypePassword !== password) {
       setIsValid(false);
+      dispatch({ type: "PASSWORD_MISSMATCH" });
     } else if (retypePassword === password) {
       dispatch({
         type: "REGISTER",
@@ -43,7 +44,7 @@ function RegisterForm() {
           </h3>
         )}
         <div className="input-container">
-          <div className="input-tag">User Name</div>
+          {/* <div className="input-tag">User Name</div> */}
           <input
             className="styled-input"
             type="text"
@@ -51,10 +52,11 @@ function RegisterForm() {
             value={username}
             required
             onChange={(event) => setUsername(event.target.value)}
+            placeholder="Username"
           />
         </div>
         <div className="input-container">
-          <div className="input-tag">Password</div>
+          {/* <div className="input-tag">Password</div> */}
           <input
             className="styled-input"
             type="password"
@@ -62,10 +64,11 @@ function RegisterForm() {
             value={password}
             required
             onChange={(event) => setPassword(event.target.value)}
+            placeholder="Password"
           />
         </div>
         <div className="input-container">
-          <div className="input-tag">Retype Password</div>
+          {/* <div className="input-tag">Retype Pass</div> */}
           <input
             className="styled-input"
             type="retypePassword"
@@ -73,10 +76,11 @@ function RegisterForm() {
             value={retypePassword}
             required
             onChange={(event) => setRetypePassword(event.target.value)}
+            placeholder="Retype password"
           />
         </div>
         <div className="input-container">
-          <div className="input-tag">First Name</div>
+          {/* <div className="input-tag">First Name</div> */}
           <input
             className="styled-input"
             type="text"
@@ -84,10 +88,10 @@ function RegisterForm() {
             value={firstName}
             required
             onChange={(event) => setFirstName(event.target.value)}
+            placeholder="First name"
           />
         </div>
         <div className="input-container">
-          <div className="input-tag">Last Name</div>
           <input
             className="styled-input"
             type="text"
@@ -95,10 +99,11 @@ function RegisterForm() {
             value={lastName}
             required
             onChange={(event) => setLastName(event.target.value)}
+            placeholder="Last name"
           />
         </div>
         <div className="input-container">
-          <div className="input-tag">Email</div>
+          {/* <div className="input-tag">Email</div> */}
           <input
             className="styled-input"
             type="email"
@@ -106,6 +111,7 @@ function RegisterForm() {
             value={email}
             required
             onChange={(event) => setEmail(event.target.value)}
+            placeholder="Email"
           />
         </div>
         <div className="login-btn-container">
