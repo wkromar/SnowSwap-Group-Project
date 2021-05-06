@@ -183,10 +183,8 @@ Form Treatment
 
 .input-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   margin: 1rem;
+  justify-content: center;
   align-items: center;
 }
 
@@ -209,6 +207,16 @@ Form Treatment
 }
 
 .styled-input {
+  border-radius: 0 10px 10px 0;
+  border-top: solid rgb(100, 100, 100) 1px;
+  border-right: solid rgb(100, 100, 100) 1px;
+  border-bottom: solid rgb(100, 100, 100) 1px;
+  border-left: none;
+  height: 31px;
+  padding: 0 0 0 0.25rem;
+}
+
+.register-input {
   border-radius: 10px 10px 10px 10px;
   border-top: solid rgb(100, 100, 100) 1px;
   border-right: solid rgb(100, 100, 100) 1px;

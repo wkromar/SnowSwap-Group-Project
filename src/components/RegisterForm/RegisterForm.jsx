@@ -46,7 +46,7 @@ function RegisterForm() {
         <div className="input-container">
           {/* <div className="input-tag">User Name</div> */}
           <input
-            className="styled-input"
+            className="register-input"
             type="text"
             name="username"
             value={username}
@@ -58,7 +58,7 @@ function RegisterForm() {
         <div className="input-container">
           {/* <div className="input-tag">Password</div> */}
           <input
-            className="styled-input"
+            className="register-input"
             type="password"
             name="password"
             value={password}
@@ -70,7 +70,7 @@ function RegisterForm() {
         <div className="input-container">
           {/* <div className="input-tag">Retype Pass</div> */}
           <input
-            className="styled-input"
+            className="register-input"
             type="retypePassword"
             name="retypePassword"
             value={retypePassword}
@@ -82,7 +82,7 @@ function RegisterForm() {
         <div className="input-container">
           {/* <div className="input-tag">First Name</div> */}
           <input
-            className="styled-input"
+            className="register-input"
             type="text"
             name="firstName"
             value={firstName}
@@ -93,7 +93,7 @@ function RegisterForm() {
         </div>
         <div className="input-container">
           <input
-            className="styled-input"
+            className="register-input"
             type="text"
             name="lastName"
             value={lastName}
@@ -105,7 +105,7 @@ function RegisterForm() {
         <div className="input-container">
           {/* <div className="input-tag">Email</div> */}
           <input
-            className="styled-input"
+            className="register-input"
             type="email"
             name="email"
             value={email}
