@@ -1,5 +1,12 @@
 const modalReducer = (
-  state = { detailView: false, enlargeView: false, addGearView: false },
+  state = {
+    detailView: false,
+    enlargeView: false,
+    addGearView: false,
+    ItemPublicJoinView: false,
+    ContactPublicJoinView: false,
+    AbleToContact: false,
+  },
   action
 ) => {
   switch (action.type) {
@@ -19,6 +26,16 @@ const modalReducer = (
       return { ...state, addGearView: true };
     case "CLOSE_ADD_VIEW":
       return { ...state, addGearView: false };
+    case "OPEN_ITEM_JOIN":
+      return { ...state, ItemPublicJoinView: true };
+    case "CLOSE_ITEM_JOIN":
+      return { ...state, ItemPublicJoinView: false };
+    case "OPEN_CONTACT_JOIN":
+      return { ...state, ContactPublicJoinView: true };
+    case "CLOSE_CONTACT_JOIN":
+      return { ...state, ContactPublicJoinView: false };
+    case "ABLE_TO_CONTACT":
+      return { ...state, AbleToContact: true };
 
     default:
       return state;

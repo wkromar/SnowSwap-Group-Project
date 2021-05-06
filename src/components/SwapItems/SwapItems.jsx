@@ -1,21 +1,22 @@
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import AddGearToSwap from '../AddGearToSwap/AddGearToSwap';
-import DetailsView from '../DetailsView/DetailsView';
-import FilterDrawer from '../FilterDrawer/FilterDrawer';
-import '../SwapItems/SwapItems.css';
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import AddGearToSwap from "../AddGearToSwap/AddGearToSwap";
+import DetailsView from "../DetailsView/DetailsView";
+import FilterDrawer from "../FilterDrawer/FilterDrawer";
+import "../SwapItems/SwapItems.css";
+import ItemPublicJoinModal from "../ItemPublicJoinModal/ItemPublicJoinModal";
 
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    position: 'relative',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    position: "relative",
   },
   overlay: { zIndex: 1000 },
 };
@@ -33,34 +34,44 @@ export default function SwapItems() {
   const gear = useSelector((state) => state.gear);
   const modalStatus = useSelector((state) => state.modal);
   const gearDetails = useSelector((state) => state?.gearDetails);
+  const joinedSwaps = useSelector((state) => state.joinedSwaps);
+  const stateOfItem = useSelector((state) => state?.stateOfItem);
+  const stateOfContact = useSelector((state) => state?.stateOfContact);
 
   const [descriptionShow, setDescriptionShow] = useState(false);
-
   useEffect(() => {
-    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: selectedSwap });
-    dispatch({ type: 'FETCH_SELECTED_SWAP', payload: id });
+    dispatch({ type: "FETCH_SWAP_ITEMS", payload: selectedSwap });
+    dispatch({ type: "FETCH_SELECTED_SWAP", payload: id });
+    console.log(selectedSwap.id);
   }, []);
 
   const handleAddGearToSwap = () => {
-    dispatch({ type: 'OPEN_ADD_VIEW' });
+    let publicOpen = !!joinedSwaps.find(
+      (swap) => swap.id === selectedSwap[0].id
+    );
+    if (publicOpen === false) {
+      dispatch({ type: "OPEN_ITEM_JOIN" });
+    } else if (publicOpen === true) {
+      dispatch({ type: "OPEN_ADD_VIEW" });
+    }
   };
 
   const favoriteItem = (piece) => {
     if (piece.favorites_id) {
-      dispatch({ type: 'UNFAVORITE_ITEM', payload: [piece, id] });
+      dispatch({ type: "UNFAVORITE_ITEM", payload: [piece, id] });
     } else {
-      dispatch({ type: 'FAVORITE_ITEM', payload: [piece, id] });
+      dispatch({ type: "FAVORITE_ITEM", payload: [piece, id] });
     }
   };
 
   const gearClicked = (piece) => {
-    dispatch({ type: 'SELECTED_PIECE', payload: piece });
-    dispatch({ type: 'OPEN_DETAIL_VIEW' });
+    dispatch({ type: "SELECTED_PIECE", payload: piece });
+    dispatch({ type: "OPEN_DETAIL_VIEW" });
   };
 
   const removeGear = (swapItemId) => {
     dispatch({
-      type: 'REMOVE_FROM_SWAP',
+      type: "REMOVE_FROM_SWAP",
       payload: { swap_item_id: swapItemId, swap_id: id },
     });
   };
@@ -80,9 +91,8 @@ export default function SwapItems() {
     setDescriptionShow(!descriptionShow);
   };
 
-
   useEffect(() => {
-    dispatch({ type: 'FETCH_SWAP_ITEMS', payload: id });
+    dispatch({ type: "FETCH_SWAP_ITEMS", payload: id });
   }, []);
 
   return (
@@ -101,7 +111,7 @@ export default function SwapItems() {
           Swap Description
         </button>
         <img
-          className={`arrow-${descriptionShow ? 'down' : 'right'}`}
+          className={`arrow-${descriptionShow ? "down" : "right"}`}
           onClick={showHideDescription}
           src="images/arrow.svg"
           alt=""
@@ -109,7 +119,7 @@ export default function SwapItems() {
       </div>
       <div
         className={`swap-description-container${
-          descriptionShow ? '-show' : '-hide'
+          descriptionShow ? "-show" : "-hide"
         }`}
       >
         <p>{selectedSwap[0]?.swap_description}</p>
@@ -175,8 +185,8 @@ export default function SwapItems() {
                   )}
                 </div>
                 <p className="name">
-                  {' '}
-                  {piece.title} | ${piece.price}{' '}
+                  {" "}
+                  {piece.title} | ${piece.price}{" "}
                 </p>
                 {user.id == piece.user_id && (
                   <button
@@ -192,7 +202,7 @@ export default function SwapItems() {
       <Modal
         ariaHideApp={false}
         isOpen={modalStatus.detailView}
-        onRequestClose={() => dispatch({ type: 'CLOSE_DETAIL_VIEW' })}
+        onRequestClose={() => dispatch({ type: "CLOSE_DETAIL_VIEW" })}
         styles={customStyles}
         className="details-modal"
         contentLabel="Detail View"
@@ -202,12 +212,22 @@ export default function SwapItems() {
       <Modal
         ariaHideApp={false}
         isOpen={modalStatus.addGearView}
-        onRequestClose={() => dispatch({ type: 'CLOSE_ADD_VIEW' })}
+        onRequestClose={() => dispatch({ type: "CLOSE_ADD_VIEW" })}
         styles={customStyles}
         className="details-modal"
         contentLabel="Add View"
       >
         <AddGearToSwap />
+      </Modal>
+      <Modal
+        ariaHideApp={false}
+        isOpen={modalStatus.ItemPublicJoinView}
+        onRequestClose={() => dispatch({ type: "CLOSE_PUBLIC_JOIN" })}
+        // styles={customStyles}
+        contentLabel="Item Public Join View"
+        className="access-modal"
+      >
+        <ItemPublicJoinModal />
       </Modal>
     </>
   );

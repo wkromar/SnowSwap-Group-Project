@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import Modal from 'react-modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import SwapCodeModal from '../SwapCodeModal/SwapCodeModal';
+import React, { useEffect } from "react";
+import Modal from "react-modal";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import SwapCodeModal from "../SwapCodeModal/SwapCodeModal";
 
 // component to render on landing page
 // displays all swaps on the app that you have not joined
@@ -13,10 +13,9 @@ export default function AllSwaps() {
   const modalStatus = useSelector((state) => state.modal);
   const history = useHistory();
 
-
-   // dispatch on page load to fetch data from allSwaps reducer
+  // dispatch on page load to fetch data from allSwaps reducer
   useEffect(() => {
-    dispatch({ type: 'FETCH_ALL_SWAPS' });
+    dispatch({ type: "FETCH_ALL_SWAPS" });
   }, []);
 
   //handleClick runs on click of swaps under the joined area
@@ -29,8 +28,8 @@ export default function AllSwaps() {
   //If the user doesn't have access to the swap a modal asking for the access code will open.
   const handleClickAll = (swap) => {
     if (swap.is_private) {
-      dispatch({ type: 'SWAP_CODE_OPEN' });
-      dispatch({ type: 'SET_SELECTED_SWAP', payload: swap });
+      dispatch({ type: "SWAP_CODE_OPEN" });
+      dispatch({ type: "SET_SELECTED_SWAP", payload: swap });
     } else {
       history.push(`/swapItems/${swap.id}`);
     }
@@ -52,7 +51,7 @@ export default function AllSwaps() {
                   <div className="days-until">
                     {swap.swap_open ? (
                       <p>
-                        Days Remaing:{' '}
+                        Days Remaing:{" "}
                         {Math.round(
                           (new Date(swap.stop_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
@@ -60,7 +59,7 @@ export default function AllSwaps() {
                       </p>
                     ) : (
                       <p>
-                        Days until swap:{' '}
+                        Days until swap:{" "}
                         {Math.round(
                           (new Date(swap.sell_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
@@ -89,7 +88,7 @@ export default function AllSwaps() {
                   <div className="days-until">
                     {swap.swap_open ? (
                       <p>
-                        Days Remaing:{' '}
+                        Days Remaing:{" "}
                         {Math.round(
                           (new Date(swap.stop_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
@@ -97,7 +96,7 @@ export default function AllSwaps() {
                       </p>
                     ) : (
                       <p>
-                        Days until swap:{' '}
+                        Days until swap:{" "}
                         {Math.round(
                           (new Date(swap.sell_date) - new Date()) /
                             (1000 * 60 * 60 * 24)
@@ -114,7 +113,7 @@ export default function AllSwaps() {
       <Modal
         ariaHideApp={false}
         isOpen={modalStatus.swapCodeView}
-        onRequestClose={() => dispatch({ type: 'SWAP_CODE_CLOSE' })}
+        onRequestClose={() => dispatch({ type: "SWAP_CODE_CLOSE" })}
         // styles={customStyles}
         contentLabel="Detail View"
         className="access-modal"
